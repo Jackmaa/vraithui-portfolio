@@ -1,0 +1,528 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* déjà présent : --bg, --fg, --panel, --accent, etc. */
+  --mode-n: 99 102 241; /* Normal (indigo)    */
+  --mode-i: 34 197 94; /* Insert (green)     */
+  --mode-v: 244 114 182; /* Visual (pink)      */
+  --mode-r: 239 68 68; /* Replace (red)      */
+  --border: 255 255 255 / 0.06;
+}
+
+/* ========== BRAND (clair) ========== */
+[data-theme="brand"] {
+  /* daisy-like tokens (source of truth) */
+  --p: 234 88 12; /* orange 600 */
+  --pc: 255 255 255;
+  --s: 14 165 233; /* sky 500 */
+  --sc: 0 0 0;
+  --bg: 255 255 255; /* base background */
+  --fg: 15 23 42; /* slate 900 */
+  --in: 14 165 233; /* info */
+  --su: 34 197 94; /* success */
+  --wa: 245 158 11; /* warning */
+  --er: 239 68 68; /* error */
+
+  /* VraithUI adapter (consommé par ton layout) */
+  --accent: var(--p);
+  --border: 0 0 0 / 0.07; /* léger pour fond clair */
+
+  /* Panneaux (générés à partir du bg via color-mix pour rester cohérents) */
+  --panel: color-mix(in oklab, rgb(var(--bg)) 90%, rgb(0 0 0) 10%);
+  --panel-2: color-mix(in oklab, rgb(var(--bg)) 82%, rgb(0 0 0) 18%);
+
+  /* Modes Vim : on garde une cohérence chromatique */
+  --mode-n: var(--p);
+  --mode-i: 34 197 94; /* green 500 */
+  --mode-v: 244 114 182; /* pink 400 */
+  --mode-r: 239 68 68; /* red 500 */
+}
+
+/* ========== NEUTRAL (clair) ========== */
+[data-theme="neutral"] {
+  /* daisy-like */
+  --p: 82 82 82; /* neutral 600 */
+  --pc: 255 255 255;
+  --s: 163 163 163; /* neutral 400 */
+  --sc: 0 0 0;
+  --bg: 250 250 250; /* neutral 50 */
+  --fg: 23 23 23; /* neutral 900 */
+  --in: 59 130 246; /* blue 500 */
+  --su: 34 197 94; /* green 500 */
+  --wa: 234 179 8; /* yellow 500 */
+  --er: 239 68 68; /* red 500 */
+
+  /* VraithUI adapter */
+  --accent: var(--p);
+  --border: 0 0 0 / 0.08;
+
+  --panel: color-mix(in oklab, rgb(var(--bg)) 90%, rgb(0 0 0) 10%);
+  --panel-2: color-mix(in oklab, rgb(var(--bg)) 82%, rgb(0 0 0) 18%);
+
+  --mode-n: var(--p);
+  --mode-i: 34 197 94;
+  --mode-v: 244 114 182;
+  --mode-r: 239 68 68;
+}
+
+/* CYBERPUNK (sombre) — déjà présent, j’ajoute les alias daisy */
+[data-theme="cyberpunk"] {
+  --bg: 3 7 18;
+  --fg: 216 233 255;
+  --panel: 8 12 24;
+  --panel-2: 12 18 36;
+  --accent: 0 255 255;
+  --mode-n: 99 102 241;
+  --mode-i: 34 197 94;
+  --mode-v: 244 114 182;
+  --mode-r: 239 68 68;
+  --border: 255 255 255 / 0.06;
+
+  /* alias daisy (facultatifs) */
+  --p: var(--accent);
+  --pc: 0 0 0;
+  --s: 34 211 238; /* cyan 400 */
+  --sc: 0 0 0;
+}
+
+/* LUXURY (sombre) — déjà présent, j’ajoute les alias daisy */
+[data-theme="luxury"] {
+  --bg: 10 10 12;
+  --fg: 232 232 236;
+  --panel: 18 18 22;
+  --panel-2: 24 24 29;
+  --accent: 253 154 0; /* gold fd9a00 */
+  --mode-n: 253 154 0;
+  --mode-i: 34 197 94;
+  --mode-v: 244 114 182;
+  --mode-r: 239 68 68;
+  --border: 255 255 255 / 0.06;
+
+  /* alias daisy */
+  --p: var(--accent);
+  --pc: 0 0 0;
+  --s: 217 119 6; /* amber 600 (plus chaud que l’accent) */
+  --sc: 0 0 0;
+}
+
+/* ========== BRAND (sombre) ========== */
+[data-theme="brand-dark"] {
+  /* VraithUI — surfaces & texte */
+  --bg: 12 14 18; /* fond principal très sombre */
+  --fg: 232 236 244; /* texte principal */
+  /* panneaux (surfaces) */
+  --panel: 18 22 28; /* surface 1 */
+  --panel-2: 24 28 36; /* surface 2 / barres */
+  --border: 255 255 255 / 0.07; /* séparateurs discrets */
+  --scroll-track: 18 22 28;
+  --scroll-thumb: 234 88 12;
+  /* accent “brand” (orange 600-ish) */
+  --accent: 234 88 12;
+
+  /* modes Vim */
+  --mode-n: var(--accent);
+  --mode-i: 34 197 94; /* green 500 */
+  --mode-v: 244 114 182; /* pink 400 */
+  --mode-r: 239 68 68; /* red 500 */
+
+  /* Alias daisy-like (si tu en as besoin ailleurs) */
+  --p: var(--accent);
+  --pc: 255 255 255;
+  --s: 14 165 233; /* sky 500 en secondaire (cool vs warm) */
+  --sc: 0 0 0;
+
+  --in: 14 165 233; /* info */
+  --su: 34 197 94; /* success */
+  --wa: 245 158 11; /* warning */
+  --er: 239 68 68; /* error */
+}
+
+/* (Optionnel) surfaces auto en color-mix si tu préfères dériver des panels depuis le bg */
+[data-theme="brand-dark"] {
+  --panel: color-mix(in oklab, rgb(var(--bg)) 85%, rgb(255 255 255) 15%);
+  --panel-2: color-mix(in oklab, rgb(var(--bg)) 78%, rgb(255 255 255) 22%);
+}
+
+[data-theme="velvet-charcoal"] {
+  --bg: 54 69 79; /* #36454F Velvet Charcoal */
+  --fg: 245 222 179; /* #F5DEB3 Golden Creme */
+  --panel: 64 82 92;
+  --panel-2: 74 92 102;
+  --border: 255 255 255 / 0.08;
+  --accent: 245 222 179; /* creme */
+  --mode-n: var(--accent);
+  --mode-i: 132 204 22;
+  --mode-v: 236 72 153;
+  --mode-r: 239 68 68;
+  --p: var(--accent);
+  --pc: 0 0 0;
+}
+
+[data-theme="persian-plum"] {
+  --bg: 112 28 28; /* #701C1C Persian Plum */
+  --fg: 240 173 214; /* #F0EAD6 Ivory Quartz (légèrement rosé) */
+  --panel: 82 20 20;
+  --panel-2: 61 15 15;
+  --border: 255 255 255 / 0.06;
+  --accent: 240 173 214;
+  --mode-n: var(--accent);
+  --mode-i: 34 197 94;
+  --mode-v: 244 114 182;
+  --mode-r: 239 68 68;
+}
+
+[data-theme="bordeaux-silk"] {
+  --bg: 80 34 45; /* #50222D Bordeaux */
+  --fg: 196 195 208; /* #C4C3D0 Silver Dust */
+  --panel: 60 25 33;
+  --panel-2: 45 20 25;
+  --border: 255 255 255 / 0.05;
+  --accent: 196 195 208;
+  --mode-n: var(--accent);
+  --mode-i: 34 197 94;
+  --mode-v: 244 114 182;
+  --mode-r: 239 68 68;
+}
+
+[data-theme="regal-gold"] {
+  --bg: 53 56 57; /* #353839 Onyx */
+  --fg: 255 215 0; /* #FFD700 Gold */
+  --panel: 43 46 47;
+  --panel-2: 33 36 37;
+  --border: 255 255 255 / 0.05;
+  --accent: 255 215 0;
+  --mode-n: var(--accent);
+  --mode-i: 132 204 22;
+  --mode-v: 236 72 153;
+  --mode-r: 239 68 68;
+}
+
+[data-theme="velvet-indigo"] {
+  --bg: 75 0 130; /* #4B0082 Indigo */
+  --fg: 229 228 226; /* #E5E4E2 Platinum */
+  --panel: 60 0 100;
+  --panel-2: 45 0 75;
+  --border: 255 255 255 / 0.06;
+  --accent: 229 228 226;
+  --mode-n: var(--accent);
+  --mode-i: 34 197 94;
+  --mode-v: 244 114 182;
+  --mode-r: 239 68 68;
+}
+
+[data-theme="deep-jungle"] {
+  --bg: 7 85 59; /* #07553B */
+  --fg: 206 212 106; /* #CED46A */
+  --panel: 5 65 45;
+  --panel-2: 3 45 30;
+  --border: 255 255 255 / 0.05;
+  --accent: 206 212 106;
+  --mode-n: var(--accent);
+  --mode-i: 132 204 22;
+  --mode-v: 244 114 182;
+  --mode-r: 239 68 68;
+}
+
+[data-theme="crimson-peach"] {
+  --bg: 164 25 61; /* #A4193D Crimson */
+  --fg: 255 223 185; /* #FFDFB9 Peach */
+  --panel: 130 20 50;
+  --panel-2: 100 15 40;
+  --border: 255 255 255 / 0.06;
+  --accent: 255 223 185;
+  --mode-n: var(--accent);
+  --mode-i: 132 204 22;
+  --mode-v: 244 114 182;
+  --mode-r: 239 68 68;
+}
+
+[data-theme="imperial-blue"] {
+  --bg: 0 35 102; /* #002366 */
+  --fg: 192 8 129; /* #C00881 Rose */
+  --panel: 0 28 82;
+  --panel-2: 0 20 60;
+  --border: 255 255 255 / 0.06;
+  --accent: 192 8 129;
+  --mode-n: var(--accent);
+  --mode-i: 132 204 22;
+  --mode-v: 244 114 182;
+  --mode-r: 239 68 68;
+}
+
+[data-theme="mystic-jade"] {
+  --bg: 119 168 168; /* #77A8A8 */
+  --fg: 126 124 206; /* #7E7CE Pale White (grisé) */
+  --panel: 100 140 140;
+  --panel-2: 80 110 110;
+  --border: 255 255 255 / 0.08;
+  --accent: 126 124 206;
+  --mode-n: var(--accent);
+  --mode-i: 34 197 94;
+  --mode-v: 244 114 182;
+  --mode-r: 239 68 68;
+}
+
+[data-theme="lush-merlot"] {
+  --bg: 115 0 0; /* #730000 Merlot */
+  --fg: 197 168 128; /* #C5A880 Gold */
+  --panel: 90 0 0;
+  --panel-2: 70 0 0;
+  --border: 255 255 255 / 0.06;
+  --accent: 197 168 128;
+  --mode-n: var(--accent);
+  --mode-i: 132 204 22;
+  --mode-v: 244 114 182;
+  --mode-r: 239 68 68;
+}
+
+/* ===== 1) Variables scrollbar dérivées du thème ===== */
+:root,
+[data-theme] {
+  /* Fallbacks si un thème ne définit pas ces variables */
+  --panel: 24 24 29;
+  --panel-2: 18 18 22;
+  --accent: 0 255 255;
+
+  /* Couleurs scrollbar dérivées */
+  --scroll-track: color-mix(in oklab, rgb(var(--panel)) 88%, rgb(0 0 0) 12%);
+  --scroll-thumb: color-mix(
+    in oklab,
+    rgb(var(--panel-2)) 70%,
+    rgb(var(--accent)) 30%
+  );
+  --scroll-thumb-hover: color-mix(
+    in oklab,
+    rgb(var(--scroll-thumb)) 75%,
+    rgb(var(--accent)) 25%
+  );
+  --scroll-thumb-active: color-mix(
+    in oklab,
+    rgb(var(--scroll-thumb)) 55%,
+    rgb(var(--accent)) 45%
+  );
+}
+
+/* Option: tu peux affiner par thème si besoin
+
+*/
+
+/* ===== Scrollbars de base ===== */
+.scroll-theme {
+  scrollbar-width: thin; /* Firefox */
+}
+.scroll-theme::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.scroll-theme::-webkit-scrollbar-track {
+  border-left: 1px solid rgb(var(--border));
+}
+.scroll-theme::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  border: 2px solid transparent; /* anneau */
+  background-clip: padding-box;
+}
+.scroll-theme::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* ===== Thèmes fixes ===== */
+
+/* Cyberpunk sombre */
+[data-theme="cyberpunk"] .scroll-theme::-webkit-scrollbar-track {
+  background: rgb(8, 12, 24);
+}
+[data-theme="cyberpunk"] .scroll-theme::-webkit-scrollbar-thumb {
+  background: rgb(0, 255, 255); /* accent cyan */
+}
+
+/* Luxury sombre */
+[data-theme="luxury"] .scroll-theme::-webkit-scrollbar-track {
+  background: rgb(18, 18, 22);
+}
+[data-theme="luxury"] .scroll-theme::-webkit-scrollbar-thumb {
+  background: rgb(253, 154, 0); /* accent gold */
+}
+
+/* Brand clair */
+[data-theme="brand"] .scroll-theme::-webkit-scrollbar-track {
+  background: rgb(250, 250, 250);
+}
+[data-theme="brand"] .scroll-theme::-webkit-scrollbar-thumb {
+  background: rgb(234, 88, 12); /* orange 600 */
+}
+
+/* Brand sombre */
+[data-theme="brand-dark"] .scroll-theme::-webkit-scrollbar-track {
+  background: rgb(18, 22, 28);
+}
+[data-theme="brand-dark"] .scroll-theme::-webkit-scrollbar-thumb {
+  background: rgb(234, 88, 12); /* orange 600 */
+}
+
+/* Neutral clair */
+[data-theme="neutral"] .scroll-theme::-webkit-scrollbar-track {
+  background: rgb(245, 245, 245);
+}
+[data-theme="neutral"] .scroll-theme::-webkit-scrollbar-thumb {
+  background: rgb(82, 82, 82); /* neutral 600 */
+}
+
+/* Velvet Charcoal */
+[data-theme="velvet-charcoal"] .scroll-theme::-webkit-scrollbar-track {
+  background: rgb(64, 82, 92);
+}
+[data-theme="velvet-charcoal"] .scroll-theme::-webkit-scrollbar-thumb {
+  background: rgb(245, 222, 179); /* creme */
+}
+
+/* Persian Plum */
+[data-theme="persian-plum"] .scroll-theme::-webkit-scrollbar-track {
+  background: rgb(82, 20, 20);
+}
+[data-theme="persian-plum"] .scroll-theme::-webkit-scrollbar-thumb {
+  background: rgb(240, 173, 214); /* ivory quartz rosé */
+}
+
+/* Bordeaux Silk */
+[data-theme="bordeaux-silk"] .scroll-theme::-webkit-scrollbar-track {
+  background: rgb(60, 25, 33);
+}
+[data-theme="bordeaux-silk"] .scroll-theme::-webkit-scrollbar-thumb {
+  background: rgb(196, 195, 208); /* silver dust */
+}
+
+/* Regal Gold */
+[data-theme="regal-gold"] .scroll-theme::-webkit-scrollbar-track {
+  background: rgb(43, 46, 47);
+}
+[data-theme="regal-gold"] .scroll-theme::-webkit-scrollbar-thumb {
+  background: rgb(255, 215, 0); /* gold */
+}
+
+/* Velvet Indigo */
+[data-theme="velvet-indigo"] .scroll-theme::-webkit-scrollbar-track {
+  background: rgb(60, 0, 100);
+}
+[data-theme="velvet-indigo"] .scroll-theme::-webkit-scrollbar-thumb {
+  background: rgb(229, 228, 226); /* platinum */
+}
+
+/* Deep Jungle */
+[data-theme="deep-jungle"] .scroll-theme::-webkit-scrollbar-track {
+  background: rgb(5, 65, 45);
+}
+[data-theme="deep-jungle"] .scroll-theme::-webkit-scrollbar-thumb {
+  background: rgb(206, 212, 106); /* light olive */
+}
+
+/* Crimson Peach */
+[data-theme="crimson-peach"] .scroll-theme::-webkit-scrollbar-track {
+  background: rgb(130, 20, 50);
+}
+[data-theme="crimson-peach"] .scroll-theme::-webkit-scrollbar-thumb {
+  background: rgb(255, 223, 185); /* peach */
+}
+
+/* Imperial Blue */
+[data-theme="imperial-blue"] .scroll-theme::-webkit-scrollbar-track {
+  background: rgb(0, 28, 82);
+}
+[data-theme="imperial-blue"] .scroll-theme::-webkit-scrollbar-thumb {
+  background: rgb(192, 8, 129); /* vintage rose */
+}
+
+/* Mystic Jade */
+[data-theme="mystic-jade"] .scroll-theme::-webkit-scrollbar-track {
+  background: rgb(100, 140, 140);
+}
+[data-theme="mystic-jade"] .scroll-theme::-webkit-scrollbar-thumb {
+  background: rgb(126, 124, 206); /* violet pale */
+}
+
+/* Lush Merlot */
+[data-theme="lush-merlot"] .scroll-theme::-webkit-scrollbar-track {
+  background: rgb(90, 0, 0);
+}
+[data-theme="lush-merlot"] .scroll-theme::-webkit-scrollbar-thumb {
+  background: rgb(197, 168, 128); /* gold doux */
+}
+
+/* ===== 2) Base UX pour éviter les sauts de layout ===== */
+html {
+  scrollbar-gutter: stable both-edges;
+}
+
+/* ===== 3) Utilitaire : applique un scrollbar themé uniquement où tu veux ===== */
+/* Mets la classe .scroll-theme sur les zones scrollables (nav, sidebars, editors…) */
+.scroll-theme {
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--scroll-thumb)) rgb(var(--scroll-track));
+}
+
+/* Chromium/WebKit */
+.scroll-theme::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.scroll-theme::-webkit-scrollbar-track {
+  background: rgb(var(--scroll-track));
+  border-left: 1px solid rgb(var(--border));
+}
+.scroll-theme::-webkit-scrollbar-thumb {
+  background: rgb(var(--scroll-thumb));
+  border-radius: 8px;
+  border: 2px solid rgb(var(--scroll-track)); /* anneau pour un rendu clean */
+}
+.scroll-theme::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--scroll-thumb-hover));
+}
+.scroll-theme::-webkit-scrollbar-thumb:active {
+  background: rgb(var(--scroll-thumb-active));
+}
+.scroll-theme::-webkit-scrollbar-corner {
+  background: rgb(var(--scroll-track));
+}
+
+/* ===== 4) Variante compacte (si tu veux un mode “thin”) ===== */
+.scroll-theme.thin {
+  scrollbar-width: thin;
+}
+.scroll-theme.thin::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* ===== 5) Variante “invisible jusqu’au hover” (Chromium/WebKit only) ===== */
+.scroll-theme.stealth::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.scroll-theme.stealth::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+.scroll-theme.stealth:hover::-webkit-scrollbar-thumb {
+  background: rgb(var(--scroll-thumb));
+}
+
+/* ===== 6) Accessibilité : contraste élevé ===== */
+@media (prefers-contrast: more) {
+  .scroll-theme {
+    scrollbar-width: auto;
+  }
+  .scroll-theme::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+  .scroll-theme::-webkit-scrollbar-thumb {
+    border-width: 1px;
+  }
+}
+
+body {
+  @apply bg-[rgb(var(--bg))] text-[rgb(var(--fg))];
+  font-family: "JetBrains Mono", monospace;
+}

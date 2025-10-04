@@ -1,0 +1,211 @@
+<!-- components/CustomScrollbar.vue -->
+<template>
+  <div
+    class="csb host"
+    :style="{ height: heightStyle }"
+    @wheel.passive="onWheel"
+    ref="host"
+  >
+    <div class="csb viewport" ref="viewport">
+      <slot />
+    </div>
+
+    <!-- track -->
+    <div class="csb track" ref="track" @mousedown="onTrackDown">
+      <!-- thumb -->
+      <div
+        class="csb thumb"
+        :style="{
+          height: thumbPx + 'px',
+          transform: `translateY(${thumbTop}px)`,
+        }"
+        @mousedown.stop="onThumbDown"
+        role="scrollbar"
+        :aria-valuemin="0"
+        :aria-valuemax="maxScroll"
+        :aria-valuenow="scrollTop"
+        tabindex="0"
+        @keydown="onKey"
+      />
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, computed, onMounted, onBeforeUnmount, watch } from "vue";
+
+const props = defineProps({
+  height: { type: [Number, String], default: 300 }, // px or 'auto'
+  thumbMinSize: { type: Number, default: 24 },
+  modelValue: { type: Number, default: 0 }, // v-model: scrollTop
+});
+const emit = defineEmits(["update:modelValue", "scroll"]);
+
+const host = ref(null);
+const viewport = ref(null);
+const track = ref(null);
+
+const heightStyle = computed(() =>
+  typeof props.height === "number" ? props.height + "px" : props.height
+);
+const state = ref({
+  contentH: 0,
+  viewportH: 0,
+  trackH: 0,
+  dragging: false,
+  dragOffset: 0,
+});
+const scrollTop = ref(props.modelValue);
+
+const maxScroll = computed(() =>
+  Math.max(0, state.value.contentH - state.value.viewportH)
+);
+const thumbPx = computed(() => {
+  if (!state.value.contentH) return props.thumbMinSize;
+  const r = state.value.viewportH / state.value.contentH;
+  return Math.max(props.thumbMinSize, Math.floor(r * state.value.trackH));
+});
+const thumbTop = computed(() => {
+  const ratio = maxScroll.value ? scrollTop.value / maxScroll.value : 0;
+  return Math.round((state.value.trackH - thumbPx.value) * ratio);
+});
+
+function syncSizes() {
+  const vp = viewport.value;
+  const tr = track.value;
+  if (!vp || !tr) return;
+  state.value.viewportH = vp.clientHeight;
+  state.value.contentH = vp.scrollHeight;
+  state.value.trackH = tr.clientHeight;
+}
+
+function setScroll(y) {
+  const clamped = Math.max(0, Math.min(maxScroll.value, y));
+  if (clamped === scrollTop.value) return;
+  scrollTop.value = clamped;
+  viewport.value.scrollTop = clamped;
+  emit("update:modelValue", clamped);
+  emit("scroll", clamped);
+}
+
+function onWheel(e) {
+  setScroll(scrollTop.value + e.deltaY);
+}
+
+function onTrackDown(e) {
+  const clickY = e.offsetY;
+  const targetTop = clickY - thumbPx.value / 2;
+  const ratio = targetTop / (state.value.trackH - thumbPx.value);
+  setScroll(ratio * maxScroll.value);
+}
+
+let unlisten = () => {};
+function onThumbDown(e) {
+  state.value.dragging = true;
+  const startY = e.clientY;
+  const startTop = thumbTop.value;
+  const move = (ev) => {
+    const dy = ev.clientY - startY;
+    const newTop = Math.max(
+      0,
+      Math.min(state.value.trackH - thumbPx.value, startTop + dy)
+    );
+    const ratio = newTop / (state.value.trackH - thumbPx.value);
+    setScroll(ratio * maxScroll.value);
+  };
+  const up = () => {
+    state.value.dragging = false;
+    window.removeEventListener("mousemove", move);
+    window.removeEventListener("mouseup", up);
+  };
+  window.addEventListener("mousemove", move, { passive: true });
+  window.addEventListener("mouseup", up, { passive: true });
+  unlisten = () => {
+    window.removeEventListener("mousemove", move);
+    window.removeEventListener("mouseup", up);
+  };
+}
+
+function onKey(e) {
+  const step = 40;
+  if (e.key === "ArrowDown") setScroll(scrollTop.value + step);
+  else if (e.key === "ArrowUp") setScroll(scrollTop.value - step);
+  else if (e.key === "PageDown")
+    setScroll(scrollTop.value + state.value.viewportH - 10);
+  else if (e.key === "PageUp")
+    setScroll(scrollTop.value - (state.value.viewportH - 10));
+  else if (e.key === "Home") setScroll(0);
+  else if (e.key === "End") setScroll(maxScroll.value);
+}
+
+onMounted(() => {
+  // sync initiale + après render
+  const ro = new ResizeObserver(() => syncSizes());
+  ro.observe(viewport.value);
+  ro.observe(track.value);
+  syncSizes();
+  // refléter le modèle externe
+  viewport.value.addEventListener(
+    "scroll",
+    () => {
+      if (!state.value.dragging) {
+        const y = viewport.value.scrollTop;
+        if (y !== scrollTop.value) {
+          scrollTop.value = y;
+          emit("update:modelValue", y);
+          emit("scroll", y);
+        }
+      }
+    },
+    { passive: true }
+  );
+  // init scroll position
+  setScroll(props.modelValue);
+  // cleanup
+  onBeforeUnmount(() => {
+    ro.disconnect();
+    unlisten();
+  });
+});
+watch(
+  () => props.modelValue,
+  (v) => setScroll(v)
+);
+</script>
+
+<style scoped>
+.csb.host {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 10px; /* contenu + track */
+  background: rgb(var(--bg));
+  color: rgb(var(--fg));
+  border: 1px solid rgb(var(--border));
+  border-radius: 10px;
+}
+.csb.viewport {
+  overflow: hidden auto; /* on masque le scrollbar natif vertical */
+  padding: 8px 12px;
+}
+.csb.track {
+  position: relative;
+  background: rgb(var(--panel));
+  border-left: 1px solid rgb(var(--border));
+  user-select: none;
+}
+.csb.thumb {
+  position: absolute;
+  left: 1px;
+  right: 1px;
+  background: rgb(var(--accent));
+  border-radius: 8px;
+  cursor: grab;
+  outline: none;
+}
+.csb.thumb:active {
+  cursor: grabbing;
+}
+.csb.thumb:focus-visible {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15);
+}
+</style>

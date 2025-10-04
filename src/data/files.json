@@ -1,0 +1,6 @@
+[
+  { "id": "home", "label": "home.lua", "component": "div" },
+  { "id": "about", "label": "about.md", "component": "div" },
+  { "id": "projects", "label": "projects.ts", "component": "div" },
+  { "id": "github", "label": "github.md", "component": "div" }
+]

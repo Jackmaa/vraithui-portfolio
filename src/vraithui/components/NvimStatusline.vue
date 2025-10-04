@@ -1,0 +1,39 @@
+<template>
+  <div
+    class="h-7 w-full flex items-center text-xs px-3 border-t"
+    :style="`border-color: var(--border); background: rgba(${modeColor}, .15)`"
+  >
+    <span
+      class="font-mono px-2 py-0.5 rounded mr-3"
+      :style="`background: rgb(${modeColor}); color: #0b0d10`"
+    >
+      {{ mode }}
+    </span>
+    <span class="opacity-80">{{ file || "—" }}</span>
+    <span class="ml-auto opacity-60">UTF-8 · LF · 120 cols</span>
+  </div>
+</template>
+
+<script setup>
+import { computed } from "vue";
+const props = defineProps({ mode: String, file: String, git: String });
+const modeColor = computed(() => {
+  switch ((props.mode || "NORMAL").toUpperCase()) {
+    case "INSERT":
+      return getVar("--mode-i");
+    case "VISUAL":
+      return getVar("--mode-v");
+    case "REPLACE":
+      return getVar("--mode-r");
+    default:
+      return getVar("--mode-n");
+  }
+});
+function getVar(name) {
+  const v = getComputedStyle(document.documentElement)
+    .getPropertyValue(name)
+    .trim()
+    .replace(/\s+/g, " ");
+  return v || "99 102 241";
+}
+</script>
