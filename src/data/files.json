@@ -1,6 +1,22 @@
 [
-  { "id": "home", "label": "home.lua", "component": "div" },
-  { "id": "about", "label": "about.md", "component": "div" },
-  { "id": "projects", "label": "projects.ts", "component": "div" },
-  { "id": "github", "label": "github.md", "component": "div" }
+  {
+    "id": "home",
+    "label": "home.lua",
+    "component": "Home"
+  },
+  {
+    "id": "about",
+    "label": "about.md",
+    "component": "AboutMe"
+  },
+  {
+    "id": "projects",
+    "label": "projects.ts",
+    "component": "Projects"
+  },
+  {
+    "id": "github",
+    "label": "github.md",
+    "component": "div"
+  }
 ]

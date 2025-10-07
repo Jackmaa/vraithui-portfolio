@@ -6,7 +6,7 @@
     @wheel.passive="onWheel"
     ref="host"
   >
-    <div class="csb viewport" ref="viewport">
+    <div class="csb viewport hide-native-scrollbar" ref="viewport">
       <slot />
     </div>
 
@@ -139,12 +139,11 @@ function onKey(e) {
 }
 
 onMounted(() => {
-  // sync initiale + après render
   const ro = new ResizeObserver(() => syncSizes());
   ro.observe(viewport.value);
   ro.observe(track.value);
   syncSizes();
-  // refléter le modèle externe
+
   viewport.value.addEventListener(
     "scroll",
     () => {
@@ -159,18 +158,31 @@ onMounted(() => {
     },
     { passive: true }
   );
-  // init scroll position
+
   setScroll(props.modelValue);
-  // cleanup
+
   onBeforeUnmount(() => {
     ro.disconnect();
     unlisten();
   });
 });
+
 watch(
   () => props.modelValue,
-  (v) => setScroll(v)
+  (v) => {
+    // Force sync des tailles avant de scroller (important si le contenu a changé)
+    requestAnimationFrame(() => {
+      syncSizes();
+      setScroll(v);
+    });
+  }
 );
+
+// Expose syncSizes pour permettre un refresh manuel depuis le parent
+defineExpose({
+  syncSizes,
+  setScroll,
+});
 </script>
 
 <style scoped>
@@ -182,17 +194,24 @@ watch(
   color: rgb(var(--fg));
   border: 1px solid rgb(var(--border));
   border-radius: 10px;
+  overflow: hidden; /* Important pour masquer tout débordement */
 }
+
 .csb.viewport {
-  overflow: hidden auto; /* on masque le scrollbar natif vertical */
+  overflow-y: auto; /* auto au lieu de scroll pour éviter la scrollbar quand pas nécessaire */
+  overflow-x: hidden;
   padding: 8px 12px;
+  height: 100%; /* Important : forcer la hauteur */
+  /* La classe .hide-native-scrollbar cachera visuellement la scrollbar */
 }
+
 .csb.track {
   position: relative;
   background: rgb(var(--panel));
   border-left: 1px solid rgb(var(--border));
   user-select: none;
 }
+
 .csb.thumb {
   position: absolute;
   left: 1px;
@@ -201,11 +220,29 @@ watch(
   border-radius: 8px;
   cursor: grab;
   outline: none;
+  transition: background 0.15s ease;
 }
+
+.csb.thumb:hover {
+  background: color-mix(in srgb, rgb(var(--accent)) 80%, white 20%);
+}
+
 .csb.thumb:active {
   cursor: grabbing;
+  background: color-mix(in srgb, rgb(var(--accent)) 90%, white 10%);
 }
+
 .csb.thumb:focus-visible {
   box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15);
+}
+
+/* Style global pour masquer scrollbar native */
+.hide-native-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.hide-native-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/Opera */
 }
 </style>

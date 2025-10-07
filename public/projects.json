@@ -1,0 +1,78 @@
+[
+  {
+    "id": "crm-forma",
+    "name": "CRM-Forma",
+    "description": "CRM complet conçu pour les formateurs indépendants et centres de formation. Gestion complète de l'activité de formation, de la prospection à la facturation, avec conformité Qualiopi intégrée.",
+    "status": "active",
+    "year": 2025,
+    "tags": ["Symfony", "Vue.js", "PostgreSQL", "TailwindCSS", "JWT"],
+    "github": "https://github.com/Jackmaa/CRM-Forma",
+    "demo": null,
+    "image": null,
+    "highlights": [
+      "Architecture hybride Symfony + Vue.js",
+      "Génération automatique de documents (devis, factures, attestations)",
+      "Gestion multi-utilisateurs avec rôles et permissions",
+      "Tableaux de bord avec indicateurs de performance",
+      "Conformité Qualiopi avec traçabilité complète",
+      "Projet de fin de formation - en amélioration continue"
+    ]
+  },
+  {
+    "id": "vraithui-portfolio",
+    "name": "VraithUI Portfolio",
+    "description": "Portfolio interactif inspiré des éditeurs de code modernes (Neovim/Cursor). Interface immersive avec système de thèmes cyberpunk, console intégrée, command palette et markdown parser custom.",
+    "status": "active",
+    "year": 2025,
+    "tags": ["Vue 3", "Vite", "TailwindCSS", "Design System"],
+    "github": "https://github.com/Jackmaa/vraithui-portfolio",
+    "demo": null,
+    "image": null,
+    "highlights": [
+      "15+ thèmes dynamiques premium",
+      "Command Palette (⌘K) avec fuzzy search",
+      "Console intégrée avec easter eggs",
+      "Custom scrollbar draggable",
+      "Markdown parser custom pour contenu",
+      "Architecture modulaire inspirée IDE"
+    ]
+  },
+  {
+    "id": "nihon",
+    "name": "Nihon",
+    "description": "Bibliothèque de manga en ligne avec système d'emprunt et de gestion. Plateforme permettant de parcourir, rechercher et emprunter des mangas avec une interface responsive et des animations GSAP.",
+    "status": "completed",
+    "year": 2024,
+    "tags": ["PHP", "MVC", "REST API", "GSAP", "AltoRouter"],
+    "github": "https://github.com/Jackmaa/nihon-ECF-3",
+    "demo": null,
+    "image": null,
+    "highlights": [
+      "Lead developer - gestion d'équipe (3 personnes)",
+      "Architecture MVC personnalisée",
+      "API REST pour gestion du catalogue",
+      "Système d'emprunt et de réservation",
+      "Animations fluides avec GSAP",
+      "Design collaboratif sur Figma"
+    ]
+  },
+  {
+    "id": "pokeapi-game",
+    "name": "PokeAPIGame",
+    "description": "Pokédex interactif complet avec mini-jeu Pokémon Battle Royale. Recherche avancée, filtres par type, système de favoris, et combat tour par tour avec calculs de dégâts basés sur les stats réelles.",
+    "status": "completed",
+    "year": 2024,
+    "tags": ["React", "PokéAPI", "Axios", "CSS", "LocalStorage"],
+    "github": "https://github.com/Jackmaa/PokeAPIGame",
+    "demo": null,
+    "image": null,
+    "highlights": [
+      "Pokédex avec 1000+ Pokémon (PokéAPI)",
+      "Recherche avec autocomplétion et navigation clavier",
+      "Système de combat tour par tour",
+      "Calculs de dégâts avec efficacité des types",
+      "Toggle shiny avec sprites animés",
+      "Chaînes d'évolution interactives"
+    ]
+  }
+]

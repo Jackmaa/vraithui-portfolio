@@ -1,6 +1,7 @@
 <template>
   <div
     class="h-screen w-full grid"
+    :class="showingIntro ? 'intro-mode' : ''"
     style="grid-template-rows: 48px 1fr 28px; grid-template-columns: 240px 1fr"
   >
     <!-- Command Palette (flottante, on/off) -->
@@ -10,10 +11,12 @@
       @close="paletteOpen = false"
       @command="handleCmd"
     />
-    <!-- Header = zone ‘Cursor’ / quick actions -->
+
+    <!-- Header = zone 'Cursor' / quick actions -->
     <header
+      v-show="!showingIntro"
       class="col-span-2 flex items-center gap-3 px-4 border-b"
-      style="border-color: var(--border)"
+      style="border-color: rgb(var(--border))"
     >
       <button class="btn btn-ghost btn-sm" @click="paletteOpen = true">
         ⌘K
@@ -25,52 +28,54 @@
     </header>
 
     <!-- Explorer -->
-    <aside class="border-r overflow-auto" style="border-color: var(--border)">
+    <aside
+      v-show="!showingIntro"
+      class="border-r overflow-hidden"
+      style="border-color: rgb(var(--border))"
+    >
       <NvimExplorer :files="files" @open="open" />
     </aside>
 
     <!-- Éditeur + Tabline -->
-    <main class="relative overflow-hidden">
+    <main
+      class="relative overflow-hidden"
+      :class="showingIntro ? 'col-span-2' : ''"
+    >
       <NvimTabline
+        v-show="!showingIntro"
         :tabs="tabs"
         :active="active"
         @close="close"
         @select="active = $event"
       />
-      <section
-        class="h-[calc(100%-2rem)] p-6 overflow-auto text-[rgb(var(--fg))]"
+
+      <!-- Zone de contenu avec CustomScrollbar -->
+      <CustomScrollbar
+        :height="showingIntro ? '100vh' : 'calc(100% - 2rem)'"
+        :thumbMinSize="40"
+        class="bg-[rgb(var(--bg))]"
       >
-        <component :is="activeTab?.component || 'div'" />
-      </section>
+        <div class="p-6 text-[rgb(var(--fg))]">
+          <component :is="activeTab?.component || 'div'" />
+        </div>
+      </CustomScrollbar>
 
       <!-- Console flottante (⌘J) -->
       <VraithConsole
         v-if="consoleOpen"
         class="absolute bottom-0 left-0 right-0"
-        :commands="[
-          { name: 'help', desc: 'Afficher l’aide' },
-          { name: 'theme list', desc: 'Lister les thèmes' },
-          ...themeNames.map((t) => ({
-            name: `theme set ${t}`,
-            desc: `Thème: ${t}`,
-          })),
-          { name: 'open home', desc: 'Ouvrir: home' },
-          { name: 'open about', desc: 'Ouvrir: about' },
-          { name: 'open projects', desc: 'Ouvrir: projects' },
-          { name: 'open github', desc: 'Ouvrir: github' },
-          { name: 'ascii vraith', desc: 'ASCII secret' },
-          { name: 'roll', desc: 'Lancer un d20' },
-        ]"
+        :commands="consoleCommands"
         @close="consoleOpen = false"
       />
     </main>
 
     <!-- Statusline -->
-    <footer>
+    <footer v-show="!showingIntro" class="col-span-2">
       <NvimStatusline :mode="mode" :file="activeTab?.label" :git="'main'" />
     </footer>
   </div>
 </template>
+
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import files from "@/data/files.json";
@@ -79,14 +84,28 @@ import NvimStatusline from "../components/NvimStatusline.vue";
 import NvimExplorer from "../components/NvimExplorer.vue";
 import CommandPalette from "../components/CommandPalette.vue";
 import VraithConsole from "../components/VraithConsole.vue";
+import CustomScrollbar from "../components/CustomScrollbar.vue";
+import AboutMe from "../sections/AboutMe.vue";
+import Projects from "../sections/Projects.vue";
+import Home from "../sections/Home.vue";
+
+const componentsMap = {
+  AboutMe,
+  Projects,
+  Home,
+};
 
 const tabs = ref([]);
 const active = ref(null);
+const introCompleted = ref(false);
+const showingIntro = computed(
+  () => !introCompleted.value && active.value === "home"
+);
 const paletteOpen = ref(false);
 const consoleOpen = ref(false);
 const mode = ref("NORMAL");
 
-// 👉 liste des thèmes dispos (ajoute/enlève librement)
+// Liste des thèmes dispos
 const themeNames = [
   "cyberpunk",
   "luxury",
@@ -105,20 +124,35 @@ const themeNames = [
   "lush-merlot",
 ];
 
-// commandes exposées à la palette
+// Commandes pour la console
+const consoleCommands = computed(() => [
+  { name: "help", desc: "Afficher l'aide" },
+  { name: "theme list", desc: "Lister les thèmes" },
+  ...themeNames.map((t) => ({
+    name: `theme set ${t}`,
+    desc: `Thème: ${t}`,
+  })),
+  { name: "open home", desc: "Ouvrir: home" },
+  { name: "open about", desc: "Ouvrir: about" },
+  { name: "open projects", desc: "Ouvrir: projects" },
+  { name: "open github", desc: "Ouvrir: github" },
+  { name: "ascii vraith", desc: "ASCII secret" },
+  { name: "roll", desc: "Lancer un d20" },
+  { name: "clear", desc: "Effacer la console" },
+  { name: "exit", desc: "Fermer la console" },
+]);
+
+// Commandes exposées à la palette
 const paletteCommands = [
-  // open
   ...["home", "about", "projects", "github"].map((n) => ({
     name: `open ${n}`,
     desc: `Ouvrir: ${n}`,
   })),
   { name: "theme list", desc: "Lister les thèmes" },
-  // theme set <...>
   ...themeNames.map((t) => ({
     name: `theme set ${t}`,
     desc: `Thème: ${t}`,
   })),
-
   { name: "help", desc: "Aide palette" },
 ];
 
@@ -126,11 +160,20 @@ function open(f) {
   if (!tabs.value.find((t) => t.id === f.id)) tabs.value.push(f);
   active.value = f.id;
 }
+
 function close(id) {
   tabs.value = tabs.value.filter((t) => t.id !== id);
   if (active.value === id) active.value = tabs.value.at(-1)?.id || null;
 }
-const activeTab = computed(() => tabs.value.find((t) => t.id === active.value));
+
+const activeTab = computed(() => {
+  const tab = tabs.value.find((t) => t.id === active.value);
+  if (!tab) return null;
+  return {
+    ...tab,
+    component: componentsMap[tab.component] || "div",
+  };
+});
 
 function setTheme(name) {
   if (!themeNames.includes(name)) return false;
@@ -138,7 +181,6 @@ function setTheme(name) {
   return true;
 }
 
-// thème toggle (entre cyberpunk et luxury par ex.)
 function toggleTheme() {
   const root = document.documentElement;
   const order = ["cyberpunk", "luxury", "brand", "neutral", "brand-dark"];
@@ -147,7 +189,6 @@ function toggleTheme() {
 }
 
 function handleCmd(cmd) {
-  // open <file>
   let m;
   if ((m = cmd.match(/^open\s+(home|about|projects|github)$/i))) {
     const id = m[1].toLowerCase();
@@ -155,17 +196,14 @@ function handleCmd(cmd) {
     if (f) open(f);
     return;
   }
-  // theme set <name>
   if ((m = cmd.match(/^theme\s+set\s+([a-z0-9\-]+)$/i))) {
     const ok = setTheme(m[1].toLowerCase());
     if (!ok) console.warn("Unknown theme:", m[1]);
     return;
   }
-  // theme list → affiche dans la console si ouverte, sinon log
   if (/^theme\s+list$/i.test(cmd)) {
     const list = `Themes: ${themeNames.join(", ")}`;
     if (!consoleOpen.value) console.log(list);
-    // propage à la console pour affichage
     window.dispatchEvent(
       new CustomEvent("vraith-console-print", { detail: list })
     );
@@ -177,8 +215,21 @@ function handleCmd(cmd) {
   }
 }
 
-// raccourcis
 onMounted(() => {
+  // Vérifier si l'intro a déjà été complétée
+  const hasCompletedIntro = localStorage.getItem("vraith-intro-completed");
+  introCompleted.value = hasCompletedIntro === "true";
+
+  // Si l'intro n'est pas complétée, ouvrir Home automatiquement
+  if (!introCompleted.value) {
+    const homeFile = files.find((f) => f.id === "home");
+    if (homeFile) open(homeFile);
+  } else {
+    // Sinon, ouvrir About par défaut
+    const aboutFile = files.find((f) => f.id === "about");
+    if (aboutFile) open(aboutFile);
+  }
+
   window.addEventListener("keydown", (e) => {
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
       e.preventDefault();
@@ -199,10 +250,9 @@ onMounted(() => {
     const f = files.find((x) => x.id === id);
     if (!f) return console.warn(`[console] fichier introuvable: ${id}`);
 
-    open(f); // ouvre (ou focus) l’onglet
+    open(f);
   });
 
-  // (bonus) répondre à `theme list` demandé par la console
   window.addEventListener("theme-list-request", () => {
     window.dispatchEvent(
       new CustomEvent("vraith-console-print", {
@@ -210,5 +260,29 @@ onMounted(() => {
       })
     );
   });
+
+  // Écouter la fin de l'intro pour fermer Home et ouvrir About
+  window.addEventListener("intro-complete", () => {
+    introCompleted.value = true;
+
+    // Fermer l'onglet Home
+    const homeTab = tabs.value.find((t) => t.id === "home");
+    if (homeTab) {
+      close("home");
+    }
+
+    // Ouvrir About
+    const aboutFile = files.find((f) => f.id === "about");
+    if (aboutFile) {
+      open(aboutFile);
+    }
+  });
 });
 </script>
+
+<style scoped>
+.intro-mode {
+  grid-template-rows: 1fr !important;
+  grid-template-columns: 1fr !important;
+}
+</style>

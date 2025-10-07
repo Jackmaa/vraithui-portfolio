@@ -452,7 +452,7 @@
 
 /* ===== 2) Base UX pour éviter les sauts de layout ===== */
 html {
-  scrollbar-gutter: stable both-edges;
+  scrollbar-gutter: none;
 }
 
 /* ===== 3) Utilitaire : applique un scrollbar themé uniquement où tu veux ===== */
