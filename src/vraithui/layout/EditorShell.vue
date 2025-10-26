@@ -53,6 +53,9 @@
       <CustomScrollbar
         :height="showingIntro ? '100vh' : 'calc(100% - 2rem)'"
         :thumbMinSize="40"
+        :key="active"
+        v-model="currentScrollPosition"
+        @scroll="handleScroll"
         class="bg-[rgb(var(--bg))]"
       >
         <div class="p-6 text-[rgb(var(--fg))]">
@@ -101,6 +104,7 @@ const introCompleted = ref(false);
 const showingIntro = computed(
   () => !introCompleted.value && active.value === "home"
 );
+const scrollPositions = ref({}); // Mémoriser les positions de scroll par section
 const paletteOpen = ref(false);
 const consoleOpen = ref(false);
 const mode = ref("NORMAL");
@@ -174,6 +178,22 @@ const activeTab = computed(() => {
     component: componentsMap[tab.component] || "div",
   };
 });
+
+// Position de scroll actuelle (liée à la section active)
+const currentScrollPosition = computed({
+  get: () => scrollPositions.value[active.value] || 0,
+  set: (val) => {
+    if (active.value) {
+      scrollPositions.value[active.value] = val;
+    }
+  },
+});
+
+function handleScroll(position) {
+  if (active.value) {
+    scrollPositions.value[active.value] = position;
+  }
+}
 
 function setTheme(name) {
   if (!themeNames.includes(name)) return false;

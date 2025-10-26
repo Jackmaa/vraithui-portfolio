@@ -9,6 +9,7 @@
     "github": "https://github.com/Jackmaa/CRM-Forma",
     "demo": null,
     "image": null,
+    "video": null,
     "highlights": [
       "Architecture hybride Symfony + Vue.js",
       "Génération automatique de documents (devis, factures, attestations)",
@@ -28,13 +29,34 @@
     "github": "https://github.com/Jackmaa/vraithui-portfolio",
     "demo": null,
     "image": null,
+    "video": null,
     "highlights": [
       "15+ thèmes dynamiques premium",
       "Command Palette (⌘K) avec fuzzy search",
       "Console intégrée avec easter eggs",
       "Custom scrollbar draggable",
       "Markdown parser custom pour contenu",
-      "Architecture modulaire inspirée IDE"
+      "Mini-jeu d'introduction avec Matrix rain"
+    ]
+  },
+  {
+    "id": "bakery-app",
+    "name": "Bakery App",
+    "description": "Application e-commerce moderne pour boulangerie avec système de commandes en ligne, gestion de stock, QR codes pour validation des commandes, et dashboard administrateur complet.",
+    "status": "completed",
+    "year": 2024,
+    "tags": ["Next.js 16", "TypeScript", "Prisma", "NextAuth", "TailwindCSS"],
+    "github": "https://github.com/Jackmaa/bakery-app",
+    "demo": null,
+    "image": null,
+    "video": null,
+    "highlights": [
+      "E-commerce complet avec panier intelligent",
+      "Authentification NextAuth (Google OAuth + credentials)",
+      "Système QR code pour validation de commandes",
+      "Dashboard admin avec statistiques en temps réel",
+      "Gestion de stock automatisée",
+      "Notifications email avec QR codes"
     ]
   },
   {
@@ -46,7 +68,8 @@
     "tags": ["PHP", "MVC", "REST API", "GSAP", "AltoRouter"],
     "github": "https://github.com/Jackmaa/nihon-ECF-3",
     "demo": null,
-    "image": null,
+    "image": "projects/nihon.png",
+    "video": "projects/nihon.mp4",
     "highlights": [
       "Lead developer - gestion d'équipe (3 personnes)",
       "Architecture MVC personnalisée",
@@ -66,6 +89,7 @@
     "github": "https://github.com/Jackmaa/PokeAPIGame",
     "demo": null,
     "image": null,
+    "video": null,
     "highlights": [
       "Pokédex avec 1000+ Pokémon (PokéAPI)",
       "Recherche avec autocomplétion et navigation clavier",

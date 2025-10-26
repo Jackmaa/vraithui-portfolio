@@ -66,7 +66,7 @@ Envie de collaborer sur un projet ? Discutons-en !
 
 **Email:** valeentingillot@gmail.com
 **GitHub:** github.com/Jackmaa  
-**LinkedIn:** linkedin.com/in/vraith
+**LinkedIn:** linkedin.com/in/valentin-gillot
 
 ---
 

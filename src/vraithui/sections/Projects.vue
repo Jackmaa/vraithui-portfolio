@@ -59,8 +59,8 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
-import ProjectCard from "../sections/ProjectCard.vue";
+import { ref, computed, onMounted, nextTick } from "vue";
+import ProjectCard from "./ProjectCard.vue";
 
 const projects = ref([]);
 const loading = ref(true);
@@ -86,6 +86,10 @@ onMounted(async () => {
 
     projects.value = await response.json();
     loading.value = false;
+
+    // Force un re-sync de la scrollbar après le rendu
+    await nextTick();
+    window.dispatchEvent(new Event("resize"));
   } catch (err) {
     error.value = err.message;
     loading.value = false;
@@ -96,6 +100,7 @@ onMounted(async () => {
 <style scoped>
 .projects-container {
   animation: fadeIn 0.5s ease-in-out;
+  padding-block: 1rem;
 }
 
 .projects-grid {

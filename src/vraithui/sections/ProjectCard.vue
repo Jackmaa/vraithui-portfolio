@@ -13,27 +13,53 @@
       </span>
     </div>
 
-    <!-- Image placeholder ou vraie image -->
+    <!-- Image/Video container -->
     <div
-      class="image-container relative h-40 bg-[rgb(var(--panel))] overflow-hidden"
+      class="image-container relative h-40 bg-[rgb(var(--panel))] overflow-hidden cursor-pointer"
+      @click="openLightbox"
+      @mouseenter="playVideo"
+      @mouseleave="pauseVideo"
     >
+      <!-- Placeholder si pas d'image -->
       <div
         v-if="!project.image"
         class="w-full h-full flex items-center justify-center text-4xl opacity-20 font-bold"
       >
         {{ project.name.charAt(0) }}
       </div>
+
+      <!-- Image statique -->
       <img
-        v-else
+        v-if="project.image"
         :src="project.image"
         :alt="project.name"
-        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+        class="static-image w-full h-full object-cover transition-all duration-300"
+        :class="{ 'opacity-0': isVideoPlaying && project.video }"
         @error="handleImageError"
       />
+
+      <!-- Vidéo/GIF (apparaît au hover) -->
+      <video
+        v-if="project.video"
+        ref="videoRef"
+        :src="project.video"
+        class="video-preview absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
+        :class="{ 'opacity-100': isVideoPlaying, 'opacity-0': !isVideoPlaying }"
+        loop
+        muted
+        playsinline
+      />
+
       <!-- Overlay gradient au hover -->
       <div
-        class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-      ></div>
+        class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+      >
+        <div
+          class="text-white text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100"
+        >
+          🔍 Click to expand
+        </div>
+      </div>
     </div>
 
     <!-- Content -->
@@ -128,10 +154,62 @@
     <!-- Glow effect au hover -->
     <div class="glow-border"></div>
   </article>
+
+  <!-- Lightbox Modal -->
+  <Teleport to="body">
+    <div
+      v-if="lightboxOpen"
+      class="lightbox-overlay fixed inset-0 z-[9999] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4"
+      @click.self="closeLightbox"
+    >
+      <!-- Close button -->
+      <button
+        @click="closeLightbox"
+        class="absolute top-4 right-4 text-white/70 hover:text-white text-3xl font-light transition-colors"
+        aria-label="Close lightbox"
+      >
+        ×
+      </button>
+
+      <!-- Project name -->
+      <div class="absolute top-4 left-4 text-white">
+        <h3 class="text-xl font-bold">{{ project.name }}</h3>
+        <p class="text-sm opacity-70">{{ project.year }}</p>
+      </div>
+
+      <!-- Content -->
+      <div class="max-w-6xl max-h-[90vh] relative">
+        <!-- Image -->
+        <img
+          v-if="project.image && !project.video"
+          :src="project.image"
+          :alt="project.name"
+          class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
+        />
+
+        <!-- Video -->
+        <video
+          v-else-if="project.video"
+          :src="project.video"
+          class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
+          controls
+          autoplay
+          loop
+        />
+
+        <!-- Navigation hint -->
+        <div
+          class="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/50 text-sm"
+        >
+          Press ESC or click outside to close
+        </div>
+      </div>
+    </div>
+  </Teleport>
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 
 const props = defineProps({
   project: {
@@ -139,6 +217,10 @@ const props = defineProps({
     required: true,
   },
 });
+
+const videoRef = ref(null);
+const isVideoPlaying = ref(false);
+const lightboxOpen = ref(false);
 
 const statusClass = computed(() => {
   switch (props.project.status) {
@@ -179,9 +261,51 @@ const statusLabel = computed(() => {
   }
 });
 
+function playVideo() {
+  if (props.project.video && videoRef.value) {
+    videoRef.value.play();
+    isVideoPlaying.value = true;
+  }
+}
+
+function pauseVideo() {
+  if (props.project.video && videoRef.value) {
+    videoRef.value.pause();
+    videoRef.value.currentTime = 0;
+    isVideoPlaying.value = false;
+  }
+}
+
+function openLightbox() {
+  if (props.project.image || props.project.video) {
+    lightboxOpen.value = true;
+    document.body.style.overflow = "hidden";
+  }
+}
+
+function closeLightbox() {
+  lightboxOpen.value = false;
+  document.body.style.overflow = "";
+}
+
 function handleImageError(e) {
   e.target.style.display = "none";
 }
+
+// ESC pour fermer la lightbox
+onMounted(() => {
+  const handleEsc = (e) => {
+    if (e.key === "Escape" && lightboxOpen.value) {
+      closeLightbox();
+    }
+  };
+  window.addEventListener("keydown", handleEsc);
+
+  onBeforeUnmount(() => {
+    window.removeEventListener("keydown", handleEsc);
+    document.body.style.overflow = "";
+  });
+});
 </script>
 
 <style scoped>
@@ -246,5 +370,44 @@ details summary::-webkit-details-marker {
 
 details[open] summary {
   color: rgb(var(--accent));
+}
+
+/* Lightbox animations */
+.lightbox-overlay {
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.lightbox-overlay img,
+.lightbox-overlay video {
+  animation: scaleIn 0.3s ease-out;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Video hover effect */
+.video-preview {
+  pointer-events: none;
+}
+
+.static-image {
+  transition: opacity 0.3s ease;
 }
 </style>
