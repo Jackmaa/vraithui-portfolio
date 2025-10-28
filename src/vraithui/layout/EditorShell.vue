@@ -91,11 +91,13 @@ import CustomScrollbar from "../components/CustomScrollbar.vue";
 import AboutMe from "../sections/AboutMe.vue";
 import Projects from "../sections/Projects.vue";
 import Home from "../sections/Home.vue";
+import Contact from "../sections/Contact.vue";
 
 const componentsMap = {
   AboutMe,
   Projects,
   Home,
+  Contact,
 };
 
 const tabs = ref([]);
@@ -144,11 +146,12 @@ const consoleCommands = computed(() => [
   { name: "roll", desc: "Lancer un d20" },
   { name: "clear", desc: "Effacer la console" },
   { name: "exit", desc: "Fermer la console" },
+  { name: "open contact", desc: "Ouvrir: contact" },
 ]);
 
 // Commandes exposées à la palette
 const paletteCommands = [
-  ...["home", "about", "projects", "github"].map((n) => ({
+  ...["home", "about", "projects", "contact", "github"].map((n) => ({
     name: `open ${n}`,
     desc: `Ouvrir: ${n}`,
   })),

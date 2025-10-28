@@ -15,6 +15,11 @@
     "component": "Projects"
   },
   {
+    "id": "contact",
+    "label": "contact.vue",
+    "component": "Contact"
+  },
+  {
     "id": "github",
     "label": "github.md",
     "component": "div"

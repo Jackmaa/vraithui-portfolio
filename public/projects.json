@@ -8,8 +8,8 @@
     "tags": ["Symfony", "Vue.js", "PostgreSQL", "TailwindCSS", "JWT"],
     "github": "https://github.com/Jackmaa/CRM-Forma",
     "demo": null,
-    "image": null,
-    "video": null,
+    "image": "projects/CRM-Forma.webp",
+    "video": "projects/CRM-Forma.mp4",
     "highlights": [
       "Architecture hybride Symfony + Vue.js",
       "Génération automatique de documents (devis, factures, attestations)",
@@ -48,8 +48,8 @@
     "tags": ["Next.js 16", "TypeScript", "Prisma", "NextAuth", "TailwindCSS"],
     "github": "https://github.com/Jackmaa/bakery-app",
     "demo": null,
-    "image": null,
-    "video": null,
+    "image": "projects/bakery-app.png",
+    "video": "projects/bakery-app.mp4",
     "highlights": [
       "E-commerce complet avec panier intelligent",
       "Authentification NextAuth (Google OAuth + credentials)",
@@ -88,8 +88,8 @@
     "tags": ["React", "PokéAPI", "Axios", "CSS", "LocalStorage"],
     "github": "https://github.com/Jackmaa/PokeAPIGame",
     "demo": null,
-    "image": null,
-    "video": null,
+    "image": "projects/PokeBattle.png",
+    "video": "projects/PokeBattle.mp4",
     "highlights": [
       "Pokédex avec 1000+ Pokémon (PokéAPI)",
       "Recherche avec autocomplétion et navigation clavier",
