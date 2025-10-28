@@ -1,7 +1,6 @@
 <template>
   <div class="about-container font-mono text-sm">
     <!-- Frontmatter (métadonnées en haut) -->
-
     <div
       v-if="frontmatter"
       class="frontmatter mb-8 p-4 rounded-lg border border-[rgb(var(--border))] bg-[rgb(var(--panel))]"
@@ -22,12 +21,14 @@
     </div>
 
     <div v-else-if="error" class="text-red-400">Error: {{ error }}</div>
+
     <div v-else class="markdown-content space-y-6" v-html="htmlContent"></div>
   </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
+
 const frontmatter = ref(null);
 const markdownContent = ref("");
 const loading = ref(true);
@@ -48,18 +49,20 @@ function parseMarkdownToHTML(md) {
   while (i < lines.length) {
     const line = lines[i];
 
-    // Headers H1
+    // Headers H1 avec glitch
     if (line.startsWith("# ")) {
-      html += `<h1 class="text-4xl font-bold mb-4 text-[rgb(var(--accent))] glow-text">${parseInline(
-        line.slice(2)
-      )}</h1>`;
+      const text = line.slice(2).trim();
+      html += `<h1 class="glitch-title text-4xl font-bold mb-4 text-[rgb(var(--accent))] glow-text" data-text="${escapeHtml(
+        text
+      )}">${parseInline(text)}</h1>`;
       i++;
     }
-    // Headers H2
+    // Headers H2 avec glitch
     else if (line.startsWith("## ")) {
-      html += `<h2 class="text-2xl font-bold mt-8 mb-3 text-[rgb(var(--fg))] border-l-4 border-[rgb(var(--accent))] pl-3">${parseInline(
-        line.slice(3)
-      )}</h2>`;
+      const text = line.slice(3).trim();
+      html += `<h2 class="glitch-title text-2xl font-bold mt-8 mb-3 text-[rgb(var(--fg))] border-l-4 border-[rgb(var(--accent))] pl-3" data-text="${escapeHtml(
+        text
+      )}">${parseInline(text)}</h2>`;
       i++;
     }
     // Headers H3
@@ -152,6 +155,16 @@ function parseInline(text) {
   );
 
   return result;
+}
+
+// Escape HTML pour data-text attribute
+function escapeHtml(text) {
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
 // Extraire le frontmatter YAML
@@ -250,6 +263,141 @@ onMounted(async () => {
 
 /* Styles pour le contenu HTML injecté */
 .markdown-content :deep(a:hover) {
+  text-shadow: 0 0 10px rgba(var(--accent), 0.5);
+}
+
+/* === GLITCH EFFECT sur les titres H1 et H2 === */
+.markdown-content :deep(.glitch-title) {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+.markdown-content :deep(.glitch-title:hover)::before,
+.markdown-content :deep(.glitch-title:hover)::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Layer rouge (décalage gauche) */
+.markdown-content :deep(.glitch-title:hover)::before {
+  left: 2px;
+  text-shadow: -2px 0 #ff00ff;
+  clip: rect(24px, 9999px, 90px, 0);
+  animation: glitch-anim-1 0.6s infinite linear alternate-reverse;
+}
+
+/* Layer cyan (décalage droit) */
+.markdown-content :deep(.glitch-title:hover)::after {
+  left: -2px;
+  text-shadow: -2px 0 #00ffff, 2px 2px #ff00ff;
+  clip: rect(85px, 9999px, 140px, 0);
+  animation: glitch-anim-2 0.6s infinite linear alternate-reverse;
+}
+
+/* Animations de glitch */
+@keyframes glitch-anim-1 {
+  0% {
+    clip: rect(132px, 9999px, 101px, 0);
+    transform: skew(0.1deg);
+  }
+  10% {
+    clip: rect(17px, 9999px, 94px, 0);
+    transform: skew(0.2deg);
+  }
+  20% {
+    clip: rect(40px, 9999px, 66px, 0);
+    transform: skew(0.3deg);
+  }
+  30% {
+    clip: rect(87px, 9999px, 82px, 0);
+    transform: skew(0.1deg);
+  }
+  40% {
+    clip: rect(137px, 9999px, 61px, 0);
+    transform: skew(0.2deg);
+  }
+  50% {
+    clip: rect(34px, 9999px, 14px, 0);
+    transform: skew(0.4deg);
+  }
+  60% {
+    clip: rect(121px, 9999px, 115px, 0);
+    transform: skew(0.2deg);
+  }
+  70% {
+    clip: rect(48px, 9999px, 78px, 0);
+    transform: skew(0.3deg);
+  }
+  80% {
+    clip: rect(78px, 9999px, 51px, 0);
+    transform: skew(0.1deg);
+  }
+  90% {
+    clip: rect(103px, 9999px, 46px, 0);
+    transform: skew(0.2deg);
+  }
+  100% {
+    clip: rect(84px, 9999px, 125px, 0);
+    transform: skew(0.3deg);
+  }
+}
+
+@keyframes glitch-anim-2 {
+  0% {
+    clip: rect(129px, 9999px, 36px, 0);
+    transform: skew(0.2deg);
+  }
+  10% {
+    clip: rect(36px, 9999px, 4px, 0);
+    transform: skew(0.3deg);
+  }
+  20% {
+    clip: rect(85px, 9999px, 66px, 0);
+    transform: skew(0.1deg);
+  }
+  30% {
+    clip: rect(91px, 9999px, 91px, 0);
+    transform: skew(0.4deg);
+  }
+  40% {
+    clip: rect(148px, 9999px, 138px, 0);
+    transform: skew(0.2deg);
+  }
+  50% {
+    clip: rect(38px, 9999px, 122px, 0);
+    transform: skew(0.3deg);
+  }
+  60% {
+    clip: rect(69px, 9999px, 54px, 0);
+    transform: skew(0.1deg);
+  }
+  70% {
+    clip: rect(98px, 9999px, 71px, 0);
+    transform: skew(0.2deg);
+  }
+  80% {
+    clip: rect(146px, 9999px, 34px, 0);
+    transform: skew(0.3deg);
+  }
+  90% {
+    clip: rect(134px, 9999px, 43px, 0);
+    transform: skew(0.1deg);
+  }
+  100% {
+    clip: rect(11px, 9999px, 108px, 0);
+    transform: skew(0.2deg);
+  }
+}
+
+/* Glow subtil pendant le glitch */
+.markdown-content :deep(.glitch-title:hover) {
   text-shadow: 0 0 10px rgba(var(--accent), 0.5);
 }
 </style>

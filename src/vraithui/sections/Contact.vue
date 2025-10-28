@@ -2,9 +2,10 @@
   <div class="contact-container font-mono">
     <!-- Header -->
     <div class="mb-8">
-      <h1 class="text-4xl font-bold text-[rgb(var(--accent))] glow-text mb-2">
-        Contact
-      </h1>
+      <GlitchText
+        text="Contact"
+        class="text-4xl font-bold text-[rgb(var(--accent))] glow-text mb-2"
+      />
       <p class="text-sm opacity-70">Let's build something amazing together</p>
     </div>
 
@@ -85,12 +86,12 @@
                 <div class="flex-1">
                   <div class="text-xs opacity-60">LinkedIn</div>
                   <a
-                    href="https://linkedin.com/in/valentin-gillot"
+                    href="https://linkedin.com/in/vraith"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="text-[rgb(var(--accent))] hover:underline"
                   >
-                    linkedin.com/in/valentin-gillot
+                    linkedin.com/in/vraith
                   </a>
                 </div>
               </div>
@@ -379,6 +380,7 @@
 
 <script setup>
 import { ref, reactive } from "vue";
+import GlitchText from "../effects/GlitchText.vue";
 
 const form = reactive({
   name: "",

@@ -4,6 +4,9 @@
     :class="showingIntro ? 'intro-mode' : ''"
     style="grid-template-rows: 48px 1fr 28px; grid-template-columns: 240px 1fr"
   >
+    <!-- Effets visuels -->
+    <ParticlesBackground />
+    <ScanlinesOverlay />
     <!-- Command Palette (flottante, on/off) -->
     <CommandPalette
       v-if="paletteOpen"
@@ -92,6 +95,8 @@ import AboutMe from "../sections/AboutMe.vue";
 import Projects from "../sections/Projects.vue";
 import Home from "../sections/Home.vue";
 import Contact from "../sections/Contact.vue";
+import ParticlesBackground from "../effects/ParticlesBackground.vue";
+import ScanlinesOverlay from "../effects/ScanlinesOverlay.vue";
 
 const componentsMap = {
   AboutMe,

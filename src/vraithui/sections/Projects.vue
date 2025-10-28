@@ -2,9 +2,10 @@
   <div class="projects-container font-mono">
     <!-- Header -->
     <div class="mb-8">
-      <h1 class="text-4xl font-bold text-[rgb(var(--accent))] glow-text mb-2">
-        Projects
-      </h1>
+      <GlitchText
+        text="Projects"
+        class="text-4xl font-bold text-[rgb(var(--accent))] glow-text mb-2"
+      />
       <p class="text-sm opacity-70">
         {{ projects.length }} projects · Filter by status or tech stack
       </p>
@@ -61,6 +62,7 @@
 <script setup>
 import { ref, computed, onMounted, nextTick } from "vue";
 import ProjectCard from "./ProjectCard.vue";
+import GlitchText from "../effects/GlitchText.vue";
 
 const projects = ref([]);
 const loading = ref(true);
