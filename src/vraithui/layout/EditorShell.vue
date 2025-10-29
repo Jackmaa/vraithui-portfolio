@@ -86,6 +86,7 @@
 import { ref, computed, onMounted } from "vue";
 import files from "@/data/files.json";
 import NvimTabline from "../components/NvimTabline.vue";
+import Github from "../sections/Github.vue";
 import NvimStatusline from "../components/NvimStatusline.vue";
 import NvimExplorer from "../components/NvimExplorer.vue";
 import CommandPalette from "../components/CommandPalette.vue";
@@ -103,6 +104,7 @@ const componentsMap = {
   Projects,
   Home,
   Contact,
+  Github,
 };
 
 const tabs = ref([]);
