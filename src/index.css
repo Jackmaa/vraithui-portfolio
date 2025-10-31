@@ -2,8 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+  overflow-x: hidden;
+}
+
 :root {
-  /* déjà présent : --bg, --fg, --panel, --accent, etc. */
+  /* déjà  présent : --bg, --fg, --panel, --accent, etc. */
   --mode-n: 99 102 241; /* Normal (indigo)    */
   --mode-i: 34 197 94; /* Insert (green)     */
   --mode-v: 244 114 182; /* Visual (pink)      */
@@ -25,15 +30,15 @@
   --wa: 245 158 11; /* warning */
   --er: 239 68 68; /* error */
 
-  /* VraithUI adapter (consommé par ton layout) */
+  /* VraithUI adapter (consommÃ© par ton layout) */
   --accent: var(--p);
-  --border: 0 0 0 / 0.07; /* léger pour fond clair */
+  --border: 0 0 0 / 0.07; /* lÃ©ger pour fond clair */
 
-  /* Panneaux (générés à partir du bg via color-mix pour rester cohérents) */
+  /* Panneaux (gÃ©nÃ©rÃ©s Ã  partir du bg via color-mix pour rester cohÃ©rents) */
   --panel: color-mix(in oklab, rgb(var(--bg)) 90%, rgb(0 0 0) 10%);
   --panel-2: color-mix(in oklab, rgb(var(--bg)) 82%, rgb(0 0 0) 18%);
 
-  /* Modes Vim : on garde une cohérence chromatique */
+  /* Modes Vim : on garde une cohÃ©rence chromatique */
   --mode-n: var(--p);
   --mode-i: 34 197 94; /* green 500 */
   --mode-v: 244 114 182; /* pink 400 */
@@ -67,7 +72,7 @@
   --mode-r: 239 68 68;
 }
 
-/* CYBERPUNK (sombre) — déjà présent, j’ajoute les alias daisy */
+/* CYBERPUNK (sombre) */
 [data-theme="cyberpunk"] {
   --bg: 3 7 18;
   --fg: 216 233 255;
@@ -87,7 +92,7 @@
   --sc: 0 0 0;
 }
 
-/* LUXURY (sombre) — déjà présent, j’ajoute les alias daisy */
+/* LUXURY (sombre) */
 [data-theme="luxury"] {
   --bg: 10 10 12;
   --fg: 232 232 236;
@@ -103,22 +108,22 @@
   /* alias daisy */
   --p: var(--accent);
   --pc: 0 0 0;
-  --s: 217 119 6; /* amber 600 (plus chaud que l’accent) */
+  --s: 217 119 6; /* amber 600 (plus chaud que lâ€™accent) */
   --sc: 0 0 0;
 }
 
 /* ========== BRAND (sombre) ========== */
 [data-theme="brand-dark"] {
-  /* VraithUI — surfaces & texte */
-  --bg: 12 14 18; /* fond principal très sombre */
+  /* VraithUI â€” surfaces & texte */
+  --bg: 12 14 18; /* fond principal trÃ¨s sombre */
   --fg: 232 236 244; /* texte principal */
   /* panneaux (surfaces) */
   --panel: 18 22 28; /* surface 1 */
   --panel-2: 24 28 36; /* surface 2 / barres */
-  --border: 255 255 255 / 0.07; /* séparateurs discrets */
+  --border: 255 255 255 / 0.07; /* sÃ©parateurs discrets */
   --scroll-track: 18 22 28;
   --scroll-thumb: 234 88 12;
-  /* accent “brand” (orange 600-ish) */
+  /* accent â€œbrandâ€ (orange 600-ish) */
   --accent: 234 88 12;
 
   /* modes Vim */
@@ -139,7 +144,7 @@
   --er: 239 68 68; /* error */
 }
 
-/* (Optionnel) surfaces auto en color-mix si tu préfères dériver des panels depuis le bg */
+/* (Optionnel) surfaces auto en color-mix si tu prÃ©fÃ¨res dÃ©river des panels depuis le bg */
 [data-theme="brand-dark"] {
   --panel: color-mix(in oklab, rgb(var(--bg)) 85%, rgb(255 255 255) 15%);
   --panel-2: color-mix(in oklab, rgb(var(--bg)) 78%, rgb(255 255 255) 22%);
@@ -171,6 +176,10 @@
   --mode-i: 34 197 94;
   --mode-v: 244 114 182;
   --mode-r: 239 68 68;
+  --p: var(--accent);
+  --pc: 112 28 28;
+  --s: 112 28 28;
+  --sc: 240 173 214;
 }
 
 [data-theme="bordeaux-silk"] {
@@ -184,6 +193,10 @@
   --mode-i: 34 197 94;
   --mode-v: 244 114 182;
   --mode-r: 239 68 68;
+  --p: var(--accent);
+  --pc: 80 34 45;
+  --s: 80 34 45;
+  --sc: 196 195 208;
 }
 
 [data-theme="regal-gold"] {
@@ -197,6 +210,10 @@
   --mode-i: 132 204 22;
   --mode-v: 236 72 153;
   --mode-r: 239 68 68;
+  --p: var(--accent);
+  --pc: 0 0 0;
+  --s: 53 56 57;
+  --sc: 255 215 0;
 }
 
 [data-theme="velvet-indigo"] {
@@ -210,11 +227,15 @@
   --mode-i: 34 197 94;
   --mode-v: 244 114 182;
   --mode-r: 239 68 68;
+  --p: var(--accent);
+  --pc: 75 0 130;
+  --s: 75 0 130;
+  --sc: 229 228 226;
 }
 
 [data-theme="deep-jungle"] {
-  --bg: 7 85 59; /* #07553B */
-  --fg: 206 212 106; /* #CED46A */
+  --bg: 7 85 59; /* #07553B Deep Jungle */
+  --fg: 206 212 106; /* #CED46A Light Olive */
   --panel: 5 65 45;
   --panel-2: 3 45 30;
   --border: 255 255 255 / 0.05;
@@ -223,6 +244,10 @@
   --mode-i: 132 204 22;
   --mode-v: 244 114 182;
   --mode-r: 239 68 68;
+  --p: var(--accent);
+  --pc: 7 85 59;
+  --s: 7 85 59;
+  --sc: 206 212 106;
 }
 
 [data-theme="crimson-peach"] {
@@ -236,11 +261,15 @@
   --mode-i: 132 204 22;
   --mode-v: 244 114 182;
   --mode-r: 239 68 68;
+  --p: var(--accent);
+  --pc: 164 25 61;
+  --s: 164 25 61;
+  --sc: 255 223 185;
 }
 
 [data-theme="imperial-blue"] {
-  --bg: 0 35 102; /* #002366 */
-  --fg: 192 8 129; /* #C00881 Rose */
+  --bg: 0 35 102; /* #002366 Imperial Blue */
+  --fg: 192 8 129; /* #C00881 Vintage Rose */
   --panel: 0 28 82;
   --panel-2: 0 20 60;
   --border: 255 255 255 / 0.06;
@@ -249,11 +278,51 @@
   --mode-i: 132 204 22;
   --mode-v: 244 114 182;
   --mode-r: 239 68 68;
+  --p: var(--accent);
+  --pc: 255 255 255;
+  --s: 0 35 102;
+  --sc: 255 255 255;
+}
+
+/* ========== OXFORD MAIZE ========== */
+[data-theme="oxford-maize"] {
+  --bg: 10 23 78; /* #0A174E Oxford Blue */
+  --fg: 245 208 66; /* #F5D042 Maize */
+  --panel: 15 30 90;
+  --panel-2: 20 35 100;
+  --border: 255 255 255 / 0.06;
+  --accent: 245 208 66;
+  --mode-n: var(--accent);
+  --mode-i: 34 197 94;
+  --mode-v: 244 114 182;
+  --mode-r: 239 68 68;
+  --p: var(--accent);
+  --pc: 10 23 78;
+  --s: 10 23 78;
+  --sc: 245 208 66;
+}
+
+/* ========== RICH BLACK + VIVID YELLOW ========== */
+[data-theme="rich-black"] {
+  --bg: 16 24 32; /* #101820 Rich Black */
+  --fg: 254 231 21; /* #FEE715 Vivid Yellow */
+  --panel: 20 30 40;
+  --panel-2: 25 35 45;
+  --border: 255 255 255 / 0.06;
+  --accent: 254 231 21;
+  --mode-n: var(--accent);
+  --mode-i: 34 197 94;
+  --mode-v: 244 114 182;
+  --mode-r: 239 68 68;
+  --p: var(--accent);
+  --pc: 0 0 0;
+  --s: 16 24 32;
+  --sc: 254 231 21;
 }
 
 [data-theme="mystic-jade"] {
-  --bg: 119 168 168; /* #77A8A8 */
-  --fg: 126 124 206; /* #7E7CE Pale White (grisé) */
+  --bg: 119 168 168; /* #77A8A8 Mystic Jade */
+  --fg: 126 124 206; /* #7E7CCE Pale Violet */
   --panel: 100 140 140;
   --panel-2: 80 110 110;
   --border: 255 255 255 / 0.08;
@@ -262,6 +331,10 @@
   --mode-i: 34 197 94;
   --mode-v: 244 114 182;
   --mode-r: 239 68 68;
+  --p: var(--accent);
+  --pc: 255 255 255;
+  --s: 119 168 168;
+  --sc: 0 0 0;
 }
 
 [data-theme="lush-merlot"] {
@@ -275,17 +348,21 @@
   --mode-i: 132 204 22;
   --mode-v: 244 114 182;
   --mode-r: 239 68 68;
+  --p: var(--accent);
+  --pc: 115 0 0;
+  --s: 115 0 0;
+  --sc: 197 168 128;
 }
 
-/* ===== 1) Variables scrollbar dérivées du thème ===== */
+/* ===== 1) Variables scrollbar dÃ©rivÃ©es du thÃ¨me ===== */
 :root,
 [data-theme] {
-  /* Fallbacks si un thème ne définit pas ces variables */
+  /* Fallbacks si un thÃ¨me ne dÃ©finit pas ces variables */
   --panel: 24 24 29;
   --panel-2: 18 18 22;
   --accent: 0 255 255;
 
-  /* Couleurs scrollbar dérivées */
+  /* Couleurs scrollbar dÃ©rivÃ©es */
   --scroll-track: color-mix(in oklab, rgb(var(--panel)) 88%, rgb(0 0 0) 12%);
   --scroll-thumb: color-mix(
     in oklab,
@@ -304,7 +381,7 @@
   );
 }
 
-/* Option: tu peux affiner par thème si besoin
+/* Option: tu peux affiner par thÃ¨me si besoin
 
 */
 
@@ -328,7 +405,7 @@
   background: transparent;
 }
 
-/* ===== Thèmes fixes ===== */
+/* ===== ThÃ¨mes fixes ===== */
 
 /* Cyberpunk sombre */
 [data-theme="cyberpunk"] .scroll-theme::-webkit-scrollbar-track {
@@ -383,7 +460,7 @@
   background: rgb(82, 20, 20);
 }
 [data-theme="persian-plum"] .scroll-theme::-webkit-scrollbar-thumb {
-  background: rgb(240, 173, 214); /* ivory quartz rosé */
+  background: rgb(240, 173, 214); /* ivory quartz rosÃ© */
 }
 
 /* Bordeaux Silk */
@@ -450,13 +527,29 @@
   background: rgb(197, 168, 128); /* gold doux */
 }
 
-/* ===== 2) Base UX pour éviter les sauts de layout ===== */
-html {
-  scrollbar-gutter: none;
+/* Oxford Maize */
+[data-theme="oxford-maize"] .scroll-theme::-webkit-scrollbar-track {
+  background: rgb(15, 30, 90);
+}
+[data-theme="oxford-maize"] .scroll-theme::-webkit-scrollbar-thumb {
+  background: rgb(245, 208, 66); /* maize */
 }
 
-/* ===== 3) Utilitaire : applique un scrollbar themé uniquement où tu veux ===== */
-/* Mets la classe .scroll-theme sur les zones scrollables (nav, sidebars, editors…) */
+/* Rich Black */
+[data-theme="rich-black"] .scroll-theme::-webkit-scrollbar-track {
+  background: rgb(20, 30, 40);
+}
+[data-theme="rich-black"] .scroll-theme::-webkit-scrollbar-thumb {
+  background: rgb(254, 231, 21); /* vivid yellow */
+}
+
+/* ===== 2) Base UX pour Ã©viter les sauts de layout ===== */
+html {
+  scrollbar-gutter: stable both-edges;
+}
+
+/* ===== 3) Utilitaire : applique un scrollbar themÃ© uniquement oÃ¹ tu veux ===== */
+/* Mets la classe .scroll-theme sur les zones scrollables (nav, sidebars, editorsâ€¦) */
 .scroll-theme {
   /* Firefox */
   scrollbar-width: thin;
@@ -487,7 +580,7 @@ html {
   background: rgb(var(--scroll-track));
 }
 
-/* ===== 4) Variante compacte (si tu veux un mode “thin”) ===== */
+/* ===== 4) Variante compacte (si tu veux un mode â€œthinâ€) ===== */
 .scroll-theme.thin {
   scrollbar-width: thin;
 }
@@ -496,7 +589,7 @@ html {
   height: 8px;
 }
 
-/* ===== 5) Variante “invisible jusqu’au hover” (Chromium/WebKit only) ===== */
+/* ===== 5) Variante â€œinvisible jusquâ€™au hoverâ€ (Chromium/WebKit only) ===== */
 .scroll-theme.stealth::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -508,7 +601,7 @@ html {
   background: rgb(var(--scroll-thumb));
 }
 
-/* ===== 6) Accessibilité : contraste élevé ===== */
+/* ===== 6) Accessibilité : contraste Ã©levÃ© ===== */
 @media (prefers-contrast: more) {
   .scroll-theme {
     scrollbar-width: auto;

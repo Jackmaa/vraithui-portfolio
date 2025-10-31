@@ -86,12 +86,12 @@
                 <div class="flex-1">
                   <div class="text-xs opacity-60">LinkedIn</div>
                   <a
-                    href="https://linkedin.com/in/vraith"
+                    href="https://linkedin.com/in/valentin-gillot"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="text-[rgb(var(--accent))] hover:underline"
                   >
-                    linkedin.com/in/vraith
+                    linkedin.com/in/valentin-gillot
                   </a>
                 </div>
               </div>
