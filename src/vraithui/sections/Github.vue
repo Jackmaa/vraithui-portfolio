@@ -184,17 +184,8 @@ const error = ref(null);
 // Timeline data (customize this with your real journey)
 const timeline = ref([
   {
-    hash: "a3f8b2e",
-    date: "January 2025",
-    title: "Formation OnlineFormaPro - Fin",
-    description:
-      "Finalisation du CRM-Forma avec Symfony + Vue.js. Lead dev sur Nihon. Exploration de Java & Spring Boot.",
-    technologies: ["Symfony", "Vue.js", "PostgreSQL", "Java", "Spring Boot"],
-    color: "#00ff9f",
-  },
-  {
     hash: "7c4d9a1",
-    date: "December 2024",
+    date: "Octobre 2025",
     title: "Full Stack Next.js",
     description:
       "Développement de Bakery App avec Next.js 16, Prisma, et système QR code. Authentification NextAuth.",
@@ -202,26 +193,17 @@ const timeline = ref([
     color: "#bd00ff",
   },
   {
-    hash: "2e91f5c",
-    date: "November 2024",
-    title: "React & PokéAPI",
+    hash: "a3f8b2e",
+    date: "Octobre 2025",
+    title: "Formation OnlineFormaPro - Fin",
     description:
-      "Création du PokeAPIGame avec système de combat tour par tour et gestion d'état avancée.",
-    technologies: ["React", "PokéAPI", "LocalStorage", "CSS"],
-    color: "#ff006e",
-  },
-  {
-    hash: "9b3c8d2",
-    date: "October 2024",
-    title: "Lead Developer Experience",
-    description:
-      "Gestion d'équipe (3 personnes) sur le projet Nihon. Architecture MVC, API REST, animations GSAP.",
-    technologies: ["PHP", "MVC", "REST API", "GSAP", "Leadership"],
-    color: "#00d9ff",
+      "Finalisation du CRM-Forma avec Symfony + Vue.js, obtention du titre DWWM",
+    technologies: ["Symfony", "Vue.js", "PostgreSQL", "Java", "Spring Boot"],
+    color: "#00ff9f",
   },
   {
     hash: "4f7a1e9",
-    date: "September 2024",
+    date: "Avril 2025",
     title: "Portfolio Cyberpunk v1",
     description:
       "Premier portfolio avec esthétique cyberpunk/glitch. Animations avancées et design Figma.",
@@ -229,8 +211,34 @@ const timeline = ref([
     color: "#ffa500",
   },
   {
+    hash: "2e91f5c",
+    date: "Avril 2025",
+    title: "React & PokéAPI",
+    description:
+      "Création du PokeAPIGame avec système de combat tour par tour et gestion d'état avancée.",
+    technologies: ["React", "PokéAPI", "Axios", "Framer-Motion"],
+    color: "#ff006e",
+  },
+  {
+    hash: "9b3c8d2",
+    date: "Mars 2025",
+    title: "Lead Developer Experience",
+    description:
+      "Gestion d'équipe (3 personnes) sur le projet Nihon. Architecture MVC, API REST, animations GSAP.",
+    technologies: ["PHP", "MVC", "REST API", "GSAP", "Leadership"],
+    color: "#00d9ff",
+  },
+  {
+    hash: "5f8d55e",
+    date: "Janvier 2025",
+    title: "Eventify",
+    description: "Application de gestion d'évènements",
+    technologies: ["PHP", "Bootstrap"],
+    color: "#6d3dff",
+  },
+  {
     hash: "8c2b6d4",
-    date: "June 2024",
+    date: "Octobre 2024",
     title: "Début Formation Web",
     description:
       "Premiers pas en développement web. HTML, CSS, JavaScript fondamentaux. Découverte de Git.",
