@@ -39,6 +39,7 @@
                 </div>
                 <div class="flex-1">
                   <div class="text-xs opacity-60">Email</div>
+
                   <a
                     href="mailto:valentingillot@gmail.com"
                     class="text-[rgb(var(--accent))] hover:underline"
@@ -61,6 +62,7 @@
                 </div>
                 <div class="flex-1">
                   <div class="text-xs opacity-60">GitHub</div>
+
                   <a
                     href="https://github.com/Jackmaa"
                     target="_blank"
@@ -85,6 +87,7 @@
                 </div>
                 <div class="flex-1">
                   <div class="text-xs opacity-60">LinkedIn</div>
+
                   <a
                     href="https://linkedin.com/in/valentin-gillot"
                     target="_blank"
@@ -487,7 +490,7 @@ async function handleSubmit() {
 }
 
 .glow-text {
-  text-shadow: 0 0 10px rgba(var(--accent), 0.5);
+  text-shadow: 0 0 10px rgb(var(--accent) / 0.5);
 }
 
 .contact-item {
@@ -505,14 +508,14 @@ async function handleSubmit() {
   width: 40px;
   height: 40px;
   border-radius: 8px;
-  background: rgba(var(--accent), 0.1);
+  background: rgb(var(--accent) / 0.1);
   color: rgb(var(--accent));
   transition: all 0.2s ease;
 }
 
 .contact-item:hover .icon-wrapper {
-  background: rgba(var(--accent), 0.2);
-  box-shadow: 0 0 12px rgba(var(--accent), 0.3);
+  background: rgb(var(--accent) / 0.2);
+  box-shadow: 0 0 12px rgb(var(--accent) / 0.3);
 }
 
 .action-button {
@@ -532,14 +535,14 @@ async function handleSubmit() {
 
 .action-button:hover {
   border-color: rgb(var(--accent));
-  background: rgba(var(--accent), 0.05);
-  box-shadow: 0 0 12px rgba(var(--accent), 0.2);
+  background: rgb(var(--accent) / 0.05);
+  box-shadow: 0 0 12px rgb(var(--accent) / 0.2);
 }
 
 .terminal-input {
   width: 100%;
   padding: 0.75rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgb(var(--panel-2));
   border: 1px solid rgb(var(--border));
   border-radius: 6px;
   color: rgb(var(--fg));
@@ -551,7 +554,7 @@ async function handleSubmit() {
 
 .terminal-input:focus {
   border-color: rgb(var(--accent));
-  box-shadow: 0 0 0 2px rgba(var(--accent), 0.1);
+  box-shadow: 0 0 0 2px rgb(var(--accent) / 0.1);
 }
 
 .terminal-input::placeholder {
@@ -578,7 +581,7 @@ async function handleSubmit() {
 
 .submit-button:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(var(--accent), 0.4);
+  box-shadow: 0 4px 12px rgb(var(--accent) / 0.4);
 }
 
 .submit-button:active:not(:disabled) {

@@ -224,16 +224,16 @@ defineExpose({
 }
 
 .csb.thumb:hover {
-  background: color-mix(in srgb, rgb(var(--accent)) 80%, white 20%);
+  opacity: 0.9;
 }
 
 .csb.thumb:active {
   cursor: grabbing;
-  background: color-mix(in srgb, rgb(var(--accent)) 90%, white 10%);
+  opacity: 0.8;
 }
 
 .csb.thumb:focus-visible {
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 2px rgb(var(--accent) / 0.3);
 }
 
 /* Style global pour masquer scrollbar native */

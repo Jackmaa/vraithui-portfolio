@@ -1,5 +1,9 @@
 <template>
-  <span class="glitch-wrapper" @mouseenter="trigger" :class="{ active: isGlitching }">
+  <span
+    class="glitch-wrapper"
+    @mouseenter="trigger"
+    :class="{ active: isGlitching }"
+  >
     <span class="glitch-text" :data-text="text">
       {{ text }}
     </span>
@@ -7,24 +11,24 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 
 const props = defineProps({
   text: {
     type: String,
-    required: true
+    required: true,
   },
   autoGlitch: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 });
 
 const isGlitching = ref(false);
 
 function trigger() {
   if (isGlitching.value) return;
-  
+
   isGlitching.value = true;
   setTimeout(() => {
     isGlitching.value = false;
@@ -66,7 +70,7 @@ if (props.autoGlitch) {
   height: 100%;
 }
 
-/* Layer rouge (décalage gauche) */
+/* Layer 1 (décalage gauche) - utilise l'accent */
 .glitch-wrapper.active .glitch-text::before {
   left: 2px;
   text-shadow: -2px 0 rgb(var(--accent));
@@ -74,12 +78,13 @@ if (props.autoGlitch) {
   animation: glitch-anim-1 0.6s infinite linear alternate-reverse;
 }
 
-/* Layer cyan (décalage droit) */
+/* Layer 2 (décalage droit) - utilise l'accent avec variation */
 .glitch-wrapper.active .glitch-text::after {
   left: -2px;
-  text-shadow: -2px 0 cyan, 2px 2px magenta;
+  text-shadow: -2px 0 rgb(var(--accent) / 0.8), 2px 2px rgb(var(--accent) / 0.6);
   clip: rect(85px, 550px, 140px, 0);
   animation: glitch-anim-2 0.6s infinite linear alternate-reverse;
+  filter: hue-rotate(180deg);
 }
 
 /* Animations de glitch */
@@ -157,6 +162,6 @@ if (props.autoGlitch) {
 
 /* Glow subtil pendant le glitch */
 .glitch-wrapper.active .glitch-text {
-  text-shadow: 0 0 10px rgba(var(--accent), 0.5);
+  text-shadow: 0 0 10px rgb(var(--accent) / 0.5);
 }
 </style>

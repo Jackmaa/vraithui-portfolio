@@ -118,7 +118,7 @@ const paletteOpen = ref(false);
 const consoleOpen = ref(false);
 const mode = ref("NORMAL");
 
-// Liste des thèmes dispos
+// Liste des thèmes dispos (17 thèmes)
 const themeNames = [
   "cyberpunk",
   "luxury",
@@ -135,6 +135,8 @@ const themeNames = [
   "imperial-blue",
   "mystic-jade",
   "lush-merlot",
+  "oxford-maize",
+  "rich-black",
 ];
 
 // Commandes pour la console

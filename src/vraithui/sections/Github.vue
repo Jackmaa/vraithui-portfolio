@@ -69,7 +69,7 @@
             <!-- Links -->
             <div class="pt-4 border-t border-[rgb(var(--border))] flex gap-3">
               <a
-                :href="stats.html_url"
+                href="stats.html_url"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="action-btn"
@@ -324,7 +324,7 @@ onMounted(() => {
 }
 
 .glow-text {
-  text-shadow: 0 0 10px rgba(var(--accent), 0.5);
+  text-shadow: 0 0 10px rgb(var(--accent) / 0.5);
 }
 
 .stat-item {
@@ -350,7 +350,7 @@ onMounted(() => {
 
 .action-btn:hover {
   border-color: rgb(var(--accent));
-  background: rgba(var(--accent), 0.1);
+  background: rgb(var(--accent) / 0.1);
   transform: translateY(-2px);
 }
 
@@ -358,7 +358,7 @@ onMounted(() => {
 .progress-bar {
   width: 100%;
   height: 6px;
-  background: rgba(var(--border), 0.3);
+  background: rgb(var(--border) / 0.3);
   border-radius: 3px;
   overflow: hidden;
 }
@@ -411,7 +411,7 @@ onMounted(() => {
   padding: 0.25rem 0.5rem;
   border: 1px solid rgb(var(--border));
   border-radius: 4px;
-  background: rgba(var(--accent), 0.05);
+  background: rgb(var(--accent) / 0.05);
 }
 
 .tech-badge {
@@ -419,8 +419,8 @@ onMounted(() => {
   padding: 0.25rem 0.5rem;
   font-size: 0.75rem;
   border-radius: 4px;
-  background: rgba(var(--accent), 0.1);
-  border: 1px solid rgba(var(--accent), 0.3);
+  background: rgb(var(--accent) / 0.1);
+  border: 1px solid rgb(var(--accent) / 0.3);
   color: rgb(var(--accent));
 }
 

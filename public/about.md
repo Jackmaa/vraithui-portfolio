@@ -64,7 +64,7 @@ Quand je ne code pas, vous me trouverez probablement en train de :
 
 Envie de collaborer sur un projet ? Discutons-en !
 
-**Email:** valeentingillot@gmail.com
+**Email:** valentingillot@gmail.com
 **GitHub:** github.com/Jackmaa  
 **LinkedIn:** linkedin.com/in/valentin-gillot
 

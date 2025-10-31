@@ -307,7 +307,7 @@ onMounted(() => {
 }
 
 .glow-text {
-  text-shadow: 0 0 10px rgba(var(--accent), 0.5);
+  text-shadow: 0 0 10px rgb(var(--accent) / 0.5);
 }
 
 input::placeholder {

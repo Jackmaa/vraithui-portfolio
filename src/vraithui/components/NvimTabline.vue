@@ -1,22 +1,23 @@
 <template>
   <div
-    class="h-8 flex items-center gap-1 px-2 border-b"
-    style="border-color: var(--border)"
+    class="h-8 flex items-center gap-1 px-2 border-b bg-[rgb(var(--panel))]"
+    :style="`border-color: rgb(var(--border))`"
   >
     <button
       v-for="t in tabs"
       :key="t.id"
-      class="px-3 h-7 rounded text-xs border"
-      :class="
+      class="px-3 h-7 rounded text-xs border transition-colors"
+      :style="
         t.id === active
-          ? 'bg-white/10 border-white/20'
-          : 'border-transparent hover:bg-white/5'
+          ? `background: rgb(var(--panel-2)); border-color: rgb(var(--border))`
+          : `border-color: transparent`
       "
+      :class="t.id !== active && 'hover:bg-[rgb(var(--panel-2))]'"
       @click="$emit('select', t.id)"
     >
       {{ t.label }}
       <span
-        class="ml-2 opacity-60 cursor-pointer"
+        class="ml-2 opacity-60 cursor-pointer hover:opacity-100 transition-opacity"
         @click.stop="$emit('close', t.id)"
         >×</span
       >

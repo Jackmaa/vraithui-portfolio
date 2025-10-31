@@ -1,14 +1,16 @@
 <template>
   <div
-    class="bg-black/75 backdrop-blur border-t border-white/10 text-[rgb(var(--fg))] flex flex-col"
+    class="bg-[rgb(var(--panel))] backdrop-blur border-t border-[rgb(var(--border))] text-[rgb(var(--fg))] flex flex-col"
   >
-    <div class="p-2 font-mono text-xs opacity-70 border-b border-white/10">
+    <div
+      class="p-2 font-mono text-xs opacity-70 border-b border-[rgb(var(--border))]"
+    >
       Vraith Console — type
       <code class="text-[rgb(var(--accent))]">help</code> for commands
     </div>
 
     <!-- CustomScrollbar avec ref pour contrôler le scroll -->
-    <div class="relative" style="height: 160">
+    <div class="relative" style="height: 160px">
       <CustomScrollbar
         :height="160"
         :thumbMinSize="28"
@@ -28,7 +30,7 @@
     </div>
 
     <div
-      class="px-3 py-2 border-t border-white/10 flex items-center gap-2 bg-black/50"
+      class="px-3 py-2 border-t border-[rgb(var(--border))] flex items-center gap-2 bg-[rgb(var(--panel-2))]"
     >
       <span class="opacity-60">❯</span>
       <input
@@ -175,6 +177,6 @@ function run() {
 code {
   padding: 2px 4px;
   border-radius: 3px;
-  background: rgba(var(--accent), 0.2);
+  background: rgb(var(--accent) / 0.2);
 }
 </style>

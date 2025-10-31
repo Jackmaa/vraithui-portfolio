@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from "vue";
 
 const canvasRef = ref(null);
 let animationId = null;
@@ -45,7 +45,7 @@ class Particle {
 
 onMounted(() => {
   const canvas = canvasRef.value;
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext("2d");
 
   // Set canvas size
   const resizeCanvas = () => {
@@ -53,15 +53,15 @@ onMounted(() => {
     canvas.height = window.innerHeight;
   };
   resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
+  window.addEventListener("resize", resizeCanvas);
 
   // Get accent color from CSS variable
   const getAccentColor = () => {
     const accentStr = getComputedStyle(document.documentElement)
-      .getPropertyValue('--accent')
+      .getPropertyValue("--accent")
       .trim()
-      .split(' ')
-      .map(x => parseInt(x));
+      .split(" ")
+      .map((x) => parseInt(x));
     return accentStr.length === 3 ? accentStr : [0, 255, 255];
   };
 
@@ -73,7 +73,7 @@ onMounted(() => {
   });
   observer.observe(document.documentElement, {
     attributes: true,
-    attributeFilter: ['data-theme']
+    attributeFilter: ["data-theme"],
   });
 
   // Create particles (nombre basé sur la taille de l'écran)
@@ -116,7 +116,7 @@ onMounted(() => {
 
   onBeforeUnmount(() => {
     if (animationId) cancelAnimationFrame(animationId);
-    window.removeEventListener('resize', resizeCanvas);
+    window.removeEventListener("resize", resizeCanvas);
     observer.disconnect();
     particles = [];
   });

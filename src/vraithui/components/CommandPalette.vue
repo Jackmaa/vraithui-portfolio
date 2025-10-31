@@ -2,14 +2,16 @@
 <template>
   <!-- Backdrop -->
   <div class="fixed inset-0 z-50" @click.self="close">
-    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+    <div class="absolute inset-0 backdrop-blur-sm bg-[rgb(var(--bg))]/80"></div>
 
     <!-- Palette -->
     <div
-      class="relative max-w-2xl mx-auto mt-24 rounded-xl overflow-hidden shadow-2xl border border-white/10 bg-[rgb(var(--panel))] text-[rgb(var(--fg))]"
+      class="relative max-w-2xl mx-auto mt-24 rounded-xl overflow-hidden shadow-2xl border border-[rgb(var(--border))] bg-[rgb(var(--panel))] text-[rgb(var(--fg))]"
     >
       <!-- Input -->
-      <div class="flex items-center gap-2 px-3 py-2 border-b border-white/10">
+      <div
+        class="flex items-center gap-2 px-3 py-2 border-b border-[rgb(var(--border))]"
+      >
         <span class="opacity-70 text-sm">⌘K</span>
         <input
           ref="inputEl"
@@ -33,8 +35,8 @@
               v-for="(item, i) in items"
               :key="i + '-' + item.key"
               @click="run(item)"
-              class="w-full text-left px-4 py-2 text-sm flex items-center gap-3 hover:bg-white/5"
-              :class="i === index ? 'bg-white/10' : ''"
+              class="w-full text-left px-4 py-2 text-sm flex items-center gap-3 hover:bg-[rgb(var(--panel-2))] transition-colors"
+              :class="i === index ? 'bg-[rgb(var(--panel-2))]' : ''"
               @mousemove="index = i"
             >
               <span class="opacity-60 font-mono text-xs min-w-28">{{
@@ -52,7 +54,7 @@
 
       <!-- Footer -->
       <div
-        class="flex justify-end gap-2 px-3 py-2 border-t border-white/10 text-xs opacity-70"
+        class="flex justify-end gap-2 px-3 py-2 border-t border-[rgb(var(--border))] text-xs opacity-70"
       >
         <span class="font-mono">↑/↓</span> pour naviguer
         <span class="font-mono ml-3">Entrée</span> exécuter
@@ -78,6 +80,7 @@ const emit = defineEmits(["close", "command"]);
 
 const inputEl = ref(null);
 const query = ref("");
+const y = ref(0);
 
 // Index sélectionné
 const index = ref(0);

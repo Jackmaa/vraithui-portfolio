@@ -126,6 +126,7 @@
           </svg>
           Code
         </a>
+
         <a
           v-if="project.demo"
           :href="project.demo"
@@ -317,7 +318,7 @@ onMounted(() => {
 
 .project-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(var(--accent), 0.15);
+  box-shadow: 0 8px 24px rgb(var(--accent) / 0.15);
 }
 
 .glow-border {
@@ -327,7 +328,7 @@ onMounted(() => {
   opacity: 0;
   transition: opacity 0.3s;
   pointer-events: none;
-  box-shadow: inset 0 0 20px rgba(var(--accent), 0.3);
+  box-shadow: inset 0 0 20px rgb(var(--accent) / 0.3);
 }
 
 .project-card:hover .glow-border {
@@ -350,7 +351,7 @@ onMounted(() => {
 .action-link:hover {
   border-color: rgb(var(--accent));
   color: rgb(var(--accent));
-  background: rgba(var(--accent), 0.1);
+  background: rgb(var(--accent) / 0.1);
 }
 
 .line-clamp-3 {

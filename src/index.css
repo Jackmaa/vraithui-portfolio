@@ -45,31 +45,43 @@ body {
   --mode-r: 239 68 68; /* red 500 */
 }
 
-/* ========== NEUTRAL (clair) ========== */
+/* ========== NEUTRAL (clair)========== */
 [data-theme="neutral"] {
   /* daisy-like */
-  --p: 82 82 82; /* neutral 600 */
+  --p: 64 64 64; /* neutral 700 - plus foncé pour meilleur contraste */
   --pc: 255 255 255;
-  --s: 163 163 163; /* neutral 400 */
-  --sc: 0 0 0;
-  --bg: 250 250 250; /* neutral 50 */
-  --fg: 23 23 23; /* neutral 900 */
+  --s: 115 115 115; /* neutral 500 - plus foncé aussi */
+  --sc: 255 255 255;
+  --bg: 255 255 255; /* blanc pur au lieu de 250 */
+  --fg: 10 10 10; /* presque noir pour contraste maximal */
   --in: 59 130 246; /* blue 500 */
   --su: 34 197 94; /* green 500 */
   --wa: 234 179 8; /* yellow 500 */
   --er: 239 68 68; /* red 500 */
 
   /* VraithUI adapter */
-  --accent: var(--p);
-  --border: 0 0 0 / 0.08;
+  --accent: 82 82 82; /* neutral 600 - accent visible */
+  --border: 0 0 0 / 0.12; /* bordures plus visibles */
 
-  --panel: color-mix(in oklab, rgb(var(--bg)) 90%, rgb(0 0 0) 10%);
-  --panel-2: color-mix(in oklab, rgb(var(--bg)) 82%, rgb(0 0 0) 18%);
+  /* Panels plus marqués */
+  --panel: 245 245 245; /* neutral 100 */
+  --panel-2: 229 229 229; /* neutral 200 */
 
-  --mode-n: var(--p);
+  --mode-n: 82 82 82; /* neutral 600 */
   --mode-i: 34 197 94;
   --mode-v: 244 114 182;
   --mode-r: 239 68 68;
+}
+
+/* Neutral clair */
+[data-theme="neutral"] .scroll-theme::-webkit-scrollbar-track {
+  background: rgb(245, 245, 245); /* panel */
+}
+[data-theme="neutral"] .scroll-theme::-webkit-scrollbar-thumb {
+  background: rgb(163, 163, 163); /* neutral 400 - visible mais doux */
+}
+[data-theme="neutral"] .scroll-theme::-webkit-scrollbar-thumb:hover {
+  background: rgb(115, 115, 115); /* neutral 500 - plus foncé au hover */
 }
 
 /* CYBERPUNK (sombre) */

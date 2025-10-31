@@ -5,7 +5,7 @@
       <li v-for="f in files" :key="f.id">
         <button
           @click="$emit('open', f)"
-          class="w-full text-left px-2 py-1 rounded hover:bg-white/5"
+          class="w-full text-left px-2 py-1 rounded hover:bg-[rgb(var(--panel-2))] transition-colors"
         >
           {{ f.label }}
         </button>

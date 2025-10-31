@@ -20,7 +20,9 @@
       <span class="animate-pulse">Loading about.md...</span>
     </div>
 
-    <div v-else-if="error" class="text-red-400">Error: {{ error }}</div>
+    <div v-else-if="error" class="text-[rgb(var(--er))]">
+      Error: {{ error }}
+    </div>
 
     <div v-else class="markdown-content space-y-6" v-html="htmlContent"></div>
   </div>
@@ -205,7 +207,7 @@ onMounted(async () => {
 
 <style scoped>
 .glow-text {
-  text-shadow: 0 0 10px rgba(var(--accent), 0.5);
+  text-shadow: 0 0 10px rgb(var(--accent) / 0.5);
 }
 
 .about-container {
@@ -263,7 +265,7 @@ onMounted(async () => {
 
 /* Styles pour le contenu HTML injecté */
 .markdown-content :deep(a:hover) {
-  text-shadow: 0 0 10px rgba(var(--accent), 0.5);
+  text-shadow: 0 0 10px rgb(var(--accent) / 0.5);
 }
 
 /* === GLITCH EFFECT sur les titres H1 et H2 === */
@@ -285,20 +287,21 @@ onMounted(async () => {
   pointer-events: none;
 }
 
-/* Layer rouge (décalage gauche) */
+/* Layer 1 (décalage gauche) - utilise l'accent */
 .markdown-content :deep(.glitch-title:hover)::before {
   left: 2px;
-  text-shadow: -2px 0 #ff00ff;
+  text-shadow: -2px 0 rgb(var(--accent));
   clip: rect(24px, 9999px, 90px, 0);
   animation: glitch-anim-1 0.6s infinite linear alternate-reverse;
 }
 
-/* Layer cyan (décalage droit) */
+/* Layer 2 (décalage droit) - utilise l'accent avec variation */
 .markdown-content :deep(.glitch-title:hover)::after {
   left: -2px;
-  text-shadow: -2px 0 #00ffff, 2px 2px #ff00ff;
+  text-shadow: -2px 0 rgb(var(--accent) / 0.8), 2px 2px rgb(var(--accent) / 0.6);
   clip: rect(85px, 9999px, 140px, 0);
   animation: glitch-anim-2 0.6s infinite linear alternate-reverse;
+  filter: hue-rotate(180deg);
 }
 
 /* Animations de glitch */
@@ -398,6 +401,6 @@ onMounted(async () => {
 
 /* Glow subtil pendant le glitch */
 .markdown-content :deep(.glitch-title:hover) {
-  text-shadow: 0 0 10px rgba(var(--accent), 0.5);
+  text-shadow: 0 0 10px rgb(var(--accent) / 0.5);
 }
 </style>

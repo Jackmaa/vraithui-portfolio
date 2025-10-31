@@ -3,13 +3,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted } from "vue";
 
 const enabled = ref(true);
 
 // Toggle avec commande console (optionnel)
 onMounted(() => {
-  window.addEventListener('toggle-scanlines', () => {
+  window.addEventListener("toggle-scanlines", () => {
     enabled.value = !enabled.value;
   });
 });
@@ -36,8 +36,8 @@ onMounted(() => {
   inset: 0;
   background: repeating-linear-gradient(
     0deg,
-    rgba(0, 0, 0, 0.15),
-    rgba(0, 0, 0, 0.15) 1px,
+    rgb(var(--fg) / 0.08),
+    rgb(var(--fg) / 0.08) 1px,
     transparent 1px,
     transparent 2px
   );
@@ -62,7 +62,7 @@ onMounted(() => {
   background: radial-gradient(
     ellipse at center,
     transparent 50%,
-    rgba(0, 0, 0, 0.3) 100%
+    rgb(var(--bg) / 0.3) 100%
   );
 }
 
@@ -72,7 +72,8 @@ onMounted(() => {
 }
 
 @keyframes flicker {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {

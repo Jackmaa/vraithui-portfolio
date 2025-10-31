@@ -45,16 +45,24 @@ onMounted(() => {
     drops[i] = Math.random() * -100; // Start above screen
   }
 
-  // Get accent color from CSS variable
-  const accentColor = getComputedStyle(document.documentElement)
+  // Get colors from CSS variables
+  const rootStyle = getComputedStyle(document.documentElement);
+
+  const accentColor = rootStyle
     .getPropertyValue("--accent")
     .trim()
     .split(" ")
     .map((x) => parseInt(x));
 
+  const bgColor = rootStyle
+    .getPropertyValue("--bg")
+    .trim()
+    .split(" ")
+    .map((x) => parseInt(x));
+
   function draw() {
-    // Semi-transparent black for trail effect
-    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+    // Semi-transparent background for trail effect (uses theme bg color)
+    ctx.fillStyle = `rgba(${bgColor[0]}, ${bgColor[1]}, ${bgColor[2]}, 0.05)`;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Matrix text
@@ -119,7 +127,7 @@ onMounted(() => {
 .matrix-container {
   position: fixed;
   inset: 0;
-  background: black;
+  background: rgb(var(--bg));
   z-index: 9999;
 }
 
@@ -136,7 +144,7 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle, transparent 30%, black 100%);
+  background: radial-gradient(circle, transparent 30%, rgb(var(--bg)) 100%);
   opacity: 0;
   transition: opacity 1s ease-in;
   pointer-events: none;
@@ -145,6 +153,7 @@ onMounted(() => {
 .unlock-message {
   text-align: center;
   animation: fadeInScale 1s ease-out;
+  color: rgb(var(--fg));
 }
 
 @keyframes fadeInScale {
@@ -159,20 +168,20 @@ onMounted(() => {
 }
 
 .glow-text {
-  text-shadow: 0 0 10px rgba(var(--accent), 0.8),
-    0 0 20px rgba(var(--accent), 0.6), 0 0 30px rgba(var(--accent), 0.4);
+  text-shadow: 0 0 10px rgb(var(--accent) / 0.8),
+    0 0 20px rgb(var(--accent) / 0.6), 0 0 30px rgb(var(--accent) / 0.4);
   animation: pulse 2s ease-in-out infinite;
 }
 
 @keyframes pulse {
   0%,
   100% {
-    text-shadow: 0 0 10px rgba(var(--accent), 0.8),
-      0 0 20px rgba(var(--accent), 0.6), 0 0 30px rgba(var(--accent), 0.4);
+    text-shadow: 0 0 10px rgb(var(--accent) / 0.8),
+      0 0 20px rgb(var(--accent) / 0.6), 0 0 30px rgb(var(--accent) / 0.4);
   }
   50% {
-    text-shadow: 0 0 20px rgba(var(--accent), 1),
-      0 0 30px rgba(var(--accent), 0.8), 0 0 40px rgba(var(--accent), 0.6);
+    text-shadow: 0 0 20px rgb(var(--accent) / 1),
+      0 0 30px rgb(var(--accent) / 0.8), 0 0 40px rgb(var(--accent) / 0.6);
   }
 }
 </style>

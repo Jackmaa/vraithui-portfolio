@@ -1,11 +1,11 @@
 <template>
   <div
     class="h-7 w-full flex items-center text-xs px-3 border-t"
-    :style="`border-color: var(--border); background: rgba(${modeColor}, .15)`"
+    :style="`border-color: rgb(var(--border)); background: rgb(${modeColor} / 0.15)`"
   >
     <span
       class="font-mono px-2 py-0.5 rounded mr-3"
-      :style="`background: rgb(${modeColor}); color: #0b0d10`"
+      :style="`background: rgb(${modeColor}); color: rgb(var(--bg))`"
     >
       {{ mode }}
     </span>
