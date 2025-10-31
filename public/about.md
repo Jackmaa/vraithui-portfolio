@@ -47,9 +47,9 @@ Je crois fermement que la **qualité du code** et l'**expérience utilisateur** 
 ## Projets notables
 
 - **VraithUI Portfolio** - Ce site que vous explorez actuellement
-- **E-commerce Platform** - Solution full-stack Vue 3 + Node.js
-- **AI Chatbot Interface** - Interface conversationnelle immersive
-- **Design System** - Composants réutilisables style Neovim
+- **CRM-Forma** - Plateforme de gestion pour centre/formateur
+- **Nihon** - Bibliothèque de manga en ligne avec système d'emprunt et de gestion
+- **Bakery App** - Application e-commerce moderne pour boulangerie
 
 ## Centres d'intérêt
 
