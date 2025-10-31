@@ -215,7 +215,25 @@ function setTheme(name) {
 
 function toggleTheme() {
   const root = document.documentElement;
-  const order = ["cyberpunk", "luxury", "brand", "neutral", "brand-dark"];
+  const order = [
+    "cyberpunk",
+    "luxury",
+    "brand",
+    "brand-dark",
+    "neutral",
+    "velvet-charcoal",
+    "persian-plum",
+    "bordeaux-silk",
+    "regal-gold",
+    "velvet-indigo",
+    "deep-jungle",
+    "crimson-peach",
+    "imperial-blue",
+    "mystic-jade",
+    "lush-merlot",
+    "oxford-maize",
+    "rich-black",
+  ];
   const i = order.indexOf(root.getAttribute("data-theme") || "cyberpunk");
   root.setAttribute("data-theme", order[(i + 1) % order.length]);
 }
