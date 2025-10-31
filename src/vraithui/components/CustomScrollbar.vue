@@ -7,7 +7,7 @@
     ref="host"
   >
     <div class="csb viewport hide-native-scrollbar" ref="viewport">
-      <slot />
+      <slot></slot>
     </div>
 
     <!-- track -->
@@ -26,7 +26,7 @@
         :aria-valuenow="scrollTop"
         tabindex="0"
         @keydown="onKey"
-      />
+      ></div>
     </div>
   </div>
 </template>
