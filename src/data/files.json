@@ -2,26 +2,26 @@
   {
     "id": "home",
     "label": "home.lua",
-    "component": "Home"
+    "component": "home"
   },
   {
     "id": "about",
     "label": "about.md",
-    "component": "AboutMe"
+    "component": "about"
   },
   {
     "id": "projects",
     "label": "projects.ts",
-    "component": "Projects"
+    "component": "projects"
   },
   {
     "id": "contact",
     "label": "contact.vue",
-    "component": "Contact"
+    "component": "contact"
   },
   {
     "id": "github",
     "label": "github.md",
-    "component": "Github"
+    "component": "github"
   }
 ]

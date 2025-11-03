@@ -119,44 +119,39 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
-import files from "@/data/files.json";
+import files from "../../data/files.json";
+import { ref, computed, onMounted, markRaw } from "vue";
 import NvimTabline from "../components/NvimTabline.vue";
-import Github from "../sections/Github.vue";
 import NvimStatusline from "../components/NvimStatusline.vue";
 import NvimExplorer from "../components/NvimExplorer.vue";
 import CommandPalette from "../components/CommandPalette.vue";
 import VraithConsole from "../components/VraithConsole.vue";
-import CustomScrollbar from "../components/CustomScrollbar.vue";
-import AboutMe from "../sections/AboutMe.vue";
-import Projects from "../sections/Projects.vue";
-import Home from "../sections/Home.vue";
-import Contact from "../sections/Contact.vue";
-import ParticlesBackground from "../effects/ParticlesBackground.vue";
-import ScanlinesOverlay from "../effects/ScanlinesOverlay.vue";
-
 import MobileControls from "../components/MobileControls.vue";
 
-const componentsMap = {
-  home: Home,
-  about: AboutMe,
-  projects: Projects,
-  github: Github,
-  contact: Contact,
+// 👉 Import des composants de pages
+import Home from "../sections/Home.vue";
+import AboutMe from "../sections/AboutMe.vue";
+import Projects from "../sections/Projects.vue";
+import Github from "../sections/Github.vue";
+import Contact from "../sections/Contact.vue";
+
+// 👉 Map des composants (structure des fichiers)
+const componentMap = {
+  home: markRaw(Home),
+  about: markRaw(AboutMe),
+  projects: markRaw(Projects),
+  github: markRaw(Github),
+  contact: markRaw(Contact),
 };
 
 const tabs = ref([]);
 const active = ref(null);
-const introCompleted = ref(false);
-const showingIntro = computed(
-  () => !introCompleted.value && active.value === "home"
-);
 const paletteOpen = ref(false);
 const consoleOpen = ref(false);
 const mobileExplorerOpen = ref(false);
 const mode = ref("NORMAL");
 
-// 👉 liste des thèmes dispos (ajoute/enlève librement)
+// 👉 liste des thèmes dispos
 const themeNames = [
   "cyberpunk",
   "luxury",
@@ -177,27 +172,9 @@ const themeNames = [
   "rich-black",
 ];
 
-const consoleCommands = computed(() => [
-  { name: "help", desc: "Afficher l'aide" },
-  { name: "theme list", desc: "Lister les thèmes" },
-  ...themeNames.map((t) => ({
-    name: `theme set ${t}`,
-    desc: `Thème: ${t}`,
-  })),
-  { name: "open home", desc: "Ouvrir: home" },
-  { name: "open about", desc: "Ouvrir: about" },
-  { name: "open projects", desc: "Ouvrir: projects" },
-  { name: "open github", desc: "Ouvrir: github" },
-  { name: "ascii vraith", desc: "ASCII secret" },
-  { name: "roll", desc: "Lancer un d20" },
-  { name: "clear", desc: "Effacer la console" },
-  { name: "exit", desc: "Fermer la console" },
-  { name: "open contact", desc: "Ouvrir: contact" },
-]);
 // commandes exposées à la palette
-// Commandes exposées à la palette
 const paletteCommands = [
-  ...["home", "about", "projects", "contact", "github"].map((n) => ({
+  ...["home", "about", "projects", "github"].map((n) => ({
     name: `open ${n}`,
     desc: `Ouvrir: ${n}`,
   })),
@@ -210,7 +187,14 @@ const paletteCommands = [
 ];
 
 function open(f) {
-  if (!tabs.value.find((t) => t.id === f.id)) tabs.value.push(f);
+  // Crée un objet tab avec le composant associé
+  const tab = {
+    id: f.id,
+    label: f.label,
+    component: componentMap[f.id] || "div",
+  };
+
+  if (!tabs.value.find((t) => t.id === f.id)) tabs.value.push(tab);
   active.value = f.id;
 }
 
@@ -225,61 +209,21 @@ function close(id) {
   if (active.value === id) active.value = tabs.value.at(-1)?.id || null;
 }
 
-const activeTab = computed(() => {
-  const tab = tabs.value.find((t) => t.id === active.value);
-  if (!tab) return null;
-  return {
-    ...tab,
-    component: componentsMap[tab.component] || "div",
-  };
-});
+const activeTab = computed(() => tabs.value.find((t) => t.id === active.value));
 
-// Position de scroll actuelle (liée à la section active)
-const currentScrollPosition = computed({
-  get: () => scrollPositions.value[active.value] || 0,
-  set: (val) => {
-    if (active.value) {
-      scrollPositions.value[active.value] = val;
-    }
-  },
-});
-
-function handleScroll(position) {
-  if (active.value) {
-    scrollPositions.value[active.value] = position;
-  }
-}
 function setTheme(name) {
   if (!themeNames.includes(name)) return false;
   document.documentElement.setAttribute("data-theme", name);
   return true;
 }
 
-// thème toggle (entre cyberpunk et luxury par ex.)
 function toggleTheme() {
   const root = document.documentElement;
-  const order = [
-    "cyberpunk",
-    "luxury",
-    "brand",
-    "brand-dark",
-    "neutral",
-    "velvet-charcoal",
-    "persian-plum",
-    "bordeaux-silk",
-    "regal-gold",
-    "velvet-indigo",
-    "deep-jungle",
-    "crimson-peach",
-    "imperial-blue",
-    "mystic-jade",
-    "lush-merlot",
-    "oxford-maize",
-    "rich-black",
-  ];
+  const order = ["cyberpunk", "luxury", "brand", "neutral", "brand-dark"];
   const i = order.indexOf(root.getAttribute("data-theme") || "cyberpunk");
   root.setAttribute("data-theme", order[(i + 1) % order.length]);
 }
+
 function handleCmd(cmd) {
   let m;
   if ((m = cmd.match(/^open\s+(home|about|projects|github)$/i))) {
@@ -302,26 +246,12 @@ function handleCmd(cmd) {
     return;
   }
   if (/^help$/i.test(cmd)) {
-    console.log("Commands: open <file>, theme set <name>, theme list, help");
+    console.log("Commands: open <file>, theme set <n>, theme list, help");
     return;
   }
 }
 
 onMounted(() => {
-  // Vérifier si l'intro a déjà été complétée
-  const hasCompletedIntro = localStorage.getItem("vraith-intro-completed");
-  introCompleted.value = hasCompletedIntro === "true";
-
-  // Si l'intro n'est pas complétée, ouvrir Home automatiquement
-  if (!introCompleted.value) {
-    const homeFile = files.find((f) => f.id === "home");
-    if (homeFile) open(homeFile);
-  } else {
-    // Sinon, ouvrir About par défaut
-    const aboutFile = files.find((f) => f.id === "about");
-    if (aboutFile) open(aboutFile);
-  }
-
   window.addEventListener("keydown", (e) => {
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
       e.preventDefault();
@@ -331,17 +261,20 @@ onMounted(() => {
       e.preventDefault();
       consoleOpen.value = !consoleOpen.value;
     }
+    if (e.key === "Escape") {
+      if (paletteOpen.value) paletteOpen.value = false;
+      else if (consoleOpen.value) consoleOpen.value = false;
+      else if (mobileExplorerOpen.value) mobileExplorerOpen.value = false;
+      else mode.value = "NORMAL";
+    }
     if (e.key === "i" && mode.value === "NORMAL") mode.value = "INSERT";
-    if (e.key === "Escape") mode.value = "NORMAL";
   });
 
   window.addEventListener("open-file", (e) => {
     const id = e?.detail?.id;
     if (!id) return console.warn("[console] open-file sans id");
-
     const f = files.find((x) => x.id === id);
     if (!f) return console.warn(`[console] fichier introuvable: ${id}`);
-
     open(f);
   });
 
@@ -351,23 +284,6 @@ onMounted(() => {
         detail: "Themes: " + themeNames.join(", "),
       })
     );
-  });
-
-  // Écouter la fin de l'intro pour fermer Home et ouvrir About
-  window.addEventListener("intro-complete", () => {
-    introCompleted.value = true;
-
-    // Fermer l'onglet Home
-    const homeTab = tabs.value.find((t) => t.id === "home");
-    if (homeTab) {
-      close("home");
-    }
-
-    // Ouvrir About
-    const aboutFile = files.find((f) => f.id === "about");
-    if (aboutFile) {
-      open(aboutFile);
-    }
   });
 });
 </script>
