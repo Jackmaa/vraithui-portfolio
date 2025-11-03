@@ -1,5 +1,12 @@
 <template>
-  <div class="h-screen w-full grid responsive-grid">
+  <div
+    class="h-screen w-full grid responsive-grid"
+    :class="showingIntro ? 'intro-mode' : ''"
+  >
+    <!-- Effets visuels (desktop + mobile acceptable) -->
+    <ParticlesBackground />
+    <ScanlinesOverlay />
+
     <!-- Command Palette (flottante, on/off) -->
     <CommandPalette
       v-if="paletteOpen"
@@ -8,12 +15,14 @@
       @command="handleCmd"
     />
 
-    <!-- Header = zone 'Cursor' / quick actions -->
+    <!-- Header -->
     <header
       class="header-area flex items-center gap-3 px-4 border-b border-[rgb(var(--border))]"
+      :aria-hidden="showingIntro ? 'true' : 'false'"
     >
       <!-- Burger menu (mobile only) -->
       <button
+        v-show="!showingIntro"
         class="md:hidden btn btn-ghost btn-sm"
         @click="mobileExplorerOpen = !mobileExplorerOpen"
         aria-label="Toggle file explorer"
@@ -33,17 +42,23 @@
         </svg>
       </button>
 
-      <button
-        class="hidden md:inline-flex btn btn-ghost btn-sm"
-        @click="paletteOpen = true"
-      >
-        ⌘K
-      </button>
-      <div class="opacity-70 text-sm truncate">
-        VraithUI · Nvim/Cursor shell
-      </div>
-      <div class="ml-auto flex items-center gap-3">
-        <button class="btn btn-ghost btn-sm" @click="toggleTheme">Theme</button>
+      <!-- Desktop palette shortcut -->
+      <div v-show="!showingIntro" class="flex space-between w-full">
+        <button
+          class="sm:hidden md:inline-flex btn btn-ghost btn-sm"
+          @click="paletteOpen = true"
+          title="Palette (⌘K)"
+        >
+          ⌘K
+        </button>
+        <div class="opacity-70 text-sm truncate">
+          VraithUI · Nvim/Cursor shell
+        </div>
+        <div class="ml-auto flex items-center gap-3">
+          <button class="btn btn-ghost btn-sm" @click="toggleTheme">
+            Theme
+          </button>
+        </div>
       </div>
     </header>
 
@@ -65,15 +80,33 @@
       <NvimExplorer :files="files" @open="openFile" />
     </aside>
 
-    <!-- Éditeur + Tabline -->
+    <!-- Éditeur + Tabline / Main -->
     <main class="main-area relative overflow-hidden">
       <NvimTabline
+        v-show="!showingIntro"
         :tabs="tabs"
         :active="active"
         @close="close"
         @select="active = $event"
       />
+
+      <!-- Contenu : utilise CustomScrollbar sur desktop, section native sur mobile -->
+      <CustomScrollbar
+        v-if="useCustomScrollbar"
+        :height="showingIntro ? '100vh' : 'calc(100% - 2rem)'"
+        :thumbMinSize="40"
+        :key="active"
+        v-model="currentScrollPosition"
+        @scroll="handleScroll"
+        class="bg-[rgb(var(--bg))]"
+      >
+        <div class="p-6 text-[rgb(var(--fg))] min-h-[60vh]">
+          <component :is="activeTab?.component || 'div'" />
+        </div>
+      </CustomScrollbar>
+
       <section
+        v-else
         class="h-[calc(100%-2rem)] p-4 md:p-6 overflow-auto scroll-theme text-[rgb(var(--fg))]"
       >
         <component :is="activeTab?.component || 'div'" />
@@ -83,30 +116,17 @@
       <VraithConsole
         v-if="consoleOpen"
         class="absolute bottom-0 left-0 right-0"
-        :commands="[
-          { name: 'help', desc: 'Afficher l\'aide' },
-          { name: 'theme list', desc: 'Lister les thèmes' },
-          ...themeNames.map((t) => ({
-            name: `theme set ${t}`,
-            desc: `Thème: ${t}`,
-          })),
-          { name: 'open home', desc: 'Ouvrir: home' },
-          { name: 'open about', desc: 'Ouvrir: about' },
-          { name: 'open projects', desc: 'Ouvrir: projects' },
-          { name: 'open github', desc: 'Ouvrir: github' },
-          { name: 'ascii vraith', desc: 'ASCII secret' },
-          { name: 'roll', desc: 'Lancer un d20' },
-        ]"
+        :commands="consoleCommands"
         @close="consoleOpen = false"
       />
     </main>
 
     <!-- Statusline -->
-    <footer class="footer-area">
+    <footer class="footer-area" v-show="!showingIntro">
       <NvimStatusline :mode="mode" :file="activeTab?.label" :git="'main'" />
     </footer>
 
-    <!-- Mobile Controls (FAB buttons) -->
+    <!-- Mobile Controls (FABs) -->
     <MobileControls
       :explorerOpen="mobileExplorerOpen"
       :consoleOpen="consoleOpen"
@@ -119,23 +139,30 @@
 </template>
 
 <script setup>
-import files from "../../data/files.json";
-import { ref, computed, onMounted, markRaw } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount, markRaw } from "vue";
+import files from "@/data/files.json";
+
+/* Components */
 import NvimTabline from "../components/NvimTabline.vue";
 import NvimStatusline from "../components/NvimStatusline.vue";
 import NvimExplorer from "../components/NvimExplorer.vue";
 import CommandPalette from "../components/CommandPalette.vue";
 import VraithConsole from "../components/VraithConsole.vue";
+import CustomScrollbar from "../components/CustomScrollbar.vue";
 import MobileControls from "../components/MobileControls.vue";
 
-// 👉 Import des composants de pages
+/* Sections / Pages */
 import Home from "../sections/Home.vue";
 import AboutMe from "../sections/AboutMe.vue";
 import Projects from "../sections/Projects.vue";
 import Github from "../sections/Github.vue";
 import Contact from "../sections/Contact.vue";
 
-// 👉 Map des composants (structure des fichiers)
+/* Effects */
+import ParticlesBackground from "../effects/ParticlesBackground.vue";
+import ScanlinesOverlay from "../effects/ScanlinesOverlay.vue";
+
+/* Map des composants – markRaw pour éviter réactivité lourde */
 const componentMap = {
   home: markRaw(Home),
   about: markRaw(AboutMe),
@@ -151,7 +178,21 @@ const consoleOpen = ref(false);
 const mobileExplorerOpen = ref(false);
 const mode = ref("NORMAL");
 
-// 👉 liste des thèmes dispos
+const introCompleted = ref(false);
+const showingIntro = computed(
+  () => !introCompleted.value && active.value === "home"
+);
+
+/* Scroll positions par onglet */
+const scrollPositions = ref({});
+const currentScrollPosition = computed({
+  get: () => scrollPositions.value[active.value] || 0,
+  set: (val) => {
+    if (active.value) scrollPositions.value[active.value] = val;
+  },
+});
+
+/* Liste des thèmes */
 const themeNames = [
   "cyberpunk",
   "luxury",
@@ -172,35 +213,58 @@ const themeNames = [
   "rich-black",
 ];
 
-// commandes exposées à la palette
+/* Console commands (computed so it can use themeNames) */
+const consoleCommands = computed(() => [
+  { name: "help", desc: "Afficher l'aide" },
+  { name: "theme list", desc: "Lister les thèmes" },
+  ...themeNames.map((t) => ({ name: `theme set ${t}`, desc: `Thème: ${t}` })),
+  { name: "open home", desc: "Ouvrir: home" },
+  { name: "open about", desc: "Ouvrir: about" },
+  { name: "open projects", desc: "Ouvrir: projects" },
+  { name: "open github", desc: "Ouvrir: github" },
+  { name: "ascii vraith", desc: "ASCII secret" },
+  { name: "roll", desc: "Lancer un d20" },
+  { name: "clear", desc: "Effacer la console" },
+  { name: "exit", desc: "Fermer la console" },
+  { name: "open contact", desc: "Ouvrir: contact" },
+]);
+
+/* Palette commands (static) */
 const paletteCommands = [
   ...["home", "about", "projects", "github"].map((n) => ({
     name: `open ${n}`,
     desc: `Ouvrir: ${n}`,
   })),
   { name: "theme list", desc: "Lister les thèmes" },
-  ...themeNames.map((t) => ({
-    name: `theme set ${t}`,
-    desc: `Thème: ${t}`,
-  })),
+  ...themeNames.map((t) => ({ name: `theme set ${t}`, desc: `Thème: ${t}` })),
   { name: "help", desc: "Aide palette" },
 ];
 
-function open(f) {
-  // Crée un objet tab avec le composant associé
-  const tab = {
-    id: f.id,
-    label: f.label,
-    component: componentMap[f.id] || "div",
-  };
+/* Utility: decide whether to use CustomScrollbar
+   We'll enable it on non-mobile widths. A quick heuristic: window.innerWidth >= 768 */
+const useCustomScrollbar = computed(() => {
+  return typeof window !== "undefined" ? window.innerWidth >= 768 : true;
+});
 
-  if (!tabs.value.find((t) => t.id === f.id)) tabs.value.push(tab);
-  active.value = f.id;
+/* Tab helpers */
+function openFileObject(tabObj) {
+  // create tab object compatible with tabs array
+  const tab = {
+    id: tabObj.id,
+    label: tabObj.label || tabObj.id,
+    component: componentMap[tabObj.id] || "div",
+  };
+  if (!tabs.value.find((t) => t.id === tab.id)) tabs.value.push(tab);
+  active.value = tab.id;
+}
+
+function open(f) {
+  // called from older code using files entries (file object)
+  openFileObject(f);
 }
 
 function openFile(f) {
   open(f);
-  // Ferme le drawer mobile après sélection
   mobileExplorerOpen.value = false;
 }
 
@@ -211,12 +275,16 @@ function close(id) {
 
 const activeTab = computed(() => tabs.value.find((t) => t.id === active.value));
 
+function handleScroll(position) {
+  if (active.value) scrollPositions.value[active.value] = position;
+}
+
+/* Theme functions */
 function setTheme(name) {
   if (!themeNames.includes(name)) return false;
   document.documentElement.setAttribute("data-theme", name);
   return true;
 }
-
 function toggleTheme() {
   const root = document.documentElement;
   const order = ["cyberpunk", "luxury", "brand", "neutral", "brand-dark"];
@@ -224,9 +292,10 @@ function toggleTheme() {
   root.setAttribute("data-theme", order[(i + 1) % order.length]);
 }
 
+/* Command handler (used by Palette & other places) */
 function handleCmd(cmd) {
   let m;
-  if ((m = cmd.match(/^open\s+(home|about|projects|github)$/i))) {
+  if ((m = cmd.match(/^open\s+(home|about|projects|github|contact)$/i))) {
     const id = m[1].toLowerCase();
     const f = files.find((f) => f.id === id);
     if (f) open(f);
@@ -239,52 +308,94 @@ function handleCmd(cmd) {
   }
   if (/^theme\s+list$/i.test(cmd)) {
     const list = `Themes: ${themeNames.join(", ")}`;
-    if (!consoleOpen.value) console.log(list);
     window.dispatchEvent(
       new CustomEvent("vraith-console-print", { detail: list })
     );
     return;
   }
   if (/^help$/i.test(cmd)) {
-    console.log("Commands: open <file>, theme set <n>, theme list, help");
+    console.log("Commands: open <file>, theme set <name>, theme list, help");
     return;
   }
 }
 
+/* Event listeners setup & teardown */
+function onKeydown(e) {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+    e.preventDefault();
+    paletteOpen.value = true;
+  }
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "j") {
+    e.preventDefault();
+    consoleOpen.value = !consoleOpen.value;
+  }
+  if (e.key === "Escape") {
+    if (paletteOpen.value) paletteOpen.value = false;
+    else if (consoleOpen.value) consoleOpen.value = false;
+    else if (mobileExplorerOpen.value) mobileExplorerOpen.value = false;
+    else mode.value = "NORMAL";
+  }
+  if (e.key === "i" && mode.value === "NORMAL") mode.value = "INSERT";
+}
+
+function onOpenFileEvent(e) {
+  const id = e?.detail?.id;
+  if (!id) return console.warn("[console] open-file sans id");
+  const f = files.find((x) => x.id === id);
+  if (!f) return console.warn(`[console] fichier introuvable: ${id}`);
+  open(f);
+}
+
+function onThemeListRequest() {
+  window.dispatchEvent(
+    new CustomEvent("vraith-console-print", {
+      detail: "Themes: " + themeNames.join(", "),
+    })
+  );
+}
+
+function onIntroComplete() {
+  introCompleted.value = true;
+  // Fermer home si présent
+  const homeTab = tabs.value.find((t) => t.id === "home");
+  if (homeTab) close("home");
+  // Ouvrir about
+  const aboutFile = files.find((f) => f.id === "about");
+  if (aboutFile) open(aboutFile);
+}
+
 onMounted(() => {
-  window.addEventListener("keydown", (e) => {
-    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
-      e.preventDefault();
-      paletteOpen.value = true;
-    }
-    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "j") {
-      e.preventDefault();
-      consoleOpen.value = !consoleOpen.value;
-    }
-    if (e.key === "Escape") {
-      if (paletteOpen.value) paletteOpen.value = false;
-      else if (consoleOpen.value) consoleOpen.value = false;
-      else if (mobileExplorerOpen.value) mobileExplorerOpen.value = false;
-      else mode.value = "NORMAL";
-    }
-    if (e.key === "i" && mode.value === "NORMAL") mode.value = "INSERT";
-  });
+  // Intro status from localStorage
+  const hasCompletedIntro = localStorage.getItem("vraith-intro-completed");
+  introCompleted.value = hasCompletedIntro === "true";
 
-  window.addEventListener("open-file", (e) => {
-    const id = e?.detail?.id;
-    if (!id) return console.warn("[console] open-file sans id");
-    const f = files.find((x) => x.id === id);
-    if (!f) return console.warn(`[console] fichier introuvable: ${id}`);
-    open(f);
-  });
+  // If intro not completed, open home; else open about
+  if (!introCompleted.value) {
+    const homeFile = files.find((f) => f.id === "home");
+    if (homeFile) open(homeFile);
+  } else {
+    const aboutFile = files.find((f) => f.id === "about");
+    if (aboutFile) open(aboutFile);
+  }
 
-  window.addEventListener("theme-list-request", () => {
-    window.dispatchEvent(
-      new CustomEvent("vraith-console-print", {
-        detail: "Themes: " + themeNames.join(", "),
-      })
-    );
+  window.addEventListener("keydown", onKeydown);
+  window.addEventListener("open-file", onOpenFileEvent);
+  window.addEventListener("theme-list-request", onThemeListRequest);
+  window.addEventListener("intro-complete", onIntroComplete);
+
+  // Keep currentScrollPosition in sync when resizing (if using CustomScrollbar)
+  window.addEventListener("resize", () => {
+    // triggers recompute of useCustomScrollbar (since we read window.innerWidth directly),
+    // but Vue computed doesn't auto-react to window.innerWidth - this is a simple heuristic:
+    // we won't do anything here, it's only to ensure no runtime errors during resize.
   });
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("keydown", onKeydown);
+  window.removeEventListener("open-file", onOpenFileEvent);
+  window.removeEventListener("theme-list-request", onThemeListRequest);
+  window.removeEventListener("intro-complete", onIntroComplete);
 });
 </script>
 
@@ -345,5 +456,22 @@ onMounted(() => {
   .mobile-drawer-open {
     transform: translateX(0);
   }
+
+  .header-area button[title="Palette (⌘K)"] {
+    display: none !important;
+  }
+}
+
+/* Small visual helpers */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Optional: ensure custom scrollbar container fills area without overflow jumps */
+.main-area > .custom-scrollbar,
+.main-area > section {
+  height: calc(100% - 2rem);
 }
 </style>
