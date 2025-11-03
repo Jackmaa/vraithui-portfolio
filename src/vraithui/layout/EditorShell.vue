@@ -43,22 +43,18 @@
       </button>
 
       <!-- Desktop palette shortcut -->
-      <div v-show="!showingIntro" class="flex space-between w-full">
-        <button
-          class="sm:hidden md:inline-flex btn btn-ghost btn-sm"
-          @click="paletteOpen = true"
-          title="Palette (⌘K)"
-        >
-          ⌘K
-        </button>
-        <div class="opacity-70 text-sm truncate">
-          VraithUI · Nvim/Cursor shell
-        </div>
-        <div class="ml-auto flex items-center gap-3">
-          <button class="btn btn-ghost btn-sm" @click="toggleTheme">
-            Theme
-          </button>
-        </div>
+      <button
+        class="sm:hidden md:inline-flex btn btn-ghost btn-sm"
+        @click="paletteOpen = true"
+        title="Palette (⌘K)"
+      >
+        ⌘K
+      </button>
+      <div class="opacity-70 text-sm truncate">
+        VraithUI · Nvim/Cursor shell
+      </div>
+      <div class="ml-auto flex items-center gap-3">
+        <button class="btn btn-ghost btn-sm" @click="toggleTheme">Theme</button>
       </div>
     </header>
 
