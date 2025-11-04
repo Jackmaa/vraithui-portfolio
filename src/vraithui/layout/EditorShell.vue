@@ -17,13 +17,12 @@
 
     <!-- Header -->
     <header
+      v-show="!showingIntro"
       class="header-area flex items-center gap-3 px-4 border-b border-[rgb(var(--border))]"
-      :aria-hidden="showingIntro ? 'true' : 'false'"
     >
-      <!-- Burger menu (mobile only) -->
+      <!-- Burger menu (mobile only, < 768px) - removed v-show, only use class -->
       <button
-        v-show="!showingIntro"
-        class="md:hidden btn btn-ghost btn-sm"
+        class="burger-menu md:hidden btn btn-ghost btn-sm"
         @click="mobileExplorerOpen = !mobileExplorerOpen"
         aria-label="Toggle file explorer"
       >
@@ -42,14 +41,15 @@
         </svg>
       </button>
 
-      <!-- Desktop palette shortcut -->
+      <!-- Desktop palette shortcut (desktop only, >= 768px) -->
       <button
-        class="sm:hidden md:inline-flex btn btn-ghost btn-sm"
+        class="palette-button hidden md:inline-flex btn btn-ghost btn-sm"
         @click="paletteOpen = true"
         title="Palette (⌘K)"
       >
         ⌘K
       </button>
+
       <div class="opacity-70 text-sm truncate">
         VraithUI · Nvim/Cursor shell
       </div>
@@ -67,6 +67,7 @@
 
     <!-- Explorer -->
     <aside
+      v-show="!showingIntro"
       class="explorer-area border-r border-[rgb(var(--border))] overflow-auto scroll-theme transition-transform"
       :class="{
         'mobile-drawer-open': mobileExplorerOpen,
@@ -124,6 +125,7 @@
 
     <!-- Mobile Controls (FABs) -->
     <MobileControls
+      v-show="!showingIntro"
       :explorerOpen="mobileExplorerOpen"
       :consoleOpen="consoleOpen"
       :paletteOpen="paletteOpen"
@@ -236,15 +238,13 @@ const paletteCommands = [
   { name: "help", desc: "Aide palette" },
 ];
 
-/* Utility: decide whether to use CustomScrollbar
-   We'll enable it on non-mobile widths. A quick heuristic: window.innerWidth >= 768 */
+/* Utility: decide whether to use CustomScrollbar */
 const useCustomScrollbar = computed(() => {
   return typeof window !== "undefined" ? window.innerWidth >= 768 : true;
 });
 
 /* Tab helpers */
 function openFileObject(tabObj) {
-  // create tab object compatible with tabs array
   const tab = {
     id: tabObj.id,
     label: tabObj.label || tabObj.id,
@@ -255,7 +255,6 @@ function openFileObject(tabObj) {
 }
 
 function open(f) {
-  // called from older code using files entries (file object)
   openFileObject(f);
 }
 
@@ -281,6 +280,7 @@ function setTheme(name) {
   document.documentElement.setAttribute("data-theme", name);
   return true;
 }
+
 function toggleTheme() {
   const root = document.documentElement;
   const order = ["cyberpunk", "luxury", "brand", "neutral", "brand-dark"];
@@ -288,7 +288,7 @@ function toggleTheme() {
   root.setAttribute("data-theme", order[(i + 1) % order.length]);
 }
 
-/* Command handler (used by Palette & other places) */
+/* Command handler */
 function handleCmd(cmd) {
   let m;
   if ((m = cmd.match(/^open\s+(home|about|projects|github|contact)$/i))) {
@@ -310,12 +310,12 @@ function handleCmd(cmd) {
     return;
   }
   if (/^help$/i.test(cmd)) {
-    console.log("Commands: open <file>, theme set <name>, theme list, help");
+    console.log("Commands: open <file>, theme set <n>, theme list, help");
     return;
   }
 }
 
-/* Event listeners setup & teardown */
+/* Event listeners */
 function onKeydown(e) {
   if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
     e.preventDefault();
@@ -352,20 +352,17 @@ function onThemeListRequest() {
 
 function onIntroComplete() {
   introCompleted.value = true;
-  // Fermer home si présent
+  localStorage.setItem("vraith-intro-completed", "true");
   const homeTab = tabs.value.find((t) => t.id === "home");
   if (homeTab) close("home");
-  // Ouvrir about
   const aboutFile = files.find((f) => f.id === "about");
   if (aboutFile) open(aboutFile);
 }
 
 onMounted(() => {
-  // Intro status from localStorage
   const hasCompletedIntro = localStorage.getItem("vraith-intro-completed");
   introCompleted.value = hasCompletedIntro === "true";
 
-  // If intro not completed, open home; else open about
   if (!introCompleted.value) {
     const homeFile = files.find((f) => f.id === "home");
     if (homeFile) open(homeFile);
@@ -378,13 +375,6 @@ onMounted(() => {
   window.addEventListener("open-file", onOpenFileEvent);
   window.addEventListener("theme-list-request", onThemeListRequest);
   window.addEventListener("intro-complete", onIntroComplete);
-
-  // Keep currentScrollPosition in sync when resizing (if using CustomScrollbar)
-  window.addEventListener("resize", () => {
-    // triggers recompute of useCustomScrollbar (since we read window.innerWidth directly),
-    // but Vue computed doesn't auto-react to window.innerWidth - this is a simple heuristic:
-    // we won't do anything here, it's only to ensure no runtime errors during resize.
-  });
 });
 
 onBeforeUnmount(() => {
@@ -400,7 +390,7 @@ onBeforeUnmount(() => {
   grid-template-rows: 1fr !important;
   grid-template-columns: 1fr !important;
 }
-/* Grid responsive */
+
 .responsive-grid {
   grid-template-areas:
     "header header"
@@ -452,20 +442,33 @@ onBeforeUnmount(() => {
   .mobile-drawer-open {
     transform: translateX(0);
   }
-
-  .header-area button[title="Palette (⌘K)"] {
-    display: none !important;
-  }
 }
 
-/* Small visual helpers */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Optional: ensure custom scrollbar container fills area without overflow jumps */
+/* Ensure mutually exclusive buttons */
+.burger-menu {
+  display: flex;
+}
+
+.palette-button {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .burger-menu {
+    display: none !important;
+  }
+
+  .palette-button {
+    display: inline-flex !important;
+  }
+}
+
 .main-area > .custom-scrollbar,
 .main-area > section {
   height: calc(100% - 2rem);
