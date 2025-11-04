@@ -9,9 +9,7 @@
       <div class="grid grid-cols-2 gap-3">
         <div v-for="(value, key) in frontmatter" :key="key">
           <span class="opacity-60">{{ key }}:</span>
-          <span class="ml-2 text-[rgb(var(--accent))] line-clamp-1">{{
-            value
-          }}</span>
+          <span class="ml-2 text-[rgb(var(--accent))]">{{ value }}</span>
         </div>
       </div>
       <div class="text-xs opacity-60 mt-2">---</div>
