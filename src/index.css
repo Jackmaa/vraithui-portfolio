@@ -8,6 +8,29 @@ body {
 }
 
 :root {
+  /* Fallbacks si un thÃ¨me ne dÃ©finit pas ces variables */
+  --panel: 24 24 29;
+  --panel-2: 18 18 22;
+  --accent: 0 255 255;
+
+  /* Couleurs scrollbar dÃ©rivÃ©es */
+  --scroll-track: color-mix(in oklab, rgb(var(--panel)) 88%, rgb(0 0 0) 12%);
+  --scroll-thumb: color-mix(
+    in oklab,
+    rgb(var(--panel-2)) 70%,
+    rgb(var(--accent)) 30%
+  );
+  --scroll-thumb-hover: color-mix(
+    in oklab,
+    rgb(var(--scroll-thumb)) 75%,
+    rgb(var(--accent)) 25%
+  );
+  --scroll-thumb-active: color-mix(
+    in oklab,
+    rgb(var(--scroll-thumb)) 55%,
+    rgb(var(--accent)) 45%
+  );
+
   /* déjà  présent : --bg, --fg, --panel, --accent, etc. */
   --mode-n: 99 102 241; /* Normal (indigo)    */
   --mode-i: 34 197 94; /* Insert (green)     */
@@ -23,51 +46,62 @@ body {
   --pc: 255 255 255;
   --s: 14 165 233; /* sky 500 */
   --sc: 0 0 0;
-  --bg: 255 255 255; /* base background */
+  --bg: 250 250 250; /* fond légèrement gris au lieu de blanc pur */
   --fg: 15 23 42; /* slate 900 */
   --in: 14 165 233; /* info */
   --su: 34 197 94; /* success */
   --wa: 245 158 11; /* warning */
   --er: 239 68 68; /* error */
 
-  /* VraithUI adapter (consommÃ© par ton layout) */
-  --accent: var(--p);
-  --border: 0 0 0 / 0.07; /* lÃ©ger pour fond clair */
-
-  /* Panneaux (gÃ©nÃ©rÃ©s Ã  partir du bg via color-mix pour rester cohÃ©rents) */
-  --panel: color-mix(in oklab, rgb(var(--bg)) 90%, rgb(0 0 0) 10%);
-  --panel-2: color-mix(in oklab, rgb(var(--bg)) 82%, rgb(0 0 0) 18%);
-
-  /* Modes Vim : on garde une cohÃ©rence chromatique */
-  --mode-n: var(--p);
-  --mode-i: 34 197 94; /* green 500 */
-  --mode-v: 244 114 182; /* pink 400 */
-  --mode-r: 239 68 68; /* red 500 */
-}
-
-/* ========== NEUTRAL (clair)========== */
-[data-theme="neutral"] {
-  /* daisy-like */
-  --p: 64 64 64; /* neutral 700 - plus foncé pour meilleur contraste */
-  --pc: 255 255 255;
-  --s: 115 115 115; /* neutral 500 - plus foncé aussi */
-  --sc: 255 255 255;
-  --bg: 255 255 255; /* blanc pur au lieu de 250 */
-  --fg: 10 10 10; /* presque noir pour contraste maximal */
-  --in: 59 130 246; /* blue 500 */
-  --su: 34 197 94; /* green 500 */
-  --wa: 234 179 8; /* yellow 500 */
-  --er: 239 68 68; /* red 500 */
-
   /* VraithUI adapter */
-  --accent: 82 82 82; /* neutral 600 - accent visible */
+  --accent: var(--p);
   --border: 0 0 0 / 0.12; /* bordures plus visibles */
 
-  /* Panels plus marqués */
-  --panel: 245 245 245; /* neutral 100 */
-  --panel-2: 229 229 229; /* neutral 200 */
+  /* Panneaux - VRAIMENT plus foncés maintenant */
+  --panel: 226 232 240; /* slate-200 */
+  --panel-2: 203 213 225; /* slate-300 */
 
-  --mode-n: 82 82 82; /* neutral 600 */
+  /* Modes Vim */
+  --mode-n: var(--p);
+  --mode-i: 34 197 94;
+  --mode-v: 244 114 182;
+  --mode-r: 239 68 68;
+}
+
+/* Scrollbar pour Brand clair */
+[data-theme="brand"] .scroll-theme::-webkit-scrollbar-track {
+  background: rgb(226, 232, 240); /* slate-200 */
+}
+[data-theme="brand"] .scroll-theme::-webkit-scrollbar-thumb {
+  background: rgb(234, 88, 12); /* orange 600 */
+}
+[data-theme="brand"] .scroll-theme::-webkit-scrollbar-thumb:hover {
+  background: rgb(194, 65, 12); /* orange 700 */
+}
+
+/* ========== NEUTRAL (clair) ========== */
+[data-theme="neutral"] {
+  /* daisy-like */
+  --p: 64 64 64;
+  --pc: 255 255 255;
+  --s: 115 115 115;
+  --sc: 255 255 255;
+  --bg: 250 250 250; /* fond légèrement gris */
+  --fg: 10 10 10; /* presque noir */
+  --in: 59 130 246;
+  --su: 34 197 94;
+  --wa: 234 179 8;
+  --er: 239 68 68;
+
+  /* VraithUI adapter */
+  --accent: 82 82 82;
+  --border: 0 0 0 / 0.15;
+
+  /* Panels VRAIMENT plus foncés */
+  --panel: 229 229 229; /* neutral-200 */
+  --panel-2: 212 212 212; /* neutral-300 */
+
+  --mode-n: 82 82 82;
   --mode-i: 34 197 94;
   --mode-v: 244 114 182;
   --mode-r: 239 68 68;
@@ -366,33 +400,6 @@ body {
   --sc: 197 168 128;
 }
 
-/* ===== 1) Variables scrollbar dÃ©rivÃ©es du thÃ¨me ===== */
-:root,
-[data-theme] {
-  /* Fallbacks si un thÃ¨me ne dÃ©finit pas ces variables */
-  --panel: 24 24 29;
-  --panel-2: 18 18 22;
-  --accent: 0 255 255;
-
-  /* Couleurs scrollbar dÃ©rivÃ©es */
-  --scroll-track: color-mix(in oklab, rgb(var(--panel)) 88%, rgb(0 0 0) 12%);
-  --scroll-thumb: color-mix(
-    in oklab,
-    rgb(var(--panel-2)) 70%,
-    rgb(var(--accent)) 30%
-  );
-  --scroll-thumb-hover: color-mix(
-    in oklab,
-    rgb(var(--scroll-thumb)) 75%,
-    rgb(var(--accent)) 25%
-  );
-  --scroll-thumb-active: color-mix(
-    in oklab,
-    rgb(var(--scroll-thumb)) 55%,
-    rgb(var(--accent)) 45%
-  );
-}
-
 /* Option: tu peux affiner par thÃ¨me si besoin
 
 */
@@ -416,8 +423,6 @@ body {
 .scroll-theme::-webkit-scrollbar-corner {
   background: transparent;
 }
-
-/* ===== ThÃ¨mes fixes ===== */
 
 /* Cyberpunk sombre */
 [data-theme="cyberpunk"] .scroll-theme::-webkit-scrollbar-track {
