@@ -448,12 +448,24 @@ async function handleSubmit() {
   isSubmitting.value = true;
 
   try {
-    // Simulate API call (remplace par ton vrai endpoint)
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    // Appel à l'API Vercel
+    const response = await fetch("/api/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: form.name,
+        email: form.email,
+        message: form.message,
+      }),
+    });
 
-    // Pour l'instant, on simule juste un succès
-    // Tu peux remplacer par un vrai appel API ou mailto:
-    console.log("Form submitted:", form);
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Erreur lors de l'envoi");
+    }
 
     submitSuccess.value = true;
 
