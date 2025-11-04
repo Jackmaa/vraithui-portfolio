@@ -181,8 +181,16 @@ const languages = ref([]);
 const loading = ref(true);
 const error = ref(null);
 
-// Timeline data (customize this with your real journey)
+// Timeline data
 const timeline = ref([
+  {
+    hash: "1d6e3f7",
+    date: "Novembre 2025",
+    title: "Vraith-Portfolio",
+    description: "Déploiement de mon portfolio",
+    technologies: ["Vue.js", "Vite", "Tailwind CSS", "Vercel"],
+    color: "#ffd700",
+  },
   {
     hash: "7c4d9a1",
     date: "Octobre 2025",
