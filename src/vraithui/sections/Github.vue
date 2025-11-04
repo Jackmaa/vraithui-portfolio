@@ -69,7 +69,7 @@
             <!-- Links -->
             <div class="pt-4 border-t border-[rgb(var(--border))] flex gap-3">
               <a
-                href="stats.html_url"
+                href="https://github.com/Jackmaa"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="action-btn"
