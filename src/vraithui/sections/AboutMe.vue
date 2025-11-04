@@ -3,13 +3,15 @@
     <!-- Frontmatter (métadonnées en haut) -->
     <div
       v-if="frontmatter"
-      class="frontmatter mb-8 p-4 rounded-lg border border-[rgb(var(--border))] bg-[rgb(var(--panel))]"
+      class="frontmatter mb-8 p-2 rounded-lg border border-[rgb(var(--border))] bg-[rgb(var(--panel))]"
     >
       <div class="text-xs opacity-60 mb-2">--- METADATA ---</div>
       <div class="grid grid-cols-2 gap-3">
         <div v-for="(value, key) in frontmatter" :key="key">
           <span class="opacity-60">{{ key }}:</span>
-          <span class="ml-2 text-[rgb(var(--accent))]">{{ value }}</span>
+          <span class="ml-2 text-[rgb(var(--accent))] line-clamp-1">{{
+            value
+          }}</span>
         </div>
       </div>
       <div class="text-xs opacity-60 mt-2">---</div>
