@@ -6,7 +6,7 @@
       class="frontmatter mb-8 p-4 rounded-lg border border-[rgb(var(--border))] bg-[rgb(var(--panel))]"
     >
       <div class="text-xs opacity-60 mb-3">--- METADATA ---</div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+      <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-3">
         <div
           v-for="(value, key) in frontmatter"
           :key="key"
