@@ -6,13 +6,14 @@
       class="frontmatter mb-8 p-4 rounded-lg border border-[rgb(var(--border))] bg-[rgb(var(--panel))]"
     >
       <div class="text-xs opacity-60 mb-3">--- METADATA ---</div>
-      <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-3">
+      <div class="grid grid-cols-2 gap-3">
         <div
           v-for="(value, key) in frontmatter"
           :key="key"
-          class="flex flex-col sm:flex-row sm:items-start gap-1"
+          class="flex flex-col gap-1"
+          :class="isLongField(key, value) ? 'col-span-2' : ''"
         >
-          <span class="opacity-60 flex-shrink-0">{{ key }}:</span>
+          <span class="opacity-60 text-xs">{{ key }}:</span>
           <span class="text-[rgb(var(--accent))] break-all">{{ value }}</span>
         </div>
       </div>
@@ -39,6 +40,14 @@ const frontmatter = ref(null);
 const markdownContent = ref("");
 const loading = ref(true);
 const error = ref(null);
+
+// Détecter si un champ est "long" et devrait prendre 2 colonnes
+function isLongField(key, value) {
+  const longKeys = ["email", "github", "linkedin", "website", "url"];
+  const isLongKey = longKeys.includes(key.toLowerCase());
+  const isLongValue = String(value).length > 25;
+  return isLongKey || isLongValue;
+}
 
 // Convertir le Markdown en HTML sécurisé
 const htmlContent = computed(() => {
