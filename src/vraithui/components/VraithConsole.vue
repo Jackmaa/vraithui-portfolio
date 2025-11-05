@@ -136,7 +136,7 @@ function run() {
     const theme = cmd.split(/\s+/).pop();
     document.documentElement.setAttribute("data-theme", theme);
     println(`✓ Theme switched to: ${theme}`);
-  } else if (/^open\s+(home|about|projects|github)$/i.test(cmd)) {
+  } else if (/^open\s+(home|about|projects|github|contact)$/i.test(cmd)) {
     const section = cmd.split(/\s+/).pop();
     println(`✓ Opening: ${section}`);
     window.dispatchEvent(
