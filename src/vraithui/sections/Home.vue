@@ -109,12 +109,12 @@
 
       <!-- Welcome message (after completion) -->
       <div v-else-if="phase === 'welcome'" class="text-center space-y-4">
-        <pre class="text-[rgb(var(--accent))] text-sm glow-text">
-  __     __         _ _   _   _
-  \ \   / / _ __ __| (_)_| |_
-   \ \ / / '_/ _` | |  _| ' \
-    \ V /  __/ |  | | |_| |_| |
-     \_/ \___|_|  |_|\__|\\__|_|</pre
+        <pre class="text-[rgb(var(--accent))] text-sm glow-text leading-tight">
+ __     __        _ _   _     
+ \ \   / / _ __ _(_) |_| |__  
+  \ \ / / '_/ _` | |  _| '_ \ 
+   \ V /| | | (_| | | |_| | | |
+    \_/ |_|  \__,_|_|\__|_| |_|</pre
         >
 
         <div class="text-lg text-[rgb(var(--accent))]">Access Granted</div>

@@ -3,10 +3,13 @@
     class="bg-[rgb(var(--panel))] backdrop-blur border-t border-[rgb(var(--border))] text-[rgb(var(--fg))] flex flex-col"
   >
     <div
-      class="p-2 font-mono text-xs opacity-70 border-b border-[rgb(var(--border))]"
+      class="p-2 font-mono text-xs opacity-70 border-b border-[rgb(var(--border))] flex items-center justify-between"
     >
-      Vraith Console — type
-      <code class="text-[rgb(var(--accent))]">help</code> for commands
+      <span>
+        Vraith Console — type
+        <code class="text-[rgb(var(--accent))]">help</code> for commands
+      </span>
+      <span class="text-[10px] opacity-50">{{ logs.length }} lines</span>
     </div>
 
     <!-- CustomScrollbar avec ref pour contrôler le scroll -->
@@ -48,10 +51,12 @@
 </template>
 
 <script setup>
-import { ref, nextTick, onMounted, watch } from "vue";
+import { ref, nextTick, onMounted, onBeforeUnmount } from "vue";
 import CustomScrollbar from "./CustomScrollbar.vue";
 
-const props = defineProps({ commands: { type: Array, default: () => [] } });
+const props = defineProps({
+  commands: { type: Array, default: () => [] },
+});
 const emit = defineEmits(["close"]);
 
 const logs = ref([]);
@@ -62,15 +67,45 @@ const historyIndex = ref(-1);
 const scrollbarRef = ref(null);
 const inputRef = ref(null);
 
+// Liste complète des thèmes (19 avec Nord et Dracula)
+const availableThemes = [
+  "nord",
+  "dracula",
+  "cyberpunk",
+  "luxury",
+  "brand",
+  "brand-dark",
+  "neutral",
+  "velvet-charcoal",
+  "persian-plum",
+  "bordeaux-silk",
+  "regal-gold",
+  "velvet-indigo",
+  "deep-jungle",
+  "crimson-peach",
+  "imperial-blue",
+  "mystic-jade",
+  "lush-merlot",
+  "oxford-maize",
+  "rich-black",
+];
+
+// Event listener pour l'impression externe
+function handleConsolePrint(e) {
+  if (e?.detail) println(String(e.detail));
+}
+
 onMounted(() => {
-  window.addEventListener("vraith-console-print", (e) => {
-    if (e?.detail) println(String(e.detail));
-  });
+  window.addEventListener("vraith-console-print", handleConsolePrint);
 
   // Focus automatique sur l'input
   nextTick(() => {
     inputRef.value?.focus();
   });
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("vraith-console-print", handleConsolePrint);
 });
 
 function println(s) {
@@ -102,12 +137,32 @@ function historyDown() {
 
 const help = () => {
   println("Available commands:");
-  println("─────────────────────────────────────");
-  props.commands.forEach((c) => {
-    const name = (c.name || c.key).padEnd(25);
-    println(`  ${name} ${c.desc || c.label || ""}`);
-  });
-  println("─────────────────────────────────────");
+  println("─────────────────────────────────────────────────────────");
+  println("  Navigation:");
+  println("    open home              Open home page");
+  println("    open about             Open about page");
+  println("    open projects          Open projects page");
+  println("    open github            Open GitHub page");
+  println("    open contact           Open contact page");
+  println("");
+  println("  Theming:");
+  println("    theme list             List all available themes");
+  println("    theme set <name>       Switch to a specific theme");
+  println("");
+  println("  Utilities:");
+  println("    help                   Show this help message");
+  println("    ascii vraith           Display ASCII art");
+  println("    roll [dX]              Roll a dice (default: d20)");
+  println("    clear / cls            Clear console output");
+  println("    whoami                 Display user info");
+  println("    pwd                    Print working directory");
+  println("    exit / quit            Close console");
+  println("─────────────────────────────────────────────────────────");
+  println("");
+  println("Tips:");
+  println("  • Use ↑/↓ arrows to navigate command history");
+  println("  • Press Tab for command completion (coming soon)");
+  println("  • Press Ctrl+J to toggle console");
 };
 
 function run() {
@@ -130,26 +185,68 @@ function run() {
   if (cmd === "help") {
     help();
   } else if (/^theme\s+list$/i.test(cmd)) {
-    println("Available themes:");
-    window.dispatchEvent(new CustomEvent("theme-list-request"));
+    println("Available themes (19 total):");
+    println("─────────────────────────────────────");
+    println("Popular themes:");
+    println("  • nord           Arctic, elegant, & harmonious");
+    println("  • dracula        Dark with vibrant accents");
+    println("  • cyberpunk      Neon cyan on dark blue");
+    println("  • luxury         Gold on black - premium");
+    println("");
+    println("Light themes:");
+    println("  • brand          Orange accent (light)");
+    println("  • neutral        Minimalist gray (light)");
+    println("  • mystic-jade    Jade with violet (light)");
+    println("");
+    println("Dark themes:");
+    println("  • brand-dark     Orange accent (dark)");
+    println("  • velvet-charcoal  Cream on charcoal");
+    println("  • persian-plum   Ivory on plum");
+    println("  • bordeaux-silk  Silver on bordeaux");
+    println("  • regal-gold     Gold on onyx");
+    println("  • velvet-indigo  Platinum on indigo");
+    println("  • deep-jungle    Light olive on jungle green");
+    println("  • crimson-peach  Peach on crimson");
+    println("  • imperial-blue  Vintage rose on imperial blue");
+    println("  • lush-merlot    Gold on merlot");
+    println("  • oxford-maize   Maize on Oxford blue");
+    println("  • rich-black     Vivid yellow on rich black");
+    println("─────────────────────────────────────");
+    println(`Total: ${availableThemes.length} themes`);
+    println("");
+    println("Usage: theme set <name>");
   } else if (/^theme\s+set\s+([a-z0-9\-]+)$/i.test(cmd)) {
     const theme = cmd.split(/\s+/).pop();
-    document.documentElement.setAttribute("data-theme", theme);
-    println(`✓ Theme switched to: ${theme}`);
+    if (availableThemes.includes(theme)) {
+      document.documentElement.setAttribute("data-theme", theme);
+      println(`✓ Theme switched to: ${theme}`);
+
+      // Messages personnalisés pour certains thèmes
+      if (theme === "nord") {
+        println(`  🌌 Welcome to the Arctic - enjoy the harmony!`);
+      } else if (theme === "dracula") {
+        println(`  🧛 Welcome to the night - embrace the darkness!`);
+      } else if (theme === "cyberpunk") {
+        println(`  ⚡ Neon lights activated - welcome to the future!`);
+      }
+    } else {
+      println(`✗ Unknown theme: '${theme}'`);
+      println(`  Type 'theme list' to see available themes`);
+    }
   } else if (/^open\s+(home|about|projects|github|contact)$/i.test(cmd)) {
     const section = cmd.split(/\s+/).pop();
     println(`✓ Opening: ${section}`);
     window.dispatchEvent(
       new CustomEvent("open-file", { detail: { id: section } })
     );
-  } else if (cmd === "ascii vraith") {
+  } else if (cmd === "ascii vraith" || cmd === "ascii") {
     println(`
-  __     __        _ _   _   _
-  \\ \\   / /__ _ __(_) |_| |_(_)
-   \\ \\ / / _ \\ '__| | __| __| |
-    \\ V /  __/ |  | | |_| |_| |
-     \\_/ \\___|_|  |_|\\__|\\__|_|
-    `);
+ __     __        _ _   _     
+ \\ \\   / / _ __ _(_) |_| |__  
+  \\ \\ / / '_/ _\`| |  __| '_  \\ 
+   \\ V /| | | (_| | | |_| | | |
+    \\_/ |_|  \\__,_|_|\\__|_| |_|
+  `);
   } else if (cmd === "clear" || cmd === "cls") {
     logs.value = [];
   } else if (/^roll(\s+d(\d+))?$/i.test(cmd)) {
@@ -157,12 +254,26 @@ function run() {
     const dice = match ? parseInt(match[1]) : 20;
     const result = Math.floor(Math.random() * dice) + 1;
     println(`🎲 You rolled d${dice}: ${result}`);
+    if (result === dice) {
+      println(`   ⭐ Critical success!`);
+    } else if (result === 1) {
+      println(`   💀 Critical failure!`);
+    }
   } else if (cmd === "exit" || cmd === "quit") {
-    emit("close");
+    println("✓ Closing console...");
+    setTimeout(() => {
+      emit("close");
+    }, 300);
   } else if (cmd === "whoami") {
     println("vraith@portfolio");
   } else if (cmd === "pwd") {
     println("/home/vraith/portfolio");
+  } else if (cmd === "date") {
+    println(new Date().toLocaleString());
+  } else if (cmd === "version" || cmd === "ver") {
+    println("Vraith Portfolio v2.1");
+    println("Built with Vue 3 + Vite");
+    println("19 themes available (including Nord & Dracula)");
   } else {
     println(`✗ Command not found: '${cmd}'`);
     println(`  Type 'help' for available commands`);
@@ -178,5 +289,21 @@ code {
   padding: 2px 4px;
   border-radius: 3px;
   background: rgb(var(--accent) / 0.2);
+}
+
+/* Animation pour les nouvelles lignes */
+.space-y-1 > div {
+  animation: slideIn 0.2s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 </style>

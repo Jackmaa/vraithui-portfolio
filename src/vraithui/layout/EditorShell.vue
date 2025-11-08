@@ -20,7 +20,7 @@
       v-show="!showingIntro"
       class="header-area flex items-center gap-3 px-4 border-b border-[rgb(var(--border))]"
     >
-      <!-- Burger menu (mobile only, < 768px) - removed v-show, only use class -->
+      <!-- Burger menu (mobile only, < 768px) -->
       <button
         class="burger-menu md:hidden btn btn-ghost btn-sm"
         @click="mobileExplorerOpen = !mobileExplorerOpen"
@@ -190,8 +190,10 @@ const currentScrollPosition = computed({
   },
 });
 
-/* Liste des thèmes */
+/* Liste complète des thèmes (19 thèmes maintenant avec Nord et Dracula) */
 const themeNames = [
+  "nord",
+  "dracula",
   "cyberpunk",
   "luxury",
   "brand",
@@ -220,16 +222,16 @@ const consoleCommands = computed(() => [
   { name: "open about", desc: "Ouvrir: about" },
   { name: "open projects", desc: "Ouvrir: projects" },
   { name: "open github", desc: "Ouvrir: github" },
+  { name: "open contact", desc: "Ouvrir: contact" },
   { name: "ascii vraith", desc: "ASCII secret" },
   { name: "roll", desc: "Lancer un d20" },
   { name: "clear", desc: "Effacer la console" },
   { name: "exit", desc: "Fermer la console" },
-  { name: "open contact", desc: "Ouvrir: contact" },
 ]);
 
 /* Palette commands (static) */
 const paletteCommands = [
-  ...["home", "about", "projects", "github"].map((n) => ({
+  ...["home", "about", "projects", "github", "contact"].map((n) => ({
     name: `open ${n}`,
     desc: `Ouvrir: ${n}`,
   })),
@@ -242,7 +244,6 @@ const paletteCommands = [
 const useCustomScrollbar = computed(() => {
   return typeof window !== "undefined" ? window.innerWidth >= 768 : true;
 });
-
 /* Tab helpers */
 function openFileObject(tabObj) {
   const tab = {
@@ -283,8 +284,16 @@ function setTheme(name) {
 
 function toggleTheme() {
   const root = document.documentElement;
-  const order = ["cyberpunk", "luxury", "brand", "neutral", "brand-dark"];
-  const i = order.indexOf(root.getAttribute("data-theme") || "cyberpunk");
+  const order = [
+    "nord",
+    "dracula",
+    "cyberpunk",
+    "luxury",
+    "brand",
+    "neutral",
+    "brand-dark",
+  ];
+  const i = order.indexOf(root.getAttribute("data-theme") || "nord");
   root.setAttribute("data-theme", order[(i + 1) % order.length]);
 }
 

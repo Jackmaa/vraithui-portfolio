@@ -39,6 +39,64 @@ body {
   --border: 255 255 255 / 0.06;
 }
 
+/* ========== NORD THEME ========== */
+[data-theme="nord"] {
+  /* Nord Polar Night */
+  --bg: 46 52 64; /* #2E3440 nord0 */
+  --fg: 236 239 244; /* #ECEFF4 nord6 */
+  --panel: 59 66 82; /* #3B4252 nord1 */
+  --panel-2: 67 76 94; /* #434C5E nord2 */
+  --border: 255 255 255 / 0.08;
+
+  /* Nord Frost (cyan/blue) */
+  --accent: 136 192 208; /* #88C0D0 nord8 */
+
+  /* Modes */
+  --mode-n: 136 192 208; /* nord8 cyan */
+  --mode-i: 163 190 140; /* nord14 green */
+  --mode-v: 180 142 173; /* nord15 purple */
+  --mode-r: 191 97 106; /* nord11 red */
+
+  /* Alias daisy */
+  --p: var(--accent);
+  --pc: 46 52 64;
+  --s: 129 161 193; /* nord9 blue */
+  --sc: 46 52 64;
+  --in: 94 129 172; /* nord10 */
+  --su: 163 190 140; /* nord14 */
+  --wa: 235 203 139; /* nord13 */
+  --er: 191 97 106; /* nord11 */
+}
+
+/* ========== DRACULA THEME ========== */
+[data-theme="dracula"] {
+  /* Dracula Background */
+  --bg: 40 42 54; /* #282A36 */
+  --fg: 248 248 242; /* #F8F8F2 */
+  --panel: 68 71 90; /* #44475A */
+  --panel-2: 98 114 164; /* #6272A4 */
+  --border: 255 255 255 / 0.08;
+
+  /* Dracula Pink */
+  --accent: 255 121 198; /* #FF79C6 */
+
+  /* Modes */
+  --mode-n: 189 147 249; /* purple #BD93F9 */
+  --mode-i: 80 250 123; /* green #50FA7B */
+  --mode-v: 255 121 198; /* pink #FF79C6 */
+  --mode-r: 255 85 85; /* red #FF5555 */
+
+  /* Alias daisy */
+  --p: var(--accent);
+  --pc: 40 42 54;
+  --s: 139 233 253; /* cyan #8BE9FD */
+  --sc: 40 42 54;
+  --in: 139 233 253; /* cyan */
+  --su: 80 250 123; /* green */
+  --wa: 241 250 140; /* yellow #F1FA8C */
+  --er: 255 85 85; /* red */
+}
+
 /* ========== BRAND (clair) ========== */
 [data-theme="brand"] {
   /* daisy-like tokens (source of truth) */

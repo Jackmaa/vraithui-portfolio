@@ -46,7 +46,7 @@ Je crois fermement que la **qualité du code** et l'**expérience utilisateur** 
 
 ## Projets notables
 
-- **VraithUI Portfolio** - Ce site que vous explorez actuellement
+- **VraithUI Portfolio** - Le site que vous explorez actuellement
 - **CRM-Forma** - Plateforme de gestion pour centre/formateur
 - **Nihon** - Bibliothèque de manga en ligne avec système d'emprunt et de gestion
 - **Bakery App** - Application e-commerce moderne pour boulangerie
@@ -70,4 +70,4 @@ Envie de collaborer sur un projet ? Discutons-en !
 
 ---
 
-_Last updated: October 2025_
+_Last updated: November 2025_
