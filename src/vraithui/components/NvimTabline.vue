@@ -1,18 +1,17 @@
 <template>
   <div
-    class="h-8 flex items-center gap-1 px-2 border-b bg-[rgb(var(--panel))]"
-    :style="`border-color: rgb(var(--border))`"
+    class="h-8 flex items-center gap-1 px-2 border-b"
+    style="border-color: var(--border)"
   >
     <button
       v-for="t in tabs"
       :key="t.id"
-      class="px-3 h-7 rounded text-xs border transition-colors"
-      :style="
+      class="tab-button px-3 h-7 rounded text-xs border transition-all duration-200 relative"
+      :class="
         t.id === active
-          ? `background: rgb(var(--panel-2)); border-color: rgb(var(--border))`
-          : `border-color: transparent`
+          ? 'tab-active border-[rgb(var(--accent))]'
+          : 'border-transparent'
       "
-      :class="t.id !== active && 'hover:bg-[rgb(var(--panel-2))]'"
       @click="$emit('select', t.id)"
     >
       {{ t.label }}
@@ -21,6 +20,13 @@
         @click.stop="$emit('close', t.id)"
         >×</span
       >
+
+      <!-- Indicateur visuel en bas pour l'onglet actif -->
+      <span
+        v-if="t.id === active"
+        class="absolute bottom-0 left-0 right-0 h-0.5 bg-[rgb(var(--accent))]"
+        style="border-radius: 2px 2px 0 0"
+      ></span>
     </button>
   </div>
 </template>
@@ -29,3 +35,26 @@
 defineProps({ tabs: Array, active: String });
 defineEmits(["select", "close"]);
 </script>
+
+<style scoped>
+/* Onglet actif - Style marqué */
+.tab-active {
+  background: rgba(var(--accent), 0.15);
+  color: rgb(var(--accent));
+  font-weight: 600;
+  box-shadow: 0 0 12px rgba(var(--accent), 0.3),
+    inset 0 0 20px rgba(var(--accent), 0.05);
+}
+
+/* Effet de hover pour les onglets non-actifs (comme les boutons Contact) */
+.tab-button:not(.tab-active):hover {
+  border-color: rgb(var(--accent));
+  background: rgba(var(--accent), 0.05);
+  box-shadow: 0 0 12px rgba(var(--accent), 0.2);
+}
+
+/* Animation smooth sur tous les états */
+.tab-button {
+  position: relative;
+}
+</style>
