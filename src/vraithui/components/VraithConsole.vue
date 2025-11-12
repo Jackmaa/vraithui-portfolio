@@ -242,10 +242,13 @@ function run() {
   } else if (cmd === "ascii vraith" || cmd === "ascii") {
     println(`
  __     __        _ _   _     
- \\ \\   / / _ __ _(_) |_| |__  
-  \\ \\ / / '_/ _\`| |  __| '_  \\ 
-   \\ V /| | | (_| | | |_| | | |
+ \\ \\   / / _ __ _ (_)|_| |___  
+  \\ \\ / / '_/ _\`| |  __| '_  \\
+   \\ V /| | | (__| | | |_| | | |
     \\_/ |_|  \\__,_|_|\\__|_| |_|
+                                
+    Developer Portfolio v2.1
+    Now with Nord & Dracula themes!
   `);
   } else if (cmd === "clear" || cmd === "cls") {
     logs.value = [];
