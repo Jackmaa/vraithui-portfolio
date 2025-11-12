@@ -5,7 +5,6 @@
   >
     <!-- Effets visuels (desktop + mobile acceptable) -->
     <ParticlesBackground />
-    <ScanlinesOverlay />
 
     <!-- Command Palette (flottante, on/off) -->
     <CommandPalette
@@ -158,7 +157,7 @@ import Contact from "../sections/Contact.vue";
 
 /* Effects */
 import ParticlesBackground from "../effects/ParticlesBackground.vue";
-import ScanlinesOverlay from "../effects/ScanlinesOverlay.vue";
+
 
 /* Map des composants – markRaw pour éviter réactivité lourde */
 const componentMap = {
