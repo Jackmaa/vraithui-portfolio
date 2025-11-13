@@ -1,7 +1,17 @@
 <template>
   <div
-    class="bg-[rgb(var(--panel))] backdrop-blur border-t border-[rgb(var(--border))] text-[rgb(var(--fg))] flex flex-col"
+    class="bg-[rgb(var(--panel))] backdrop-blur border-t border-[rgb(var(--border))] text-[rgb(var(--fg))] flex flex-col transition-all"
+    :style="{ height: consoleHeight + 'px' }"
   >
+    <!-- Resize handle -->
+    <div
+      @mousedown="startResize"
+      class="resize-handle w-full h-1 cursor-ns-resize hover:bg-[rgb(var(--accent))] transition-colors flex items-center justify-center group"
+      title="Drag to resize console"
+    >
+      <div class="w-12 h-0.5 bg-[rgb(var(--border))] group-hover:bg-[rgb(var(--accent))] rounded-full transition-colors"></div>
+    </div>
+
     <div
       class="p-2 font-mono text-xs opacity-70 border-b border-[rgb(var(--border))] flex items-center justify-between"
     >
@@ -13,9 +23,9 @@
     </div>
 
     <!-- CustomScrollbar avec ref pour contrôler le scroll -->
-    <div class="relative" style="height: 160px">
+    <div class="relative flex-1" :style="{ minHeight: scrollAreaHeight + 'px' }">
       <CustomScrollbar
-        :height="160"
+        :height="scrollAreaHeight"
         :thumbMinSize="28"
         v-model="scrollY"
         ref="scrollbarRef"
@@ -51,7 +61,7 @@
 </template>
 
 <script setup>
-import { ref, computed, nextTick, onMounted, watch } from "vue";
+import { ref, computed, nextTick, onMounted, onBeforeUnmount, watch } from "vue";
 import CustomScrollbar from "./CustomScrollbar.vue";
 import { useCommandStore } from "@/stores/commandStore";
 
@@ -71,11 +81,106 @@ const contentRef = ref(null);
 // Use logs from command store
 const logs = computed(() => commandStore.consoleOutput);
 
+// Console resize state
+const MIN_HEIGHT = 200;
+const MAX_HEIGHT = 600;
+const DEFAULT_HEIGHT = 240;
+const STORAGE_KEY = 'vraithui-console-height';
+
+const consoleHeight = ref(DEFAULT_HEIGHT);
+const isResizing = ref(false);
+const resizeStartY = ref(0);
+const resizeStartHeight = ref(0);
+
+// Calculate scroll area height (total height minus header and input)
+const scrollAreaHeight = computed(() => {
+  // Header ~40px + input ~45px = ~85px overhead
+  return Math.max(100, consoleHeight.value - 85);
+});
+
+// Load saved height from localStorage
+function loadHeight() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const height = parseInt(saved);
+      if (height >= MIN_HEIGHT && height <= MAX_HEIGHT) {
+        consoleHeight.value = height;
+      }
+    }
+  } catch (error) {
+    console.error('[Console] Failed to load height:', error);
+  }
+}
+
+// Save height to localStorage
+function saveHeight() {
+  try {
+    localStorage.setItem(STORAGE_KEY, consoleHeight.value.toString());
+  } catch (error) {
+    console.error('[Console] Failed to save height:', error);
+  }
+}
+
+// Start resizing
+function startResize(e) {
+  isResizing.value = true;
+  resizeStartY.value = e.clientY;
+  resizeStartHeight.value = consoleHeight.value;
+
+  document.addEventListener('mousemove', handleResize);
+  document.addEventListener('mouseup', stopResize);
+
+  // Add class to body to prevent text selection
+  document.body.classList.add('resizing');
+
+  // Prevent text selection during drag
+  e.preventDefault();
+}
+
+// Handle resize
+function handleResize(e) {
+  if (!isResizing.value) return;
+
+  // Calculate new height (inverted because we're dragging from top)
+  const deltaY = resizeStartY.value - e.clientY;
+  let newHeight = resizeStartHeight.value + deltaY;
+
+  // Clamp to min/max
+  newHeight = Math.max(MIN_HEIGHT, Math.min(MAX_HEIGHT, newHeight));
+
+  consoleHeight.value = newHeight;
+}
+
+// Stop resizing
+function stopResize() {
+  if (isResizing.value) {
+    isResizing.value = false;
+    saveHeight();
+
+    // Remove class from body
+    document.body.classList.remove('resizing');
+
+    document.removeEventListener('mousemove', handleResize);
+    document.removeEventListener('mouseup', stopResize);
+  }
+}
+
 onMounted(() => {
+  // Load saved height
+  loadHeight();
+
   // Focus automatique sur l'input
   nextTick(() => {
     inputRef.value?.focus();
   });
+});
+
+// Cleanup on unmount
+onBeforeUnmount(() => {
+  document.body.classList.remove('resizing');
+  document.removeEventListener('mousemove', handleResize);
+  document.removeEventListener('mouseup', stopResize);
 });
 
 // Auto-scroll when new logs are added
@@ -134,6 +239,29 @@ function run() {
 </script>
 
 <style scoped>
+/* Resize handle styling */
+.resize-handle {
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.resize-handle:active {
+  background: rgb(var(--accent) / 0.2);
+  cursor: ns-resize !important;
+}
+
+/* Prevent text selection while resizing */
+body.resizing * {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+
+/* Smooth transition when not resizing */
+.transition-all {
+  transition: height 0.05s ease-out;
+}
+
 /* Amélioration visuelle pour la console */
 code {
   padding: 2px 4px;
