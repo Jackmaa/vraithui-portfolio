@@ -112,7 +112,6 @@
       <VraithConsole
         v-if="consoleOpen"
         class="absolute bottom-0 left-0 right-0"
-        :commands="consoleCommands"
         @close="consoleOpen = false"
       />
     </main>
@@ -136,9 +135,10 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount, markRaw } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount, nextTick, markRaw } from "vue";
 import files from "@/data/files.json";
 import { useThemeStore } from "@/stores/themeStore";
+import { useCommandStore } from "@/stores/commandStore";
 
 /* Components */
 import NvimTabline from "../components/NvimTabline.vue";
@@ -162,6 +162,7 @@ import ParticlesBackground from "../effects/ParticlesBackground.vue";
 
 /* Stores */
 const themeStore = useThemeStore();
+const commandStore = useCommandStore();
 
 /* Map des composants – markRaw pour éviter réactivité lourde */
 const componentMap = {
@@ -193,32 +194,28 @@ const currentScrollPosition = computed({
   },
 });
 
-/* Console commands (computed to use themeStore) */
-const consoleCommands = computed(() => [
-  { name: "help", desc: "Afficher l'aide" },
-  { name: "theme list", desc: "Lister les thèmes" },
-  ...themeStore.themeNames.map((t) => ({ name: `theme set ${t}`, desc: `Thème: ${t}` })),
-  { name: "open home", desc: "Ouvrir: home" },
-  { name: "open about", desc: "Ouvrir: about" },
-  { name: "open projects", desc: "Ouvrir: projects" },
-  { name: "open github", desc: "Ouvrir: github" },
-  { name: "open contact", desc: "Ouvrir: contact" },
-  { name: "ascii vraith", desc: "ASCII secret" },
-  { name: "roll", desc: "Lancer un d20" },
-  { name: "clear", desc: "Effacer la console" },
-  { name: "exit", desc: "Fermer la console" },
-]);
+/* Console & Palette commands - generated from command store */
+const paletteCommands = computed(() => {
+  const commands = [];
 
-/* Palette commands (computed to use themeStore) */
-const paletteCommands = computed(() => [
-  ...["home", "about", "projects", "github", "contact"].map((n) => ({
-    name: `open ${n}`,
-    desc: `Ouvrir: ${n}`,
-  })),
-  { name: "theme list", desc: "Lister les thèmes" },
-  ...themeStore.themeNames.map((t) => ({ name: `theme set ${t}`, desc: `Thème: ${t}` })),
-  { name: "help", desc: "Aide palette" },
-]);
+  // Add all registered commands
+  commandStore.allCommands.forEach(cmd => {
+    commands.push({
+      name: cmd.name,
+      desc: cmd.description,
+    });
+  });
+
+  // Add dynamic theme set commands
+  themeStore.themeNames.forEach(themeName => {
+    commands.push({
+      name: `theme set ${themeName}`,
+      desc: `Set theme: ${themeName}`,
+    });
+  });
+
+  return commands;
+});
 
 /* Utility: decide whether to use CustomScrollbar */
 const useCustomScrollbar = computed(() => {
@@ -260,30 +257,28 @@ function toggleTheme() {
   themeStore.toggleMode();
 }
 
-/* Command handler */
+/* Command handler - now using commandStore */
 function handleCmd(cmd) {
-  let m;
-  if ((m = cmd.match(/^open\s+(home|about|projects|github|contact)$/i))) {
-    const id = m[1].toLowerCase();
-    const f = files.find((f) => f.id === id);
-    if (f) open(f);
-    return;
+  // Execute command through store
+  const result = commandStore.execute(cmd);
+
+  // Handle specific actions from command result
+  if (result.action === 'navigate' && result.section) {
+    // Navigate to section
+    const file = files.find((f) => f.id === result.section);
+    if (file) {
+      open(file);
+    }
+  } else if (result.action === 'close-console') {
+    // Close console with slight delay for UX
+    setTimeout(() => {
+      consoleOpen.value = false;
+    }, 300);
   }
-  if ((m = cmd.match(/^theme\s+set\s+([a-z0-9\-]+)$/i))) {
-    const ok = themeStore.setTheme(m[1].toLowerCase());
-    if (!ok) console.warn("Unknown theme:", m[1]);
-    return;
-  }
-  if (/^theme\s+list$/i.test(cmd)) {
-    const list = `Themes: ${themeStore.themeNames.join(", ")}`;
-    window.dispatchEvent(
-      new CustomEvent("vraith-console-print", { detail: list })
-    );
-    return;
-  }
-  if (/^help$/i.test(cmd)) {
-    console.log("Commands: open <file>, theme set <n>, theme list, help");
-    return;
+
+  // Auto-open console if command requires it
+  if (result.requiresConsole && !consoleOpen.value) {
+    consoleOpen.value = true;
   }
 }
 
@@ -314,13 +309,7 @@ function onOpenFileEvent(e) {
   open(f);
 }
 
-function onThemeListRequest() {
-  window.dispatchEvent(
-    new CustomEvent("vraith-console-print", {
-      detail: "Themes: " + themeNames.join(", "),
-    })
-  );
-}
+// Removed onThemeListRequest - no longer needed with commandStore
 
 function onIntroComplete() {
   introCompleted.value = true;
@@ -345,14 +334,12 @@ onMounted(() => {
 
   window.addEventListener("keydown", onKeydown);
   window.addEventListener("open-file", onOpenFileEvent);
-  window.addEventListener("theme-list-request", onThemeListRequest);
   window.addEventListener("intro-complete", onIntroComplete);
 });
 
 onBeforeUnmount(() => {
   window.removeEventListener("keydown", onKeydown);
   window.removeEventListener("open-file", onOpenFileEvent);
-  window.removeEventListener("theme-list-request", onThemeListRequest);
   window.removeEventListener("intro-complete", onIntroComplete);
 });
 </script>

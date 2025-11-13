@@ -51,14 +51,10 @@
           <button
             v-for="(item, i) in items"
             :key="i + '-' + item.key"
-            :ref="
-              (el) => {
-                if (el) itemRefs[i] = el;
-              }
-            "
+            :ref="(el) => setItemRef(el, i)"
             @click="run(item)"
-            class="w-full text-left px-4 py-2 text-sm flex items-center gap-3 hover:bg-[rgb(var(--panel-2))] transition-colors"
-            :class="i === index ? 'bg-[rgb(var(--panel-2))]' : ''"
+            class="w-full text-left px-4 py-2 text-sm flex items-center gap-3 hover:bg-[rgb(var(--panel-2))] transition-colors border-l-2"
+            :class="i === index ? 'bg-[rgb(var(--panel-2))] border-[rgb(var(--accent))]' : 'border-transparent'"
             @mousemove="index = i"
           >
             <span class="opacity-60 font-mono text-xs min-w-28">{{
@@ -103,50 +99,14 @@ const query = ref("");
 const index = ref(0);
 const itemRefs = ref([]);
 
-// Commandes de base
-const base = [
-  {
-    key: "open home",
-    label: "Ouvrir: home",
-    action: () => emit("command", "open home"),
-  },
-  {
-    key: "open about",
-    label: "Ouvrir: about",
-    action: () => emit("command", "open about"),
-  },
-  {
-    key: "open projects",
-    label: "Ouvrir: projects",
-    action: () => emit("command", "open projects"),
-  },
-  {
-    key: "open contact",
-    label: "Ouvrir: contact",
-    action: () => emit("command", "open contact"),
-  },
-  {
-    key: "open github",
-    label: "Ouvrir: github",
-    action: () => emit("command", "open github"),
-  },
-  {
-    key: "theme set luxury",
-    label: "Thème: luxury",
-    action: () => emit("command", "theme set luxury"),
-  },
-  {
-    key: "theme set cyberpunk",
-    label: "Thème: cyberpunk",
-    action: () => emit("command", "theme set cyberpunk"),
-  },
-  {
-    key: "help",
-    label: "Afficher aide",
-    action: () => emit("command", "help"),
-  },
-];
+// Function to set item ref
+function setItemRef(el, i) {
+  if (el) {
+    itemRefs.value[i] = el;
+  }
+}
 
+// Normalize commands from props
 function normalize(arr) {
   return (arr || []).map((c) => {
     const key = c.name || c.key || "";
@@ -156,7 +116,8 @@ function normalize(arr) {
   });
 }
 
-const pool = computed(() => [...normalize(props.commands), ...base]);
+// All commands now come from the store via props
+const pool = computed(() => normalize(props.commands));
 
 const items = computed(() => {
   const q = query.value.trim().toLowerCase();
@@ -173,13 +134,13 @@ function move(delta) {
   if (!items.value.length) return;
   index.value = (index.value + delta + items.value.length) % items.value.length;
 
-  // Scroll pour que l'élément soit visible
+  // Scroll instantané pour une navigation fluide
   nextTick(() => {
     const selectedEl = itemRefs.value[index.value];
     if (selectedEl) {
       selectedEl.scrollIntoView({
         block: "nearest",
-        behavior: "smooth",
+        behavior: "auto", // Scroll instantané, pas d'animation
       });
     }
   });
