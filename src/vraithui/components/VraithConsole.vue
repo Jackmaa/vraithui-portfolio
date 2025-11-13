@@ -20,7 +20,7 @@
         v-model="scrollY"
         ref="scrollbarRef"
       >
-        <div class="px-3 py-2 font-mono text-sm space-y-1">
+        <div ref="contentRef" class="px-3 py-2 font-mono text-sm space-y-1">
           <div
             v-for="(l, i) in logs"
             :key="i"
@@ -66,6 +66,7 @@ const line = ref("");
 const scrollY = ref(0);
 const scrollbarRef = ref(null);
 const inputRef = ref(null);
+const contentRef = ref(null);
 
 // Use logs from command store
 const logs = computed(() => commandStore.consoleOutput);
@@ -80,13 +81,14 @@ onMounted(() => {
 // Auto-scroll when new logs are added
 watch(() => commandStore.consoleOutput.length, () => {
   nextTick(() => {
-    // Force scroll to bottom by using a very large value
-    scrollY.value = Number.MAX_SAFE_INTEGER;
-    // Also force CustomScrollbar to sync after DOM update
-    nextTick(() => {
-      scrollbarRef.value?.syncSizes();
-      scrollY.value = Number.MAX_SAFE_INTEGER;
-    });
+    // Calculate actual scroll height based on content
+    if (contentRef.value) {
+      const contentHeight = contentRef.value.scrollHeight;
+      scrollY.value = contentHeight;
+    } else {
+      // Fallback to large number if ref not available yet
+      scrollY.value = 999999;
+    }
   });
 });
 
