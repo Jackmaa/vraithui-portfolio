@@ -53,11 +53,15 @@
 <script setup>
 import { ref, nextTick, onMounted, onBeforeUnmount } from "vue";
 import CustomScrollbar from "./CustomScrollbar.vue";
+import { useThemeStore } from "@/stores/themeStore";
+import { THEME_CATEGORIES } from "@/config/themes";
 
 const props = defineProps({
   commands: { type: Array, default: () => [] },
 });
 const emit = defineEmits(["close"]);
+
+const themeStore = useThemeStore();
 
 const logs = ref([]);
 const line = ref("");
@@ -66,29 +70,6 @@ const history = ref([]);
 const historyIndex = ref(-1);
 const scrollbarRef = ref(null);
 const inputRef = ref(null);
-
-// Liste complète des thèmes (19 avec Nord et Dracula)
-const availableThemes = [
-  "nord",
-  "dracula",
-  "cyberpunk",
-  "luxury",
-  "brand",
-  "brand-dark",
-  "neutral",
-  "velvet-charcoal",
-  "persian-plum",
-  "bordeaux-silk",
-  "regal-gold",
-  "velvet-indigo",
-  "deep-jungle",
-  "crimson-peach",
-  "imperial-blue",
-  "mystic-jade",
-  "lush-merlot",
-  "oxford-maize",
-  "rich-black",
-];
 
 // Event listener pour l'impression externe
 function handleConsolePrint(e) {
@@ -185,52 +166,52 @@ function run() {
   if (cmd === "help") {
     help();
   } else if (/^theme\s+list$/i.test(cmd)) {
-    println("Available themes (19 total):");
+    println(`Available themes (${themeStore.allThemes.length} total):`);
     println("─────────────────────────────────────");
-    println("Popular themes:");
-    println("  • nord           Arctic, elegant, & harmonious");
-    println("  • dracula        Dark with vibrant accents");
-    println("  • cyberpunk      Neon cyan on dark blue");
-    println("  • luxury         Gold on black - premium");
-    println("");
-    println("Light themes:");
-    println("  • brand          Orange accent (light)");
-    println("  • neutral        Minimalist gray (light)");
-    println("  • mystic-jade    Jade with violet (light)");
-    println("");
-    println("Dark themes:");
-    println("  • brand-dark     Orange accent (dark)");
-    println("  • velvet-charcoal  Cream on charcoal");
-    println("  • persian-plum   Ivory on plum");
-    println("  • bordeaux-silk  Silver on bordeaux");
-    println("  • regal-gold     Gold on onyx");
-    println("  • velvet-indigo  Platinum on indigo");
-    println("  • deep-jungle    Light olive on jungle green");
-    println("  • crimson-peach  Peach on crimson");
-    println("  • imperial-blue  Vintage rose on imperial blue");
-    println("  • lush-merlot    Gold on merlot");
-    println("  • oxford-maize   Maize on Oxford blue");
-    println("  • rich-black     Vivid yellow on rich black");
+
+    // Group themes by category
+    const categories = {
+      [THEME_CATEGORIES.POPULAR]: 'Popular themes:',
+      [THEME_CATEGORIES.LIGHT]: 'Light themes:',
+      [THEME_CATEGORIES.DARK]: 'Dark themes:',
+      [THEME_CATEGORIES.LUXURY]: 'Luxury themes:',
+    };
+
+    Object.entries(themeStore.themesByCategory).forEach(([category, themes]) => {
+      if (themes.length > 0) {
+        println(categories[category] || `${category}:`);
+        themes.forEach(theme => {
+          const current = theme.name === themeStore.theme ? ' (current)' : '';
+          println(`  • ${theme.name.padEnd(18)} ${theme.label}${current}`);
+        });
+        println("");
+      }
+    });
+
     println("─────────────────────────────────────");
-    println(`Total: ${availableThemes.length} themes`);
+    println(`Total: ${themeStore.allThemes.length} themes`);
+    println(`Current: ${themeStore.theme}`);
     println("");
     println("Usage: theme set <name>");
   } else if (/^theme\s+set\s+([a-z0-9\-]+)$/i.test(cmd)) {
-    const theme = cmd.split(/\s+/).pop();
-    if (availableThemes.includes(theme)) {
-      document.documentElement.setAttribute("data-theme", theme);
-      println(`✓ Theme switched to: ${theme}`);
+    const themeName = cmd.split(/\s+/).pop();
+    const success = themeStore.setTheme(themeName);
+
+    if (success) {
+      const themeData = themeStore.themeData;
+      println(`✓ Theme switched to: ${themeName}`);
+      println(`  ${themeData.label} (${themeData.mode} mode)`);
 
       // Messages personnalisés pour certains thèmes
-      if (theme === "nord") {
+      if (themeName === "nord") {
         println(`  🌌 Welcome to the Arctic - enjoy the harmony!`);
-      } else if (theme === "dracula") {
+      } else if (themeName === "dracula") {
         println(`  🧛 Welcome to the night - embrace the darkness!`);
-      } else if (theme === "cyberpunk") {
+      } else if (themeName === "cyberpunk") {
         println(`  ⚡ Neon lights activated - welcome to the future!`);
       }
     } else {
-      println(`✗ Unknown theme: '${theme}'`);
+      println(`✗ Unknown theme: '${themeName}'`);
       println(`  Type 'theme list' to see available themes`);
     }
   } else if (/^open\s+(home|about|projects|github|contact)$/i.test(cmd)) {
@@ -276,7 +257,7 @@ function run() {
   } else if (cmd === "version" || cmd === "ver") {
     println("Vraith Portfolio v2.1");
     println("Built with Vue 3 + Vite");
-    println("19 themes available (including Nord & Dracula)");
+    println(`${themeStore.allThemes.length} themes available (current: ${themeStore.theme})`);
   } else {
     println(`✗ Command not found: '${cmd}'`);
     println(`  Type 'help' for available commands`);

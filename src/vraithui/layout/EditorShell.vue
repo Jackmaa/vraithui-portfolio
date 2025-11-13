@@ -138,6 +138,7 @@
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount, markRaw } from "vue";
 import files from "@/data/files.json";
+import { useThemeStore } from "@/stores/themeStore";
 
 /* Components */
 import NvimTabline from "../components/NvimTabline.vue";
@@ -158,6 +159,9 @@ import Contact from "../sections/Contact.vue";
 /* Effects */
 import ParticlesBackground from "../effects/ParticlesBackground.vue";
 
+
+/* Stores */
+const themeStore = useThemeStore();
 
 /* Map des composants – markRaw pour éviter réactivité lourde */
 const componentMap = {
@@ -189,34 +193,11 @@ const currentScrollPosition = computed({
   },
 });
 
-/* Liste complète des thèmes (19 thèmes maintenant avec Nord et Dracula) */
-const themeNames = [
-  "nord",
-  "dracula",
-  "cyberpunk",
-  "luxury",
-  "brand",
-  "brand-dark",
-  "neutral",
-  "velvet-charcoal",
-  "persian-plum",
-  "bordeaux-silk",
-  "regal-gold",
-  "velvet-indigo",
-  "deep-jungle",
-  "crimson-peach",
-  "imperial-blue",
-  "mystic-jade",
-  "lush-merlot",
-  "oxford-maize",
-  "rich-black",
-];
-
-/* Console commands (computed so it can use themeNames) */
+/* Console commands (computed to use themeStore) */
 const consoleCommands = computed(() => [
   { name: "help", desc: "Afficher l'aide" },
   { name: "theme list", desc: "Lister les thèmes" },
-  ...themeNames.map((t) => ({ name: `theme set ${t}`, desc: `Thème: ${t}` })),
+  ...themeStore.themeNames.map((t) => ({ name: `theme set ${t}`, desc: `Thème: ${t}` })),
   { name: "open home", desc: "Ouvrir: home" },
   { name: "open about", desc: "Ouvrir: about" },
   { name: "open projects", desc: "Ouvrir: projects" },
@@ -228,16 +209,16 @@ const consoleCommands = computed(() => [
   { name: "exit", desc: "Fermer la console" },
 ]);
 
-/* Palette commands (static) */
-const paletteCommands = [
+/* Palette commands (computed to use themeStore) */
+const paletteCommands = computed(() => [
   ...["home", "about", "projects", "github", "contact"].map((n) => ({
     name: `open ${n}`,
     desc: `Ouvrir: ${n}`,
   })),
   { name: "theme list", desc: "Lister les thèmes" },
-  ...themeNames.map((t) => ({ name: `theme set ${t}`, desc: `Thème: ${t}` })),
+  ...themeStore.themeNames.map((t) => ({ name: `theme set ${t}`, desc: `Thème: ${t}` })),
   { name: "help", desc: "Aide palette" },
-];
+]);
 
 /* Utility: decide whether to use CustomScrollbar */
 const useCustomScrollbar = computed(() => {
@@ -274,26 +255,9 @@ function handleScroll(position) {
   if (active.value) scrollPositions.value[active.value] = position;
 }
 
-/* Theme functions */
-function setTheme(name) {
-  if (!themeNames.includes(name)) return false;
-  document.documentElement.setAttribute("data-theme", name);
-  return true;
-}
-
+/* Theme functions - now using themeStore */
 function toggleTheme() {
-  const root = document.documentElement;
-  const order = [
-    "nord",
-    "dracula",
-    "cyberpunk",
-    "luxury",
-    "brand",
-    "neutral",
-    "brand-dark",
-  ];
-  const i = order.indexOf(root.getAttribute("data-theme") || "nord");
-  root.setAttribute("data-theme", order[(i + 1) % order.length]);
+  themeStore.toggleMode();
 }
 
 /* Command handler */
@@ -306,12 +270,12 @@ function handleCmd(cmd) {
     return;
   }
   if ((m = cmd.match(/^theme\s+set\s+([a-z0-9\-]+)$/i))) {
-    const ok = setTheme(m[1].toLowerCase());
+    const ok = themeStore.setTheme(m[1].toLowerCase());
     if (!ok) console.warn("Unknown theme:", m[1]);
     return;
   }
   if (/^theme\s+list$/i.test(cmd)) {
-    const list = `Themes: ${themeNames.join(", ")}`;
+    const list = `Themes: ${themeStore.themeNames.join(", ")}`;
     window.dispatchEvent(
       new CustomEvent("vraith-console-print", { detail: list })
     );

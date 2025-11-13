@@ -1,5 +1,10 @@
 import { createApp } from "vue";
+import { createPinia } from "pinia";
 import "./index.css";
 import App from "./App.vue";
-document.documentElement.setAttribute("data-theme", "cyberpunk");
-createApp(App).mount("#app");
+
+const app = createApp(App);
+const pinia = createPinia();
+
+app.use(pinia);
+app.mount("#app");
