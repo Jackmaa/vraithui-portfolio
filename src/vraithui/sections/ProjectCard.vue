@@ -28,11 +28,15 @@
         {{ project.name.charAt(0) }}
       </div>
 
-      <!-- Image statique -->
+      <!-- Image statique with responsive sizes -->
       <img
         v-if="project.image"
         :src="project.image"
+        :srcset="generateSrcSet(project.image)"
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
         :alt="project.name"
+        loading="lazy"
+        decoding="async"
         class="static-image w-full h-full object-cover transition-all duration-300"
         :class="{ 'opacity-0': isVideoPlaying && project.video }"
         @error="handleImageError"
@@ -43,6 +47,7 @@
         v-if="project.video"
         ref="videoRef"
         :src="project.video"
+        preload="none"
         class="video-preview absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
         :class="{ 'opacity-100': isVideoPlaying, 'opacity-0': !isVideoPlaying }"
         loop
@@ -185,6 +190,8 @@
           v-if="project.image && !project.video"
           :src="project.image"
           :alt="project.name"
+          loading="eager"
+          decoding="async"
           class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
         />
 
@@ -192,6 +199,7 @@
         <video
           v-else-if="project.video"
           :src="project.video"
+          preload="auto"
           class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
           controls
           autoplay
@@ -291,6 +299,20 @@ function closeLightbox() {
 
 function handleImageError(e) {
   e.target.style.display = "none";
+}
+
+// Generate srcset for responsive images
+// Note: To use WebP, convert images with a build plugin or manually
+// Example: /projects/myproject.png -> /projects/myproject.webp
+function generateSrcSet(imagePath) {
+  if (!imagePath) return '';
+
+  // For now, return the original image
+  // TODO: Add WebP conversion in build process and generate multiple sizes
+  // const webpPath = imagePath.replace(/\.(png|jpe?g)$/i, '.webp');
+  // return `${webpPath} 1x, ${imagePath} 1x`;
+
+  return '';
 }
 
 // ESC pour fermer la lightbox

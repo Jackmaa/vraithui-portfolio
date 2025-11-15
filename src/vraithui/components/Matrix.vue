@@ -23,6 +23,9 @@ const canvasRef = ref(null);
 let animationId = null;
 let columns = [];
 let drops = [];
+let lastFrameTime = 0;
+const TARGET_FPS = 30;
+const FRAME_DURATION = 1000 / TARGET_FPS;
 
 onMounted(() => {
   const canvas = canvasRef.value;
@@ -60,7 +63,16 @@ onMounted(() => {
     .split(" ")
     .map((x) => parseInt(x));
 
-  function draw() {
+  function draw(currentTime) {
+    animationId = requestAnimationFrame(draw);
+
+    // Throttle to 30 FPS
+    const deltaTime = currentTime - lastFrameTime;
+    if (deltaTime < FRAME_DURATION) {
+      return;
+    }
+    lastFrameTime = currentTime - (deltaTime % FRAME_DURATION);
+
     // Semi-transparent background for trail effect (uses theme bg color)
     ctx.fillStyle = `rgba(${bgColor[0]}, ${bgColor[1]}, ${bgColor[2]}, 0.05)`;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -89,12 +101,10 @@ onMounted(() => {
       // Move drop down
       drops[i]++;
     }
-
-    animationId = requestAnimationFrame(draw);
   }
 
   // Start animation
-  draw();
+  draw(0);
 
   // Fade out after 3 seconds
   setTimeout(() => {
