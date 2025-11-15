@@ -48,7 +48,7 @@
     "tags": ["Next.js 16", "TypeScript", "Prisma", "NextAuth", "TailwindCSS"],
     "github": "https://github.com/Jackmaa/bakery-app",
     "demo": null,
-    "image": "projects/bakery-app.png",
+    "image": "projects/bakery-app.webp",
     "video": "projects/bakery-app.mp4",
     "highlights": [
       "E-commerce complet avec panier intelligent",
@@ -68,7 +68,7 @@
     "tags": ["PHP", "MVC", "REST API", "GSAP", "AltoRouter"],
     "github": "https://github.com/Jackmaa/nihon-ECF-3",
     "demo": null,
-    "image": "projects/nihon.png",
+    "image": "projects/nihon.webp",
     "video": "projects/nihon.mp4",
     "highlights": [
       "Lead developer - gestion d'équipe (3 personnes)",
@@ -88,7 +88,7 @@
     "tags": ["React", "PokéAPI", "Axios", "CSS", "LocalStorage"],
     "github": "https://github.com/Jackmaa/PokeAPIGame",
     "demo": null,
-    "image": "projects/PokeBattle.png",
+    "image": "projects/PokeBattle.webp",
     "video": "projects/PokeBattle.mp4",
     "highlights": [
       "Pokédex avec 1000+ Pokémon (PokéAPI)",
