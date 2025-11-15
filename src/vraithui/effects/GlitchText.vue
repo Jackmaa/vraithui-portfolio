@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 
 const props = defineProps({
   text: {
@@ -25,6 +25,7 @@ const props = defineProps({
 });
 
 const isGlitching = ref(false);
+let intervalId = null;
 
 function trigger() {
   if (isGlitching.value) return;
@@ -36,13 +37,23 @@ function trigger() {
 }
 
 // Auto-glitch aléatoire si activé
-if (props.autoGlitch) {
-  setInterval(() => {
-    if (Math.random() > 0.95) {
-      trigger();
-    }
-  }, 2000);
-}
+onMounted(() => {
+  if (props.autoGlitch) {
+    intervalId = setInterval(() => {
+      if (Math.random() > 0.95) {
+        trigger();
+      }
+    }, 2000);
+  }
+});
+
+// Cleanup: critical pour éviter les memory leaks
+onBeforeUnmount(() => {
+  if (intervalId) {
+    clearInterval(intervalId);
+    intervalId = null;
+  }
+});
 </script>
 
 <style scoped>

@@ -33,6 +33,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount, watch } from "vue";
+import { rafDebounce } from "../utils/debounce";
 
 const props = defineProps({
   height: { type: [Number, String], default: 300 }, // px or 'auto'
@@ -139,7 +140,10 @@ function onKey(e) {
 }
 
 onMounted(() => {
-  const ro = new ResizeObserver(() => syncSizes());
+  // Debounce syncSizes with RAF for better performance
+  const debouncedSyncSizes = rafDebounce(syncSizes);
+
+  const ro = new ResizeObserver(debouncedSyncSizes);
   ro.observe(viewport.value);
   ro.observe(track.value);
   syncSizes();

@@ -4,6 +4,7 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
+import { debounce } from "../utils/debounce";
 
 const canvasRef = ref(null);
 let animationId = null;
@@ -138,13 +139,27 @@ onMounted(() => {
 
   let accentColor = getAccentColor();
 
-  // Listen for theme changes
-  const observer = new MutationObserver(() => {
+  // Listen for theme changes with debouncing
+  const updateThemeColor = debounce(() => {
     accentColor = getAccentColor();
+  }, 100);
+
+  const observer = new MutationObserver((mutations) => {
+    // Only update if data-theme actually changed
+    const themeChanged = mutations.some(
+      mutation => mutation.attributeName === 'data-theme' &&
+                  mutation.oldValue !== document.documentElement.getAttribute('data-theme')
+    );
+
+    if (themeChanged) {
+      updateThemeColor();
+    }
   });
+
   observer.observe(document.documentElement, {
     attributes: true,
     attributeFilter: ["data-theme"],
+    attributeOldValue: true
   });
 
   // Create particles (reduced count for better performance)
