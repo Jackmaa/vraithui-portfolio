@@ -1,5 +1,25 @@
 [
   {
+    "id": "vraithui-plugin",
+    "name": "VraithUI",
+    "description": "Plugin Tailwind CSS minimaliste et thémable avec 51 composants, 16 thèmes et support TypeScript complet. Design system inspiré de daisyUI avec tokens sémantiques, helpers runtime et accessibilité intégrée.",
+    "status": "active",
+    "year": 2025,
+    "tags": ["TailwindCSS", "Plugin", "TypeScript", "Design System", "UI Components"],
+    "github": "https://github.com/Jackmaa/vraithui-plugin",
+    "demo": null,
+    "image": "projects/vraithui-plugin.webp",
+    "video": "projects/vraithui-plugin.mp4",
+    "highlights": [
+      "51 composants UI (boutons, forms, cards, modals, etc.)",
+      "16 thèmes premium (dark, cyberpunk, luxury, etc.)",
+      "Support TypeScript complet avec définitions de types",
+      "Runtime helpers pour composants interactifs",
+      "Zero runtime CSS - styles purs sans JavaScript",
+      "API événementielle avec custom events"
+    ]
+  },
+  {
     "id": "crm-forma",
     "name": "CRM-Forma",
     "description": "CRM complet conçu pour les formateurs indépendants et centres de formation. Gestion complète de l'activité de formation, de la prospection à la facturation, avec conformité Qualiopi intégrée.",
