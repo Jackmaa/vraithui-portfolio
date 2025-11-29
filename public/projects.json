@@ -83,7 +83,7 @@
     "id": "pokeapi-game",
     "name": "PokeAPIGame",
     "description": "Pokédex interactif complet avec mini-jeu Pokémon Battle Royale. Recherche avancée, filtres par type, système de favoris, et combat tour par tour avec calculs de dégâts basés sur les stats réelles.",
-    "status": "completed",
+    "status": "active",
     "year": 2024,
     "tags": ["React", "PokéAPI", "Axios", "CSS", "LocalStorage"],
     "github": "https://github.com/Jackmaa/PokeAPIGame",
