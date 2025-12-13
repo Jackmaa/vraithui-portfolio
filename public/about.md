@@ -70,4 +70,4 @@ Envie de collaborer sur un projet ? Discutons-en !
 
 ---
 
-_Last updated: November 2025_
+_Last updated: December 2025_

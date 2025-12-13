@@ -1,5 +1,36 @@
 [
   {
+    "id": "jdc-metal",
+    "name": "JDC Metal",
+    "description": "Plateforme web complète pour une entreprise de menuiserie métallique et PVC. Gestion des devis en ligne, catalogue produits configurables, rendez-vous synchronisés Google Calendar, dashboard multi-rôles et suivi de chantiers.",
+    "status": "active",
+    "year": 2025,
+    "tags": [
+      "Next.js 16",
+      "TypeScript",
+      "Prisma",
+      "TailwindCSS",
+      "NextAuth",
+      "Dashboard",
+      "PDF",
+      "Google Calendar"
+    ],
+    "github": "https://github.com/Jackmaa/jdc-m-tal",
+    "demo": null,
+    "image": "projects/jdc-metal.webp",
+    "video": "projects/jdc-metal.mp4",
+    "highlights": [
+      "Système de devis multi-étapes avec calcul automatique des prix",
+      "Génération de PDF via Puppeteer",
+      "Catalogue produits configurables sur-mesure",
+      "Gestion de rendez-vous avec synchronisation Google Calendar",
+      "Dashboard client / admin / artisan avec rôles différenciés",
+      "Suivi de chantiers avec photos et statuts",
+      "Emails transactionnels avec React Email",
+      "Calcul automatique des frais de déplacement par géolocalisation"
+    ]
+  },
+  {
     "id": "vraithui-plugin",
     "name": "VraithUI",
     "description": "Plugin Tailwind CSS minimaliste et thémable avec 51 composants, 16 thèmes et support TypeScript complet. Design system inspiré de daisyUI avec tokens sémantiques, helpers runtime et accessibilité intégrée.",
