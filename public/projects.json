@@ -31,6 +31,35 @@
     ]
   },
   {
+    "id": "project-cli",
+    "name": "Project CLI",
+    "description": "Outil en ligne de commande Python pour gérer, organiser et visualiser tous tes projets (actifs, pausés, terminés, abandonnés) depuis le terminal.",
+    "status": "active",
+    "year": 2025,
+    "tags": [
+      "Python",
+      "CLI",
+      "Typer",
+      "Rich",
+      "TUI",
+      "Productivité"
+    ],
+    "github": "https://github.com/Jackmaa/project-cli",
+    "demo": null,
+    "image": "projects/project-cli.webp",
+    "video": "projects/project-cli.mp4",
+    "highlights": [
+      "Gestion de projets via CLI avec statuts, tags et priorités",
+      "Scan automatique de dossiers pour importer tous tes repos git",
+      "Affichage coloré et interactif avec Rich",
+      "Dashboard TUI (texte plein écran) pour navigation visuelle",
+      "Intégration avancée du statut Git (statut, branche, commits)",
+      "Détection automatique du langage des projets",
+      "Statistiques détaillées de productivité et de projets",
+      "Support de nombreuses commandes utiles (list, add, stale, stats…)"
+    ]
+  },
+  {
     "id": "vraithui-plugin",
     "name": "VraithUI",
     "description": "Plugin Tailwind CSS minimaliste et thémable avec 51 composants, 16 thèmes et support TypeScript complet. Design system inspiré de daisyUI avec tokens sémantiques, helpers runtime et accessibilité intégrée.",

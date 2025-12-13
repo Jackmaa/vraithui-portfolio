@@ -183,9 +183,42 @@ const error = ref(null);
 
 // Timeline data
 const timeline = ref([
+{
+  hash: "c7e4a21",
+  date: "Décembre 2025",
+  title: "JDC Metal – Plateforme de gestion",
+  description:
+    "Développement d’une plateforme métier complète pour une entreprise de menuiserie: devis en ligne avec calcul automatique, génération PDF, catalogue produits configurables, rendez-vous synchronisés Google Calendar, dashboard multi-rôles et suivi de chantiers.",
+  technologies: [
+    "Next.js 16",
+    "TypeScript",
+    "Prisma",
+    "Tailwind CSS",
+    "NextAuth",
+    "Puppeteer",
+    "Google Calendar API"
+  ],
+  color: "#00c2ff",
+},
+  {
+    hash: "e91d6b3",
+    date: "Décembre 2025",
+    title: "Project CLI – Découverte de Python",
+    description:
+      "Découverte de Python à travers le développement d’un outil CLI de gestion de projets. Scan automatique des repos Git, statuts, tags, statistiques et interface TUI interactive orientée productivité.",
+    technologies: [
+      "Python",
+      "CLI",
+      "Typer",
+      "Rich",
+      "Git",
+      "TUI"
+    ],
+    color: "#ffd43b",
+  },
   {
     hash: "1d6e3f7",
-    date: "Novembre 2025",
+    date: "Octobre 2025",
     title: "Vraith-Portfolio",
     description: "Déploiement de mon portfolio",
     technologies: ["Vue.js", "Vite", "Tailwind CSS", "Vercel"],
