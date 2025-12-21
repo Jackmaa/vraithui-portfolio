@@ -1,0 +1,182 @@
+[
+  {
+    "id": "jdc-metal",
+    "name": "JDC Metal",
+    "description": "Complete web platform for a metal and PVC joinery company. Online quote management, configurable product catalog, Google Calendar synchronized appointments, multi-role dashboard and project tracking.",
+    "status": "active",
+    "year": 2025,
+    "tags": [
+      "Next.js 16",
+      "TypeScript",
+      "Prisma",
+      "TailwindCSS",
+      "NextAuth",
+      "Dashboard",
+      "PDF",
+      "Google Calendar"
+    ],
+    "github": "https://github.com/Jackmaa/jdc-m-tal",
+    "demo": null,
+    "image": "projects/jdc-metal.webp",
+    "video": "projects/jdc-metal.mp4",
+    "highlights": [
+      "Multi-step quote system with automatic price calculation",
+      "PDF generation via Puppeteer",
+      "Customizable product catalog",
+      "Appointment management with Google Calendar synchronization",
+      "Client / admin / craftsman dashboard with differentiated roles",
+      "Project tracking with photos and statuses",
+      "Transactional emails with React Email",
+      "Automatic travel cost calculation by geolocation"
+    ]
+  },
+  {
+    "id": "project-cli",
+    "name": "Project CLI",
+    "description": "Python command-line tool to manage, organize and visualize all your projects (active, paused, completed, abandoned) from the terminal.",
+    "status": "active",
+    "year": 2025,
+    "tags": [
+      "Python",
+      "CLI",
+      "Typer",
+      "Rich",
+      "TUI",
+      "Productivity"
+    ],
+    "github": "https://github.com/Jackmaa/project-cli",
+    "demo": null,
+    "image": "projects/project-cli.webp",
+    "video": "projects/project-cli.mp4",
+    "highlights": [
+      "Project management via CLI with statuses, tags and priorities",
+      "Automatic folder scanning to import all your git repos",
+      "Colorful and interactive display with Rich",
+      "TUI dashboard (fullscreen text) for visual navigation",
+      "Advanced Git status integration (status, branch, commits)",
+      "Automatic project language detection",
+      "Detailed productivity and project statistics",
+      "Support for many useful commands (list, add, stale, stats…)"
+    ]
+  },
+  {
+    "id": "vraithui-plugin",
+    "name": "VraithUI",
+    "description": "Minimalist and themable Tailwind CSS plugin with 51 components, 16 themes and full TypeScript support. Design system inspired by daisyUI with semantic tokens, runtime helpers and integrated accessibility.",
+    "status": "active",
+    "year": 2025,
+    "tags": ["TailwindCSS", "Plugin", "TypeScript", "Design System", "UI Components"],
+    "github": "https://github.com/Jackmaa/vraithui-plugin",
+    "demo": null,
+    "image": "projects/vraithui-plugin.webp",
+    "video": "projects/vraithui-plugin.mp4",
+    "highlights": [
+      "51 UI components (buttons, forms, cards, modals, etc.)",
+      "16 premium themes (dark, cyberpunk, luxury, etc.)",
+      "Full TypeScript support with type definitions",
+      "Runtime helpers for interactive components",
+      "Zero runtime CSS - pure styles without JavaScript",
+      "Event-driven API with custom events"
+    ]
+  },
+  {
+    "id": "crm-forma",
+    "name": "CRM-Forma",
+    "description": "Complete CRM designed for independent trainers and training centers. Comprehensive training activity management, from prospecting to billing, with integrated Qualiopi compliance.",
+    "status": "active",
+    "year": 2025,
+    "tags": ["Symfony", "Vue.js", "PostgreSQL", "TailwindCSS", "JWT"],
+    "github": "https://github.com/Jackmaa/CRM-Forma",
+    "demo": null,
+    "image": "projects/CRM-Forma.webp",
+    "video": "projects/CRM-Forma.mp4",
+    "highlights": [
+      "Hybrid architecture Symfony + Vue.js",
+      "Automatic document generation (quotes, invoices, certificates)",
+      "Multi-user management with roles and permissions",
+      "Dashboards with performance indicators",
+      "Qualiopi compliance with complete traceability",
+      "End-of-training project - continuous improvement"
+    ]
+  },
+  {
+    "id": "vraithui-portfolio",
+    "name": "VraithUI Portfolio",
+    "description": "Interactive portfolio inspired by modern code editors (Neovim/Cursor). Immersive interface with cyberpunk theme system, integrated console, command palette and custom markdown parser.",
+    "status": "active",
+    "year": 2025,
+    "tags": ["Vue 3", "Vite", "TailwindCSS", "Design System"],
+    "github": "https://github.com/Jackmaa/vraithui-portfolio",
+    "demo": null,
+    "image": null,
+    "video": null,
+    "highlights": [
+      "15+ premium dynamic themes",
+      "Command Palette (⌘K) with fuzzy search",
+      "Integrated console with easter eggs",
+      "Custom draggable scrollbar",
+      "Custom markdown parser for content",
+      "Introduction mini-game with Matrix rain"
+    ]
+  },
+  {
+    "id": "bakery-app",
+    "name": "Bakery App",
+    "description": "Modern e-commerce application for bakery with online ordering system, inventory management, QR codes for order validation, and complete admin dashboard.",
+    "status": "completed",
+    "year": 2024,
+    "tags": ["Next.js 16", "TypeScript", "Prisma", "NextAuth", "TailwindCSS"],
+    "github": "https://github.com/Jackmaa/bakery-app",
+    "demo": null,
+    "image": "projects/bakery-app.webp",
+    "video": "projects/bakery-app.mp4",
+    "highlights": [
+      "Complete e-commerce with smart cart",
+      "NextAuth authentication (Google OAuth + credentials)",
+      "QR code system for order validation",
+      "Admin dashboard with real-time statistics",
+      "Automated inventory management",
+      "Email notifications with QR codes"
+    ]
+  },
+  {
+    "id": "nihon",
+    "name": "Nihon",
+    "description": "Online manga library with lending and management system. Platform for browsing, searching and borrowing manga with responsive interface and GSAP animations.",
+    "status": "completed",
+    "year": 2024,
+    "tags": ["PHP", "MVC", "REST API", "GSAP", "AltoRouter"],
+    "github": "https://github.com/Jackmaa/nihon-ECF-3",
+    "demo": null,
+    "image": "projects/nihon.webp",
+    "video": "projects/nihon.mp4",
+    "highlights": [
+      "Lead developer - team management (3 people)",
+      "Custom MVC architecture",
+      "REST API for catalog management",
+      "Lending and reservation system",
+      "Smooth animations with GSAP",
+      "Collaborative design on Figma"
+    ]
+  },
+  {
+    "id": "pokeapi-game",
+    "name": "PokeAPIGame",
+    "description": "Complete interactive Pokédex with Pokémon Battle Royale mini-game. Advanced search, type filters, favorites system, and turn-based combat with damage calculations based on real stats.",
+    "status": "active",
+    "year": 2024,
+    "tags": ["React", "PokéAPI", "Axios", "CSS", "LocalStorage"],
+    "github": "https://github.com/Jackmaa/PokeAPIGame",
+    "demo": null,
+    "image": "projects/PokeBattle.webp",
+    "video": "projects/PokeBattle.mp4",
+    "highlights": [
+      "Pokédex with 1000+ Pokémon (PokéAPI)",
+      "Search with autocompletion and keyboard navigation",
+      "Turn-based battle system",
+      "Damage calculations with type effectiveness",
+      "Shiny toggle with animated sprites",
+      "Interactive evolution chains"
+    ]
+  }
+]

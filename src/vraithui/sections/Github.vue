@@ -6,7 +6,7 @@
         text="GitHub"
         class="text-4xl font-bold text-[rgb(var(--accent))] glow-text mb-2"
       />
-      <p class="text-sm opacity-70">Real-time stats & learning journey</p>
+      <p class="text-sm opacity-70">{{ $t('sections.github.subtitle') }}</p>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -21,36 +21,36 @@
           </div>
 
           <div v-if="loading" class="text-sm opacity-60">
-            <span class="animate-pulse">Fetching data...</span>
+            <span class="animate-pulse">{{ $t('sections.github.loading') }}</span>
           </div>
 
           <div v-else-if="error" class="text-red-400 text-sm">
-            Error: {{ error }}
+            {{ $t('common.error') }}: {{ error }}
           </div>
 
           <div v-else class="space-y-4">
             <!-- Basic stats -->
             <div class="grid grid-cols-2 gap-4">
               <div class="stat-item">
-                <div class="text-xs opacity-60">Public Repos</div>
+                <div class="text-xs opacity-60">{{ $t('sections.github.stats.publicRepos') }}</div>
                 <div class="text-2xl font-bold text-[rgb(var(--accent))]">
                   {{ stats.public_repos }}
                 </div>
               </div>
               <div class="stat-item">
-                <div class="text-xs opacity-60">Followers</div>
+                <div class="text-xs opacity-60">{{ $t('sections.github.stats.followers') }}</div>
                 <div class="text-2xl font-bold text-[rgb(var(--accent))]">
                   {{ stats.followers }}
                 </div>
               </div>
               <div class="stat-item">
-                <div class="text-xs opacity-60">Following</div>
+                <div class="text-xs opacity-60">{{ $t('sections.github.stats.following') }}</div>
                 <div class="text-2xl font-bold text-[rgb(var(--accent))]">
                   {{ stats.following }}
                 </div>
               </div>
               <div class="stat-item">
-                <div class="text-xs opacity-60">Gists</div>
+                <div class="text-xs opacity-60">{{ $t('sections.github.stats.gists') }}</div>
                 <div class="text-2xl font-bold text-[rgb(var(--accent))]">
                   {{ stats.public_gists }}
                 </div>
@@ -62,7 +62,7 @@
               v-if="stats.bio"
               class="pt-4 border-t border-[rgb(var(--border))]"
             >
-              <div class="text-xs opacity-60 mb-2">Bio</div>
+              <div class="text-xs opacity-60 mb-2">{{ $t('sections.github.stats.bio') }}</div>
               <p class="text-sm opacity-90">{{ stats.bio }}</p>
             </div>
 
@@ -79,7 +79,7 @@
                     d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
                   />
                 </svg>
-                View Profile
+                {{ $t('sections.github.viewProfile') }}
               </a>
             </div>
           </div>
@@ -93,7 +93,7 @@
           <div class="text-xs opacity-60 mb-4">
             $ git log --format='%H %an' --all | wc -l
           </div>
-          <div class="text-sm font-semibold mb-4">Most Used Languages</div>
+          <div class="text-sm font-semibold mb-4">{{ $t('sections.github.mostUsedLanguages') }}</div>
 
           <div class="space-y-3">
             <div
@@ -126,7 +126,7 @@
         <div class="text-xs opacity-60 mb-4">
           $ git log --graph --all --format=format:'%h - %s (%ar)'
         </div>
-        <div class="text-sm font-semibold mb-6">Learning Journey</div>
+        <div class="text-sm font-semibold mb-6">{{ $t('sections.github.learningJourney') }}</div>
 
         <div class="timeline space-y-6">
           <div
@@ -173,8 +173,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 import GlitchText from "../effects/GlitchText.vue";
+import { useLanguageStore } from "@/stores/languageStore";
+import { useI18n } from "vue-i18n";
+
+const languageStore = useLanguageStore();
+const { t } = useI18n();
 
 const stats = ref({});
 const languages = ref([]);
@@ -182,111 +187,13 @@ const loading = ref(true);
 const error = ref(null);
 
 // Timeline data
-const timeline = ref([
-{
-  hash: "c7e4a21",
-  date: "Décembre 2025",
-  title: "JDC Metal – Plateforme de gestion",
-  description:
-    "Développement d’une plateforme métier complète pour une entreprise de menuiserie: devis en ligne avec calcul automatique, génération PDF, catalogue produits configurables, rendez-vous synchronisés Google Calendar, dashboard multi-rôles et suivi de chantiers.",
-  technologies: [
-    "Next.js 16",
-    "TypeScript",
-    "Prisma",
-    "Tailwind CSS",
-    "NextAuth",
-    "Puppeteer",
-    "Google Calendar API"
-  ],
-  color: "#00c2ff",
-},
-  {
-    hash: "e91d6b3",
-    date: "Décembre 2025",
-    title: "Project CLI – Découverte de Python",
-    description:
-      "Découverte de Python à travers le développement d’un outil CLI de gestion de projets. Scan automatique des repos Git, statuts, tags, statistiques et interface TUI interactive orientée productivité.",
-    technologies: [
-      "Python",
-      "CLI",
-      "Typer",
-      "Rich",
-      "Git",
-      "TUI"
-    ],
-    color: "#ffd43b",
-  },
-  {
-    hash: "1d6e3f7",
-    date: "Octobre 2025",
-    title: "Vraith-Portfolio",
-    description: "Déploiement de mon portfolio",
-    technologies: ["Vue.js", "Vite", "Tailwind CSS", "Vercel"],
-    color: "#ffd700",
-  },
-  {
-    hash: "7c4d9a1",
-    date: "Octobre 2025",
-    title: "Full Stack Next.js",
-    description:
-      "Développement de Bakery App avec Next.js 16, Prisma, et système QR code. Authentification NextAuth.",
-    technologies: ["Next.js 16", "TypeScript", "Prisma", "NextAuth"],
-    color: "#bd00ff",
-  },
-  {
-    hash: "a3f8b2e",
-    date: "Octobre 2025",
-    title: "Formation OnlineFormaPro - Fin",
-    description:
-      "Finalisation du CRM-Forma avec Symfony + Vue.js, obtention du titre DWWM",
-    technologies: ["Symfony", "Vue.js", "PostgreSQL", "Java", "Spring Boot"],
-    color: "#00ff9f",
-  },
-  {
-    hash: "4f7a1e9",
-    date: "Avril 2025",
-    title: "Portfolio Cyberpunk v1",
-    description:
-      "Premier portfolio avec esthétique cyberpunk/glitch. Animations avancées et design Figma.",
-    technologies: ["HTML", "CSS", "SCSS", "GSAP", "Figma"],
-    color: "#ffa500",
-  },
-  {
-    hash: "2e91f5c",
-    date: "Avril 2025",
-    title: "React & PokéAPI",
-    description:
-      "Création du PokeAPIGame avec système de combat tour par tour et gestion d'état avancée.",
-    technologies: ["React", "PokéAPI", "Axios", "Framer-Motion"],
-    color: "#ff006e",
-  },
-  {
-    hash: "9b3c8d2",
-    date: "Mars 2025",
-    title: "Lead Developer Experience",
-    description:
-      "Gestion d'équipe (3 personnes) sur le projet Nihon. Architecture MVC, API REST, animations GSAP.",
-    technologies: ["PHP", "MVC", "REST API", "GSAP", "Leadership"],
-    color: "#00d9ff",
-  },
-  {
-    hash: "5f8d55e",
-    date: "Janvier 2025",
-    title: "Eventify",
-    description: "Application de gestion d'évènements",
-    technologies: ["PHP", "Bootstrap"],
-    color: "#6d3dff",
-  },
-  {
-    hash: "8c2b6d4",
-    date: "Octobre 2024",
-    title: "Début Formation Web",
-    description:
-      "Premiers pas en développement web. HTML, CSS, JavaScript fondamentaux. Découverte de Git.",
-    technologies: ["HTML", "CSS", "JavaScript", "Git"],
-    color: "#6366f1",
-  },
-]);
+const timeline = ref([]);
+const timelineLoading = ref(true);
+
+// Computed path based on locale
+const timelinePath = computed(() => {
+  return `/content/timeline.${languageStore.currentLocale}.json`;
+});
 
 // Language colors (GitHub-like)
 const languageColors = {
@@ -351,8 +258,30 @@ async function fetchLanguages() {
   }
 }
 
+// Fetch timeline
+async function fetchTimeline() {
+  timelineLoading.value = true;
+
+  try {
+    const response = await fetch(timelinePath.value);
+    if (!response.ok) throw new Error("Failed to load timeline.json");
+
+    timeline.value = await response.json();
+    timelineLoading.value = false;
+  } catch (err) {
+    console.error("Error fetching timeline:", err);
+    timelineLoading.value = false;
+  }
+}
+
+// Watch for locale changes
+watch(() => languageStore.currentLocale, () => {
+  fetchTimeline();
+});
+
 onMounted(() => {
   fetchGitHubStats();
+  fetchTimeline();
 });
 </script>
 

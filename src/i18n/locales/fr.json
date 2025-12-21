@@ -1,0 +1,101 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur"
+  },
+  "header": {
+    "subtitle": "VraithUI · Nvim/Cursor shell"
+  },
+  "explorer": {
+    "files": "Fichiers"
+  },
+  "tabs": {
+    "home": "home.lua",
+    "about": "about.md",
+    "projects": "projects.ts",
+    "contact": "contact.vue",
+    "github": "github.md"
+  },
+  "sections": {
+    "about": {
+      "title": "À propos",
+      "loading": "Chargement about.md...",
+      "metadata": "METADATA"
+    },
+    "projects": {
+      "title": "Projects",
+      "subtitle": "{count} projets · Filtrer par statut ou stack technique",
+      "loading": "Chargement projects.json...",
+      "filters": {
+        "all": "Tous",
+        "active": "Actif",
+        "completed": "Terminé",
+        "in-progress": "En cours"
+      },
+      "empty": {
+        "message": "Aucun projet ne correspond à ce filtre.",
+        "reset": "Réinitialiser les filtres"
+      }
+    },
+    "github": {
+      "subtitle": "Stats en temps réel et parcours d'apprentissage",
+      "loading": "Récupération des données...",
+      "stats": {
+        "publicRepos": "Dépôts publics",
+        "followers": "Abonnés",
+        "following": "Abonnements",
+        "gists": "Gists",
+        "bio": "Bio"
+      },
+      "viewProfile": "Voir le profil",
+      "mostUsedLanguages": "Langages les plus utilisés",
+      "learningJourney": "Parcours d'apprentissage",
+      "timelineLoading": "Chargement timeline.json..."
+    },
+    "contact": {
+      "title": "Contact",
+      "subtitle": "Construisons quelque chose d'incroyable ensemble",
+      "info": {
+        "title": "$ cat contact_info.txt",
+        "email": "Email",
+        "github": "GitHub",
+        "linkedin": "LinkedIn",
+        "location": "Localisation",
+        "status": "Statut",
+        "available": "Disponible pour des opportunités"
+      },
+      "actions": {
+        "sendEmail": "Envoyez-moi un email",
+        "checkGithub": "Consultez mon GitHub"
+      },
+      "form": {
+        "prompt": "vraith@contact:~$",
+        "title": "# Envoyez-moi un message via le terminal",
+        "name": "$ name",
+        "namePlaceholder": "Votre nom",
+        "nameRequired": "Le nom est requis",
+        "email": "$ email",
+        "emailPlaceholder": "votre.email@exemple.com",
+        "emailRequired": "L'email est requis",
+        "emailInvalid": "Format d'email invalide",
+        "message": "$ message",
+        "messagePlaceholder": "Votre message...",
+        "messageRequired": "Le message est requis",
+        "messageShort": "Message trop court (min 10 caractères)",
+        "submit": "$ send --message",
+        "sending": "Envoi...",
+        "success": "Message envoyé avec succès!",
+        "successSub": "Je vous répondrai bientôt.",
+        "error": "Oups! Quelque chose s'est mal passé.",
+        "errorSub": "Veuillez essayer d'envoyer un email directement."
+      }
+    }
+  },
+  "console": {
+    "commands": {
+      "help": "Afficher ce menu d'aide",
+      "clear": "Effacer la sortie de la console",
+      "exit": "Fermer la console"
+    }
+  }
+}

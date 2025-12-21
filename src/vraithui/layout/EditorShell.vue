@@ -53,6 +53,7 @@
         VraithUI · Nvim/Cursor shell
       </div>
       <div class="ml-auto flex items-center gap-3">
+        <LanguageToggle />
         <button class="btn btn-ghost btn-sm" @click="toggleTheme">Theme</button>
       </div>
     </header>
@@ -139,6 +140,7 @@ import { ref, computed, onMounted, onBeforeUnmount, nextTick, markRaw } from "vu
 import files from "@/data/files.json";
 import { useThemeStore } from "@/stores/themeStore";
 import { useCommandStore } from "@/stores/commandStore";
+import { useLanguageStore } from "@/stores/languageStore";
 
 /* Components */
 import NvimTabline from "../components/NvimTabline.vue";
@@ -148,6 +150,7 @@ import CommandPalette from "../components/CommandPalette.vue";
 import VraithConsole from "../components/VraithConsole.vue";
 import CustomScrollbar from "../components/CustomScrollbar.vue";
 import MobileControls from "../components/MobileControls.vue";
+import LanguageToggle from "../components/LanguageToggle.vue";
 
 /* Sections / Pages */
 import Home from "../sections/Home.vue";
@@ -163,6 +166,7 @@ import ParticlesBackground from "../effects/ParticlesBackground.vue";
 /* Stores */
 const themeStore = useThemeStore();
 const commandStore = useCommandStore();
+const languageStore = useLanguageStore();
 
 /* Map des composants – markRaw pour éviter réactivité lourde */
 const componentMap = {
@@ -321,6 +325,9 @@ function onIntroComplete() {
 }
 
 onMounted(() => {
+  // Initialize language store FIRST
+  languageStore.initialize();
+
   const hasCompletedIntro = localStorage.getItem("vraith-intro-completed");
   introCompleted.value = hasCompletedIntro === "true";
 

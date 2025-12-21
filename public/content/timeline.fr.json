@@ -1,0 +1,97 @@
+[
+  {
+    "hash": "c7e4a21",
+    "date": "Décembre 2025",
+    "title": "JDC Metal – Plateforme de gestion",
+    "description": "Développement d'une plateforme métier complète pour une entreprise de menuiserie: devis en ligne avec calcul automatique, génération PDF, catalogue produits configurables, rendez-vous synchronisés Google Calendar, dashboard multi-rôles et suivi de chantiers.",
+    "technologies": [
+      "Next.js 16",
+      "TypeScript",
+      "Prisma",
+      "Tailwind CSS",
+      "NextAuth",
+      "Puppeteer",
+      "Google Calendar API"
+    ],
+    "color": "#00c2ff"
+  },
+  {
+    "hash": "e91d6b3",
+    "date": "Décembre 2025",
+    "title": "Project CLI – Découverte de Python",
+    "description": "Découverte de Python à travers le développement d'un outil CLI de gestion de projets. Scan automatique des repos Git, statuts, tags, statistiques et interface TUI interactive orientée productivité.",
+    "technologies": [
+      "Python",
+      "CLI",
+      "Typer",
+      "Rich",
+      "Git",
+      "TUI"
+    ],
+    "color": "#ffd43b"
+  },
+  {
+    "hash": "1d6e3f7",
+    "date": "Octobre 2025",
+    "title": "Vraith-Portfolio",
+    "description": "Déploiement de mon portfolio",
+    "technologies": ["Vue.js", "Vite", "Tailwind CSS", "Vercel"],
+    "color": "#ffd700"
+  },
+  {
+    "hash": "7c4d9a1",
+    "date": "Octobre 2025",
+    "title": "Full Stack Next.js",
+    "description": "Développement de Bakery App avec Next.js 16, Prisma, et système QR code. Authentification NextAuth.",
+    "technologies": ["Next.js 16", "TypeScript", "Prisma", "NextAuth"],
+    "color": "#bd00ff"
+  },
+  {
+    "hash": "a3f8b2e",
+    "date": "Octobre 2025",
+    "title": "Formation OnlineFormaPro - Fin",
+    "description": "Finalisation du CRM-Forma avec Symfony + Vue.js, obtention du titre DWWM",
+    "technologies": ["Symfony", "Vue.js", "PostgreSQL", "Java", "Spring Boot"],
+    "color": "#00ff9f"
+  },
+  {
+    "hash": "4f7a1e9",
+    "date": "Avril 2025",
+    "title": "Portfolio Cyberpunk v1",
+    "description": "Premier portfolio avec esthétique cyberpunk/glitch. Animations avancées et design Figma.",
+    "technologies": ["HTML", "CSS", "SCSS", "GSAP", "Figma"],
+    "color": "#ffa500"
+  },
+  {
+    "hash": "2e91f5c",
+    "date": "Avril 2025",
+    "title": "React & PokéAPI",
+    "description": "Création du PokeAPIGame avec système de combat tour par tour et gestion d'état avancée.",
+    "technologies": ["React", "PokéAPI", "Axios", "Framer-Motion"],
+    "color": "#ff006e"
+  },
+  {
+    "hash": "9b3c8d2",
+    "date": "Mars 2025",
+    "title": "Lead Developer Experience",
+    "description": "Gestion d'équipe (3 personnes) sur le projet Nihon. Architecture MVC, API REST, animations GSAP.",
+    "technologies": ["PHP", "MVC", "REST API", "GSAP", "Leadership"],
+    "color": "#00d9ff"
+  },
+  {
+    "hash": "5f8d55e",
+    "date": "Janvier 2025",
+    "title": "Eventify",
+    "description": "Application de gestion d'évènements",
+    "technologies": ["PHP", "Bootstrap"],
+    "color": "#6d3dff"
+  },
+  {
+    "hash": "8c2b6d4",
+    "date": "Octobre 2024",
+    "title": "Début Formation Web",
+    "description": "Premiers pas en développement web. HTML, CSS, JavaScript fondamentaux. Découverte de Git.",
+    "technologies": ["HTML", "CSS", "JavaScript", "Git"],
+    "color": "#6366f1"
+  }
+]

@@ -1,0 +1,101 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error"
+  },
+  "header": {
+    "subtitle": "VraithUI · Nvim/Cursor shell"
+  },
+  "explorer": {
+    "files": "Files"
+  },
+  "tabs": {
+    "home": "home.lua",
+    "about": "about.md",
+    "projects": "projects.ts",
+    "contact": "contact.vue",
+    "github": "github.md"
+  },
+  "sections": {
+    "about": {
+      "title": "About",
+      "loading": "Loading about.md...",
+      "metadata": "METADATA"
+    },
+    "projects": {
+      "title": "Projects",
+      "subtitle": "{count} projects · Filter by status or tech stack",
+      "loading": "Loading projects.json...",
+      "filters": {
+        "all": "All",
+        "active": "Active",
+        "completed": "Completed",
+        "in-progress": "In Progress"
+      },
+      "empty": {
+        "message": "No projects match this filter.",
+        "reset": "Reset filters"
+      }
+    },
+    "github": {
+      "subtitle": "Real-time stats & learning journey",
+      "loading": "Fetching data...",
+      "stats": {
+        "publicRepos": "Public Repos",
+        "followers": "Followers",
+        "following": "Following",
+        "gists": "Gists",
+        "bio": "Bio"
+      },
+      "viewProfile": "View Profile",
+      "mostUsedLanguages": "Most Used Languages",
+      "learningJourney": "Learning Journey",
+      "timelineLoading": "Loading timeline.json..."
+    },
+    "contact": {
+      "title": "Contact",
+      "subtitle": "Let's build something amazing together",
+      "info": {
+        "title": "$ cat contact_info.txt",
+        "email": "Email",
+        "github": "GitHub",
+        "linkedin": "LinkedIn",
+        "location": "Location",
+        "status": "Status",
+        "available": "Available for opportunities"
+      },
+      "actions": {
+        "sendEmail": "Send me an email",
+        "checkGithub": "Check my GitHub"
+      },
+      "form": {
+        "prompt": "vraith@contact:~$",
+        "title": "# Send me a message via terminal",
+        "name": "$ name",
+        "namePlaceholder": "Your name",
+        "nameRequired": "Name is required",
+        "email": "$ email",
+        "emailPlaceholder": "your.email@example.com",
+        "emailRequired": "Email is required",
+        "emailInvalid": "Invalid email format",
+        "message": "$ message",
+        "messagePlaceholder": "Your message...",
+        "messageRequired": "Message is required",
+        "messageShort": "Message too short (min 10 characters)",
+        "submit": "$ send --message",
+        "sending": "Sending...",
+        "success": "Message sent successfully!",
+        "successSub": "I'll get back to you soon.",
+        "error": "Oops! Something went wrong.",
+        "errorSub": "Please try sending an email directly."
+      }
+    }
+  },
+  "console": {
+    "commands": {
+      "help": "Show this help menu",
+      "clear": "Clear console output",
+      "exit": "Close the console"
+    }
+  }
+}

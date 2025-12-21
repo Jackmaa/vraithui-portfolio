@@ -5,7 +5,7 @@
       v-if="frontmatter"
       class="frontmatter mb-8 p-4 rounded-lg border border-[rgb(var(--border))] bg-[rgb(var(--panel))]"
     >
-      <div class="text-xs opacity-60 mb-3">--- METADATA ---</div>
+      <div class="text-xs opacity-60 mb-3">--- {{ $t('sections.about.metadata') }} ---</div>
       <div class="grid grid-cols-2 gap-3">
         <div
           v-for="(value, key) in frontmatter"
@@ -22,11 +22,11 @@
 
     <!-- Contenu Markdown parsé -->
     <div v-if="loading" class="opacity-60">
-      <span class="animate-pulse">Loading about.md...</span>
+      <span class="animate-pulse">{{ $t('sections.about.loading') }}</span>
     </div>
 
     <div v-else-if="error" class="text-[rgb(var(--er))]">
-      Error: {{ error }}
+      {{ $t('common.error') }}: {{ error }}
     </div>
 
     <div v-else class="markdown-content space-y-6" v-html="htmlContent"></div>
@@ -34,12 +34,22 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
+import { useLanguageStore } from "@/stores/languageStore";
+import { useI18n } from "vue-i18n";
+
+const languageStore = useLanguageStore();
+const { t } = useI18n();
 
 const frontmatter = ref(null);
 const markdownContent = ref("");
 const loading = ref(true);
 const error = ref(null);
+
+// Computed path based on locale
+const aboutPath = computed(() => {
+  return `/content/about.${languageStore.currentLocale}.md`;
+});
 
 // Détecter si un champ est "long" et devrait prendre 2 colonnes
 function isLongField(key, value) {
@@ -199,15 +209,27 @@ function extractFrontmatter(content) {
   return { frontmatter: fm, content: match[2] };
 }
 
-// Fetch et parse
-onMounted(async () => {
+// Fetch about content
+async function fetchAboutContent() {
+  loading.value = true;
+  error.value = null;
+
   try {
-    const response = await fetch("/about.md");
-    if (!response.ok) throw new Error("Failed to load about.md");
+    const response = await fetch(aboutPath.value);
+    if (!response.ok) {
+      // Fallback to old path for backward compatibility
+      const fallbackResponse = await fetch("/about.md");
+      if (!fallbackResponse.ok) throw new Error("Failed to load about.md");
+      const raw = await fallbackResponse.text();
+      const { frontmatter: fm, content } = extractFrontmatter(raw);
+      frontmatter.value = fm;
+      markdownContent.value = content;
+      loading.value = false;
+      return;
+    }
 
     const raw = await response.text();
     const { frontmatter: fm, content } = extractFrontmatter(raw);
-
     frontmatter.value = fm;
     markdownContent.value = content;
     loading.value = false;
@@ -215,6 +237,15 @@ onMounted(async () => {
     error.value = err.message;
     loading.value = false;
   }
+}
+
+// Watch for locale changes
+watch(() => languageStore.currentLocale, () => {
+  fetchAboutContent();
+});
+
+onMounted(async () => {
+  await fetchAboutContent();
 });
 </script>
 
