@@ -1,5 +1,43 @@
 [
   {
+    "hash": "a9b2f4e",
+    "date": "Février 2026",
+    "title": "Symfony Auth Starter – Bundle Open Source",
+    "description": "Création d'un bundle Symfony moderne pour l'authentification avec OAuth. Installation en une commande (composer + CLI), support Google OAuth, email verification, password reset. Architecture propre, templates prêts à l'emploi, documentation complète.",
+    "technologies": [
+      "Symfony 7.x",
+      "PHP 8.2",
+      "OAuth2",
+      "Doctrine",
+      "Twig",
+      "PHPUnit",
+      "PHPStan"
+    ],
+    "color": "#000000"
+  },
+  {
+    "hash": "b3f5c8a7",
+    "date": "Février 2026",
+    "title": "GoLang -- Blockchain",
+    "description": "Découverte de GoLang et de son écosystème. Création d'un outil CLI pour la gestion de projets. Scan automatique des repos Git, statuts, tags, statistiques et interface TUI interactive orientée productivité.",
+    "technologies": ["GoLang", "Blockchain"],
+    "color": "#00ADD8"
+  },
+  {
+    "hash": "3f5c8a7",
+    "date": "Janvier 2026",
+    "title": "PNG2WebP Converter – Outil CLI",
+    "description": "Développement d'un convertisseur d'images en ligne de commande. Conversion batch PNG vers WebP avec optimisation automatique, préservation des métadonnées et traitement parallèle. Interface CLI intuitive avec barre de progression.",
+    "technologies": [
+      "Node.js",
+      "Sharp",
+      "Commander.js",
+      "CLI",
+      "Image Processing"
+    ],
+    "color": "#68a063"
+  },
+  {
     "hash": "c7e4a21",
     "date": "Décembre 2025",
     "title": "JDC Metal – Plateforme de gestion",

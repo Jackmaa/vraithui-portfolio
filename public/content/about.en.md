@@ -71,4 +71,4 @@ Want to collaborate on a project? Let's talk!
 
 ---
 
-_Last updated: December 2025_
+_Last updated: February 2026_

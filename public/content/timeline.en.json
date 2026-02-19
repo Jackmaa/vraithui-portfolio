@@ -1,8 +1,46 @@
 [
   {
+    "hash": "a9b2f4e",
+    "date": "February 2026",
+    "title": "Symfony Auth Starter – Bundle Open Source",
+    "description": "Creation of a modern Symfony bundle for authentication with OAuth. Installation in one command (composer + CLI), support Google OAuth, email verification, password reset. Clean architecture, ready-to-use templates, complete documentation.",
+    "technologies": [
+      "Symfony 7.x",
+      "PHP 8.2",
+      "OAuth2",
+      "Doctrine",
+      "Twig",
+      "PHPUnit",
+      "PHPStan"
+    ],
+    "color": "#000000"
+  },
+  {
+    "hash": "b3f5c8a7",
+    "date": "February 2026",
+    "title": "GoLang -- Blockchain",
+    "description": "Discovery of GoLang and its ecosystem. Creation of a CLI tool for project management. Automatic Git repo scanning, statuses, tags, statistics and productivity-oriented interactive TUI interface.",
+    "technologies": ["GoLang", "Blockchain"],
+    "color": "#00ADD8"
+  },
+  {
+    "hash": "3f5c8a7",
+    "date": "January 2026",
+    "title": "PNG2WebP Converter – Outil CLI",
+    "description": "Development of a command-line image converter. Batch PNG to WebP conversion with automatic optimization, metadata preservation and parallel processing. Intuitive CLI interface with progress bar.",
+    "technologies": [
+      "Node.js",
+      "Sharp",
+      "Commander.js",
+      "CLI",
+      "Image Processing"
+    ],
+    "color": "#68a063"
+  },
+  {
     "hash": "c7e4a21",
     "date": "December 2025",
-    "title": "JDC Metal – Management Platform",
+    "title": "JDC Metal – Business Platform",
     "description": "Development of a complete business platform for a joinery company: online quotes with automatic calculation, PDF generation, configurable product catalog, Google Calendar synchronized appointments, multi-role dashboard and project tracking.",
     "technologies": [
       "Next.js 16",

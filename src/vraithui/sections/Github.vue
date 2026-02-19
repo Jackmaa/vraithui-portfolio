@@ -205,6 +205,7 @@ const languageColors = {
   HTML: "#e34c26",
   Java: "#b07219",
   Python: "#3572A5",
+  GoLang: "#00ADD8",
 };
 
 // Fetch GitHub stats
