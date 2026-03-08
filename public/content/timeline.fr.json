@@ -19,7 +19,7 @@
     "hash": "b3f5c8a7",
     "date": "Février 2026",
     "title": "GoLang -- Blockchain",
-    "description": "Découverte de GoLang et de son écosystème. Création d'un outil CLI pour la gestion de projets. Scan automatique des repos Git, statuts, tags, statistiques et interface TUI interactive orientée productivité.",
+    "description": "Découverte de GoLang pour créer un projet blockchain.",
     "technologies": ["GoLang", "Blockchain"],
     "color": "#00ADD8"
   },
