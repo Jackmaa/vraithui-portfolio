@@ -6,7 +6,7 @@
     <button
       v-if="!completed && !skipped && phase !== 'main'"
       @click="skipIntro"
-      class="absolute top-4 right-4 z-[70] px-3 py-1.5 text-xs border border-[rgb(var(--border))] rounded hover:border-[rgb(var(--accent))] hover:text-[rgb(var(--accent))] transition-all"
+      class="skip-btn absolute bottom-6 left-1/2 -translate-x-1/2 z-[70] px-4 py-2 text-sm text-[rgb(var(--fg))] bg-[rgb(var(--bg))]/80 backdrop-blur-sm border border-[rgb(var(--border))] rounded-full hover:border-[rgb(var(--accent))] hover:text-[rgb(var(--accent))] transition-all whitespace-nowrap"
     >
       Skip intro [ESC]
     </button>
@@ -64,7 +64,7 @@
           >
 
           <!-- Terminal output -->
-          <div class="space-y-2 text-sm mb-4 max-h-64 overflow-auto">
+          <div ref="terminalOutputRef" class="space-y-2 text-sm mb-4 max-h-64 overflow-auto">
             <div
               v-for="(line, i) in terminalLines"
               :key="i"
@@ -90,6 +90,9 @@
               >
                 {{ line.text }}
               </span>
+              <span v-if="line.type === 'processing'" class="text-yellow-400 processing-dots">
+                {{ line.text }}
+              </span>
             </div>
           </div>
 
@@ -102,7 +105,7 @@
           </div>
 
           <!-- Input -->
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-2" :class="isProcessing ? 'opacity-40' : ''">
             <span class="text-[rgb(var(--accent))]">vraith@portfolio:~$</span>
             <input
               ref="inputRef"
@@ -110,7 +113,8 @@
               @keydown.enter="executeCommand"
               @keydown.tab.prevent="autocomplete"
               class="flex-1 bg-transparent outline-none border-b border-[rgb(var(--border))] focus:border-[rgb(var(--accent))] transition-colors px-2 py-1"
-              :placeholder="currentHint"
+              :placeholder="isProcessing ? '' : currentHint"
+              :disabled="isProcessing"
             />
           </div>
 
@@ -268,10 +272,12 @@ const terminalLines = ref([]);
 const currentInput = ref("");
 const currentStep = ref(0);
 const inputRef = ref(null);
+const terminalOutputRef = ref(null);
 const completed = ref(false);
 const skipped = ref(false);
 const showMatrix = ref(false);
 const showHint = ref(true);
+const isProcessing = ref(false);
 
 // Game steps
 const steps = [
@@ -289,7 +295,7 @@ const steps = [
     hint: "Type 'bypass' to override security",
     responses: [
       "[BYPASS] Overriding security protocols...",
-      "████████████████████████████ 100%",
+      { type: "progressBar", total: 28, duration: 1400 },
       "[SUCCESS] Firewall disabled",
       "[HINT] Execute: access",
     ],
@@ -306,45 +312,113 @@ const currentHint = computed(() => {
   return steps[currentStep.value].hint;
 });
 
+function scrollToBottom() {
+  nextTick(() => {
+    if (terminalOutputRef.value) {
+      terminalOutputRef.value.scrollTop = terminalOutputRef.value.scrollHeight;
+    }
+  });
+}
+
 function addLine(text, type = "output", options = {}) {
   terminalLines.value.push({ text, type, ...options });
+  scrollToBottom();
 }
 
 function executeCommand() {
   const cmd = currentInput.value.trim().toLowerCase();
 
-  if (!cmd) return;
+  if (!cmd || isProcessing.value) return;
 
   addLine(cmd, "input");
   addLine("", "prompt");
+
+  currentInput.value = "";
 
   if (currentStep.value < steps.length) {
     const step = steps[currentStep.value];
 
     if (cmd === step.command) {
-      step.responses.forEach((response) => {
-        addLine(response, "output", { success: true });
-      });
-      currentStep.value++;
+      isProcessing.value = true;
 
-      if (currentStep.value >= steps.length) {
+      // Push a "processing" placeholder that animates while lines are loading
+      const processingIdx = terminalLines.value.length;
+      terminalLines.value.push({ text: "[PROCESSING]", type: "processing" });
+      scrollToBottom();
+
+      // Reveal each response line one by one, then remove the placeholder
+      let cumulativeDelay = 500;
+
+      step.responses.forEach((response, i) => {
+        const delay = cumulativeDelay;
+
+        if (response?.type === "progressBar") {
+          // Reserve extra time for the bar animation
+          cumulativeDelay += response.duration + 300;
+        } else {
+          cumulativeDelay += 450;
+        }
+
         setTimeout(() => {
-          showMatrix.value = true;
-        }, 1000);
-      }
+          if (i === 0) {
+            terminalLines.value.splice(processingIdx, 1);
+          }
+
+          if (response?.type === "progressBar") {
+            // Push a live line and animate blocks into it
+            const lineIdx = terminalLines.value.length;
+            terminalLines.value.push({ text: " 0%", type: "output", success: true });
+            scrollToBottom();
+
+            const total = response.total;
+            const intervalMs = response.duration / total;
+            let filled = 0;
+
+            const ticker = setInterval(() => {
+              filled++;
+              const blocks = "█".repeat(filled) + "░".repeat(total - filled);
+              const pct = Math.round((filled / total) * 100);
+              terminalLines.value[lineIdx] = {
+                text: `${blocks} ${pct}%`,
+                type: "output",
+                success: true,
+              };
+              scrollToBottom();
+
+              if (filled >= total) {
+                clearInterval(ticker);
+              }
+            }, intervalMs);
+          } else {
+            addLine(response, "output", { success: true });
+          }
+
+          if (i === step.responses.length - 1) {
+            // Wait for bar to finish before unlocking
+            const extra = response?.type === "progressBar" ? response.duration : 0;
+            setTimeout(() => {
+              currentStep.value++;
+              isProcessing.value = false;
+
+              if (currentStep.value >= steps.length) {
+                setTimeout(() => { showMatrix.value = true; }, 1000);
+              }
+
+              nextTick(() => inputRef.value?.focus());
+            }, extra);
+          }
+        }, delay);
+      });
     } else if (cmd === "help") {
       addLine("Available commands:", "output");
       addLine(`  ${step.command.padEnd(15)} - ${step.hint}`, "output");
+      nextTick(() => inputRef.value?.focus());
     } else {
       addLine(`Command not recognized: ${cmd}`, "output", { error: true });
       addLine(`Type 'help' for available commands`, "output");
+      nextTick(() => inputRef.value?.focus());
     }
   }
-
-  currentInput.value = "";
-  nextTick(() => {
-    inputRef.value?.focus();
-  });
 }
 
 function autocomplete() {
@@ -425,6 +499,27 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
+/* Skip intro button — fade in after 1.5s, then pulse glow twice */
+.skip-btn {
+  opacity: 0;
+  animation: skipBtnReveal 3.5s ease-out forwards;
+}
+
+@keyframes skipBtnReveal {
+  /* Hidden during boot sequence */
+  0%, 43%  { opacity: 0; box-shadow: none; }
+  /* Fade in */
+  57%      { opacity: 1; box-shadow: none; }
+  /* First glow pulse */
+  71%      { opacity: 1; box-shadow: 0 0 14px 2px rgba(var(--accent), 0.65); }
+  /* Settle */
+  85%      { opacity: 1; box-shadow: none; }
+  /* Second softer pulse */
+  92%      { opacity: 1; box-shadow: 0 0 10px 1px rgba(var(--accent), 0.35); }
+  /* Final rest state */
+  100%     { opacity: 1; box-shadow: none; }
+}
+
 /* Boot animation */
 .boot-line {
   opacity: 0;
@@ -445,6 +540,20 @@ onBeforeUnmount(() => {
 /* Terminal */
 .terminal-line {
   animation: fadeIn 0.2s ease-out;
+}
+
+/* Processing indicator — animated trailing dots */
+.processing-dots::after {
+  content: '';
+  animation: processingDots 1.2s steps(4, end) infinite;
+}
+
+@keyframes processingDots {
+  0%   { content: ''; }
+  25%  { content: ' .'; }
+  50%  { content: ' ..'; }
+  75%  { content: ' ...'; }
+  100% { content: ''; }
 }
 
 @keyframes fadeIn {
