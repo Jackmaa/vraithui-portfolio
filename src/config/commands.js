@@ -9,6 +9,7 @@ export const COMMAND_CATEGORIES = {
   UTILITY: 'utility',
   FUN: 'fun',
   SYSTEM: 'system',
+  EASTER_EGG: 'easter_egg',
 };
 
 /**
@@ -79,6 +80,13 @@ export const COMMAND_DEFINITIONS = [
     requiresConsole: false,
     hasArgs: true,
   },
+  {
+    name: 'theme random',
+    pattern: /^theme\s+random$/i,
+    category: COMMAND_CATEGORIES.THEME,
+    description: 'Set a random theme',
+    requiresConsole: false,
+  },
 
   // === UTILITY ===
   {
@@ -131,6 +139,31 @@ export const COMMAND_DEFINITIONS = [
     requiresConsole: true,
   },
 
+  // === UTILITY (language & manual) ===
+  {
+    name: 'lang toggle',
+    pattern: /^lang\s+toggle$/i,
+    category: COMMAND_CATEGORIES.UTILITY,
+    description: 'Toggle language (EN/FR)',
+    requiresConsole: true,
+  },
+  {
+    name: 'lang set',
+    pattern: /^lang\s+(en|fr)$/i,
+    category: COMMAND_CATEGORIES.UTILITY,
+    description: 'Set language: lang en | lang fr',
+    requiresConsole: true,
+    hasArgs: true,
+  },
+  {
+    name: 'man',
+    pattern: /^man\s+(\S+.*)$/i,
+    category: COMMAND_CATEGORIES.UTILITY,
+    description: 'Show manual for a command',
+    requiresConsole: true,
+    hasArgs: true,
+  },
+
   // === FUN ===
   {
     name: 'ascii vraith',
@@ -146,6 +179,100 @@ export const COMMAND_DEFINITIONS = [
     description: 'Roll dice: roll or roll d20',
     requiresConsole: true,
     hasArgs: true,
+  },
+  // === EASTER EGGS ===
+  // NOTE: sudo rm -rf / MUST come before generic sudo (Array.find returns first match)
+  {
+    name: 'sudo rm -rf /',
+    pattern: /^sudo\s+rm\s+-rf\s+\/$/i,
+    category: COMMAND_CATEGORIES.EASTER_EGG,
+    description: 'Nice try',
+    requiresConsole: true,
+  },
+  {
+    name: 'sudo',
+    pattern: /^sudo(\s+.*)?$/i,
+    category: COMMAND_CATEGORIES.EASTER_EGG,
+    description: 'Permission denied',
+    requiresConsole: true,
+  },
+  {
+    name: 'vim',
+    pattern: /^(n?vim)$/i,
+    category: COMMAND_CATEGORIES.EASTER_EGG,
+    description: 'You\'re already here',
+    requiresConsole: true,
+  },
+  {
+    name: 'emacs',
+    pattern: /^emacs$/i,
+    category: COMMAND_CATEGORIES.EASTER_EGG,
+    description: 'We don\'t do that here',
+    requiresConsole: true,
+  },
+  {
+    name: ':q',
+    pattern: /^:(q!?|wq!?|x)$/i,
+    category: COMMAND_CATEGORIES.EASTER_EGG,
+    description: 'No escape',
+    requiresConsole: true,
+  },
+  {
+    name: 'neofetch',
+    pattern: /^neofetch$/i,
+    category: COMMAND_CATEGORIES.EASTER_EGG,
+    description: 'System info',
+    requiresConsole: true,
+  },
+  {
+    name: 'matrix',
+    pattern: /^(c?matrix)$/i,
+    category: COMMAND_CATEGORIES.EASTER_EGG,
+    description: 'Enter the Matrix',
+    requiresConsole: false,
+  },
+  {
+    name: 'cowsay',
+    pattern: /^cowsay\s+(.+)$/i,
+    category: COMMAND_CATEGORIES.EASTER_EGG,
+    description: 'Moo',
+    requiresConsole: true,
+    hasArgs: true,
+  },
+  {
+    name: 'fortune',
+    pattern: /^fortune$/i,
+    category: COMMAND_CATEGORIES.EASTER_EGG,
+    description: 'Random wisdom',
+    requiresConsole: true,
+  },
+  {
+    name: 'history',
+    pattern: /^history$/i,
+    category: COMMAND_CATEGORIES.EASTER_EGG,
+    description: 'Show command history',
+    requiresConsole: true,
+  },
+  {
+    name: 'uptime',
+    pattern: /^uptime$/i,
+    category: COMMAND_CATEGORIES.EASTER_EGG,
+    description: 'Session uptime',
+    requiresConsole: true,
+  },
+  {
+    name: 'hack',
+    pattern: /^hack$/i,
+    category: COMMAND_CATEGORIES.EASTER_EGG,
+    description: 'Hack the mainframe',
+    requiresConsole: true,
+  },
+  {
+    name: 'barrel roll',
+    pattern: /^(barrel\s+roll|do\s+a\s+barrel\s+roll)$/i,
+    category: COMMAND_CATEGORIES.EASTER_EGG,
+    description: 'Do a barrel roll!',
+    requiresConsole: false,
   },
 ];
 

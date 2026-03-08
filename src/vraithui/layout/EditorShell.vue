@@ -1,7 +1,7 @@
 <template>
   <div
     class="h-screen w-full grid responsive-grid"
-    :class="showingIntro ? 'intro-mode' : ''"
+    :class="[showingIntro ? 'intro-mode' : '', barrelRolling ? 'barrel-roll' : '']"
   >
     <!-- Effets visuels (desktop + mobile acceptable) -->
     <ParticlesBackground />
@@ -49,9 +49,7 @@
         ⌘K
       </button>
 
-      <div class="opacity-70 text-sm truncate">
-        VraithUI · Nvim/Cursor shell
-      </div>
+      <div class="opacity-70 text-sm truncate font-mono">{{ headerPath }}</div>
       <div class="ml-auto flex items-center gap-3">
         <LanguageToggle />
         <button class="btn btn-ghost btn-sm" @click="toggleTheme">Theme</button>
@@ -132,6 +130,15 @@
       @toggle-console="consoleOpen = !consoleOpen"
       @toggle-palette="paletteOpen = true"
     />
+
+    <!-- Matrix Rain Overlay -->
+    <MatrixRain
+      v-if="showMatrixOverlay"
+      :title="matrixTitle"
+      :subtitle="matrixSubtitle"
+      @complete="onMatrixComplete"
+      class="fixed inset-0 z-[80]"
+    />
   </div>
 </template>
 
@@ -141,6 +148,7 @@ import files from "@/data/files.json";
 import { useThemeStore } from "@/stores/themeStore";
 import { useCommandStore } from "@/stores/commandStore";
 import { useLanguageStore } from "@/stores/languageStore";
+import { useKonami } from "@/composables/useKonami";
 
 /* Components */
 import NvimTabline from "../components/NvimTabline.vue";
@@ -148,6 +156,7 @@ import NvimStatusline from "../components/NvimStatusline.vue";
 import NvimExplorer from "../components/NvimExplorer.vue";
 import CommandPalette from "../components/CommandPalette.vue";
 import VraithConsole from "../components/VraithConsole.vue";
+import MatrixRain from "../components/Matrix.vue";
 import CustomScrollbar from "../components/CustomScrollbar.vue";
 import MobileControls from "../components/MobileControls.vue";
 import LanguageToggle from "../components/LanguageToggle.vue";
@@ -184,6 +193,33 @@ const consoleOpen = ref(false);
 const mobileExplorerOpen = ref(false);
 const mode = ref("NORMAL");
 
+/* Matrix + Barrel Roll */
+const showMatrixOverlay = ref(false);
+const matrixTitle = ref('SYSTEM UNLOCKED');
+const matrixSubtitle = ref('Welcome to the portfolio...');
+const barrelRolling = ref(false);
+const konamiMatrixActive = ref(false);
+
+/* Konami Code */
+const { isUnlocked: konamiUnlocked } = useKonami(() => {
+  // Show Matrix rain with jailbreak message, then apply hacker theme on complete
+  matrixTitle.value = 'SYSTEM JAILBREAK';
+  matrixSubtitle.value = 'HACKER MODE ON';
+  konamiMatrixActive.value = true;
+  showMatrixOverlay.value = true;
+});
+
+function onMatrixComplete() {
+  showMatrixOverlay.value = false;
+  if (konamiMatrixActive.value) {
+    konamiMatrixActive.value = false;
+    themeStore.setTheme('hacker');
+  }
+  // Reset to defaults for future `matrix` command uses
+  matrixTitle.value = 'SYSTEM UNLOCKED';
+  matrixSubtitle.value = 'Welcome to the portfolio...';
+}
+
 const introCompleted = ref(false);
 const showingIntro = computed(
   () => !introCompleted.value && active.value === "home"
@@ -202,13 +238,15 @@ const currentScrollPosition = computed({
 const paletteCommands = computed(() => {
   const commands = [];
 
-  // Add all registered commands
-  commandStore.allCommands.forEach(cmd => {
-    commands.push({
-      name: cmd.name,
-      desc: cmd.description,
+  // Add all registered commands (except hidden easter eggs)
+  commandStore.allCommands
+    .filter(cmd => cmd.category !== 'easter_egg')
+    .forEach(cmd => {
+      commands.push({
+        name: cmd.name,
+        desc: cmd.description,
+      });
     });
-  });
 
   // Add dynamic theme set commands
   themeStore.themeNames.forEach(themeName => {
@@ -252,6 +290,11 @@ function close(id) {
 
 const activeTab = computed(() => tabs.value.find((t) => t.id === active.value));
 
+const headerPath = computed(() => {
+  if (!activeTab.value) return '~/portfolio';
+  return `~/portfolio/${activeTab.value.label}`;
+});
+
 function handleScroll(position) {
   if (active.value) scrollPositions.value[active.value] = position;
 }
@@ -278,6 +321,11 @@ function handleCmd(cmd) {
     setTimeout(() => {
       consoleOpen.value = false;
     }, 300);
+  } else if (result.action === 'matrix') {
+    showMatrixOverlay.value = true;
+  } else if (result.action === 'barrel-roll') {
+    barrelRolling.value = true;
+    setTimeout(() => { barrelRolling.value = false; }, 1500);
   }
 
   // Auto-open console if command requires it
@@ -315,6 +363,15 @@ function onOpenFileEvent(e) {
 
 // Removed onThemeListRequest - no longer needed with commandStore
 
+function onTriggerMatrix() {
+  showMatrixOverlay.value = true;
+}
+
+function onBarrelRoll() {
+  barrelRolling.value = true;
+  setTimeout(() => { barrelRolling.value = false; }, 1500);
+}
+
 function onIntroComplete() {
   introCompleted.value = true;
   localStorage.setItem("vraith-intro-completed", "true");
@@ -342,12 +399,16 @@ onMounted(() => {
   window.addEventListener("keydown", onKeydown);
   window.addEventListener("open-file", onOpenFileEvent);
   window.addEventListener("intro-complete", onIntroComplete);
+  window.addEventListener("trigger-matrix", onTriggerMatrix);
+  window.addEventListener("barrel-roll", onBarrelRoll);
 });
 
 onBeforeUnmount(() => {
   window.removeEventListener("keydown", onKeydown);
   window.removeEventListener("open-file", onOpenFileEvent);
   window.removeEventListener("intro-complete", onIntroComplete);
+  window.removeEventListener("trigger-matrix", onTriggerMatrix);
+  window.removeEventListener("barrel-roll", onBarrelRoll);
 });
 </script>
 
@@ -439,4 +500,15 @@ onBeforeUnmount(() => {
 .main-area > section {
   height: calc(100% - 2rem);
 }
+
+/* Barrel Roll */
+.barrel-roll {
+  animation: barrelRoll 1.5s ease-in-out;
+}
+
+@keyframes barrelRoll {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 </style>

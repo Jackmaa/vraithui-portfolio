@@ -10,13 +10,38 @@
       {{ mode }}
     </span>
     <span class="opacity-80">{{ file || "—" }}</span>
-    <span class="ml-auto opacity-60">UTF-8 · LF · 120 cols</span>
+    <span class="ml-2 text-[rgb(var(--accent))] opacity-70">{{ languageStore.currentLocale.toUpperCase() }}</span>
+    <span class="ml-auto opacity-60">{{ elapsedFormatted }} · UTF-8 · LF</span>
   </div>
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, ref, onMounted, onBeforeUnmount } from "vue";
+import { useLanguageStore } from "@/stores/languageStore";
+
 const props = defineProps({ mode: String, file: String, git: String });
+const languageStore = useLanguageStore();
+
+const sessionStart = Date.now();
+const elapsed = ref(0);
+let timerInterval = null;
+
+const elapsedFormatted = computed(() => {
+  const totalSecs = Math.floor(elapsed.value / 1000);
+  const mins = Math.floor(totalSecs / 60);
+  const secs = totalSecs % 60;
+  return `${mins}m ${secs}s`;
+});
+
+onMounted(() => {
+  timerInterval = setInterval(() => {
+    elapsed.value = Date.now() - sessionStart;
+  }, 1000);
+});
+
+onBeforeUnmount(() => {
+  if (timerInterval) clearInterval(timerInterval);
+});
 const modeColor = computed(() => {
   switch ((props.mode || "NORMAL").toUpperCase()) {
     case "INSERT":

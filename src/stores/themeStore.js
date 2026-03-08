@@ -103,8 +103,8 @@ export const useThemeStore = defineStore('theme', () => {
   }
 
   function getRandomTheme() {
-    const randomIndex = Math.floor(Math.random() * THEMES.length);
-    return THEMES[randomIndex].name;
+    const visible = THEMES.filter(t => !t.hidden);
+    return visible[Math.floor(Math.random() * visible.length)].name;
   }
 
   function setRandomTheme() {

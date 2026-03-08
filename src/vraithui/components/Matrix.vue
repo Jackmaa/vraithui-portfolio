@@ -6,9 +6,9 @@
         <div
           class="text-4xl font-bold mb-4 text-[rgb(var(--accent))] glow-text"
         >
-          SYSTEM UNLOCKED
+          {{ title }}
         </div>
-        <div class="text-sm opacity-70">Welcome to the portfolio...</div>
+        <div class="text-sm opacity-70">{{ subtitle }}</div>
       </div>
     </div>
   </div>
@@ -17,6 +17,10 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
 
+const props = defineProps({
+  title: { type: String, default: 'SYSTEM UNLOCKED' },
+  subtitle: { type: String, default: 'Welcome to the portfolio...' },
+});
 const emit = defineEmits(["complete"]);
 const canvasRef = ref(null);
 

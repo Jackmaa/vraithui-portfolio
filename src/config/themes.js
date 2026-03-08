@@ -30,6 +30,7 @@ export const THEMES = [
   { name: 'lush-merlot', category: THEME_CATEGORIES.LUXURY, mode: 'dark', label: 'Lush Merlot' },
   { name: 'oxford-maize', category: THEME_CATEGORIES.DARK, mode: 'dark', label: 'Oxford Maize' },
   { name: 'rich-black', category: THEME_CATEGORIES.DARK, mode: 'dark', label: 'Rich Black' },
+  { name: 'hacker', category: THEME_CATEGORIES.DARK, mode: 'dark', label: 'Hacker', hidden: true },
 ];
 
 // Default theme

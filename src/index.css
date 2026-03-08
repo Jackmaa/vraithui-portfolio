@@ -458,9 +458,34 @@ body {
   --sc: 197 168 128;
 }
 
-/* Option: tu peux affiner par thÃ¨me si besoin
+/* ========== HACKER (hidden, Konami-unlocked) ========== */
+[data-theme="hacker"] {
+  --bg: 0 0 0;
+  --fg: 0 255 65;
+  --panel: 0 8 0;
+  --panel-2: 0 15 0;
+  --accent: 0 255 65;
+  --border: 0 255 65 / 0.12;
+  --mode-n: 0 255 65;
+  --mode-i: 255 255 0;
+  --mode-v: 0 255 255;
+  --mode-r: 255 0 0;
+  --p: var(--accent);
+  --pc: 0 0 0;
+  --s: 0 180 0;
+  --sc: 0 0 0;
+}
 
-*/
+/* Hacker scrollbar */
+[data-theme="hacker"] .scroll-theme::-webkit-scrollbar-track {
+  background: rgb(0, 8, 0);
+}
+[data-theme="hacker"] .scroll-theme::-webkit-scrollbar-thumb {
+  background: rgb(0, 255, 65);
+}
+[data-theme="hacker"] .scroll-theme::-webkit-scrollbar-thumb:hover {
+  background: rgb(0, 200, 50);
+}
 
 /* ===== Scrollbars de base ===== */
 .scroll-theme {

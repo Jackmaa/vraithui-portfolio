@@ -232,6 +232,10 @@ function run() {
     window.dispatchEvent(
       new CustomEvent("open-file", { detail: { id: result.section } })
     );
+  } else if (result.action === 'matrix') {
+    window.dispatchEvent(new CustomEvent('trigger-matrix'));
+  } else if (result.action === 'barrel-roll') {
+    window.dispatchEvent(new CustomEvent('barrel-roll'));
   }
 
   line.value = "";
