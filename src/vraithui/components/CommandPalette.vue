@@ -57,9 +57,12 @@
             :class="i === index ? 'bg-[rgb(var(--panel-2))] border-[rgb(var(--accent))]' : 'border-transparent'"
             @mousemove="index = i"
           >
-            <span class="opacity-60 font-mono text-xs min-w-28">{{
-              item.key
-            }}</span>
+            <span class="opacity-60 font-mono text-xs min-w-28">
+              <template v-for="(seg, si) in item.segments" :key="si">
+                <span v-if="seg.highlight" class="text-[rgb(var(--accent))] opacity-100">{{ seg.text }}</span>
+                <template v-else>{{ seg.text }}</template>
+              </template>
+            </span>
             <span>{{ item.label }}</span>
           </button>
         </template>
@@ -83,6 +86,7 @@
 
 <script setup>
 import { computed, onMounted, ref, watch, nextTick } from "vue";
+import { fuzzyScore, fuzzyFilter, highlightMatches } from "@/vraithui/utils/fuzzyMatch";
 
 const props = defineProps({
   commands: {
@@ -120,14 +124,48 @@ function normalize(arr) {
 const pool = computed(() => normalize(props.commands));
 
 const items = computed(() => {
-  const q = query.value.trim().toLowerCase();
-  const out = !q
-    ? pool.value
-    : pool.value.filter((i) =>
-        (i.key + " " + i.label).toLowerCase().includes(q)
-      );
-  if (index.value >= out.length) index.value = 0;
-  return out;
+  const q = query.value.trim();
+  if (!q) {
+    const out = pool.value.map((item) => ({
+      ...item,
+      segments: highlightMatches(item.key, []),
+    }));
+    if (index.value >= out.length) index.value = 0;
+    return out;
+  }
+
+  // Run fuzzy against both key and label, take best score
+  const scored = [];
+  for (const item of pool.value) {
+    const keyResult = fuzzyScore(q, item.key);
+    const labelResult = fuzzyScore(q, item.label);
+
+    let best = null;
+    let matchesForKey = [];
+
+    if (keyResult && labelResult) {
+      best = keyResult.score >= labelResult.score ? keyResult : labelResult;
+      matchesForKey = keyResult ? keyResult.matches : [];
+    } else if (keyResult) {
+      best = keyResult;
+      matchesForKey = keyResult.matches;
+    } else if (labelResult) {
+      best = labelResult;
+      matchesForKey = [];
+    }
+
+    if (best) {
+      scored.push({
+        ...item,
+        score: best.score,
+        segments: highlightMatches(item.key, matchesForKey),
+      });
+    }
+  }
+
+  scored.sort((a, b) => b.score - a.score);
+  if (index.value >= scored.length) index.value = 0;
+  return scored;
 });
 
 function move(delta) {
@@ -140,7 +178,7 @@ function move(delta) {
     if (selectedEl) {
       selectedEl.scrollIntoView({
         block: "nearest",
-        behavior: "auto", // Scroll instantané, pas d'animation
+        behavior: "auto",
       });
     }
   });

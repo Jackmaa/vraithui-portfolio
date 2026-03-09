@@ -13,6 +13,9 @@
     "home": "home.lua",
     "about": "about.md",
     "projects": "projects.ts",
+    "skills": "skills.rs",
+    "blog": "blog.sh",
+    "resume": "resume.json",
     "contact": "contact.vue",
     "github": "github.md"
   },
@@ -51,6 +54,31 @@
       "mostUsedLanguages": "Most Used Languages",
       "learningJourney": "Learning Journey",
       "timelineLoading": "Loading timeline.json..."
+    },
+    "skills": {
+      "title": "Skills",
+      "subtitle": "Technical proficiency overview",
+      "loading": "Compiling skills.rs...",
+      "compiling": "cargo build --release",
+      "compiled": "Compiled successfully",
+      "hover": "Hover for details"
+    },
+    "blog": {
+      "title": "Blog",
+      "subtitle": "Thoughts on code, tech, and everything in between",
+      "loading": "Loading blog.sh...",
+      "empty": "No posts found.",
+      "readMore": "Read more",
+      "collapse": "Collapse",
+      "tags": "Tags"
+    },
+    "resume": {
+      "title": "Resume",
+      "subtitle": "Professional experience & qualifications",
+      "loading": "Loading resume.json...",
+      "download": "Download PDF",
+      "collapse": "Click to collapse",
+      "expand": "Click to expand"
     },
     "contact": {
       "title": "Contact",

@@ -1,0 +1,37 @@
+[
+  {
+    "hash": "ecb7079",
+    "date": "2026-03-09",
+    "title": "Adding fuzzy search and new sections to VraithUI",
+    "content": "The portfolio now has a fuzzy matching engine powering both the command palette (Ctrl+K) and console Tab completion. Typing 'tls' finds 'theme list', 'prj' matches 'open projects'. The scoring system has six tiers — exact, starts-with, word-boundary, substring, acronym, and fuzzy subsequence.\n\n<strong>Three new sections</strong> joined the family: skills.rs (Rust-themed with cargo build animation and animated progress bars), blog.sh (git log-style posts), and resume.json (syntax-highlighted JSON with collapsible sections).\n\n<strong>Key technical choices:</strong> The fuzzy engine is a pure function utility with zero dependencies — shared by both UI consumers without coupling. The suggestion dropdown uses absolute positioning with bottom:100% to overlay the scroll area without disrupting the console's flex layout.",
+    "tags": ["vue", "fuzzy-search", "portfolio"]
+  },
+  {
+    "hash": "f5aca7f",
+    "date": "2026-02-28",
+    "title": "Building a terminal-themed portfolio with Vue 3",
+    "content": "VraithUI is a Neovim-inspired developer portfolio built entirely with Vue 3 and Tailwind CSS — no component library. The architecture mimics a real code editor:\n\n<strong>EditorShell.vue</strong> manages a CSS Grid layout with named areas: header, explorer sidebar, tabline, main content, console, and statusline. Each section is a Vue component loaded via dynamic <code>&lt;component :is&gt;</code>.\n\n<strong>The command system:</strong> A centralized registry in commands.js defines every command as a regex pattern + metadata. The commandStore handles execution, history, and now fuzzy suggestions. Everything is keyboard-accessible — Ctrl+K for palette, Ctrl+J for console.\n\n<strong>Theming:</strong> 15+ themes defined as CSS custom property sets. The theme store persists to localStorage, supports dark/light toggling, and even has hidden themes unlockable via the Konami code.",
+    "tags": ["vue", "architecture", "tailwind"]
+  },
+  {
+    "hash": "96b4ce7",
+    "date": "2026-01-15",
+    "title": "CRM-FORMA: building a custom CRM with Symfony and Vue.js",
+    "content": "CRM-FORMA is a custom CRM built for training centers. It centralizes all administrative actions — managing courses, learners, trainers, and schedules in one place.\n\n<strong>Stack choice:</strong> Symfony for the backend provides a robust MVC structure with Doctrine ORM for PostgreSQL. Vue.js on the frontend handles reactive data grids and filtering without full page reloads.\n\n<strong>Challenges solved:</strong>\n- Complex many-to-many relationships between trainers, courses, and learner cohorts\n- Role-based access control for admin, trainer, and learner views\n- Calendar-based scheduling with conflict detection\n\n<strong>Takeaway:</strong> Building a real-world business tool teaches you things side projects don't — data integrity, edge cases in user workflows, and the importance of thinking about state transitions before writing code.",
+    "tags": ["symfony", "vue", "postgresql", "crm"]
+  },
+  {
+    "hash": "ce73dcd",
+    "date": "2025-12-01",
+    "title": "From jQuery to Vue 3: lessons from a migration",
+    "content": "One of the most valuable experiences in my learning journey was understanding why modern frameworks exist — by first working with vanilla JS and jQuery, then migrating to Vue 3.\n\n<strong>What changed:</strong> Vue's reactivity model eliminates manual DOM manipulation entirely. Instead of <code>$('.element').text(value)</code>, you declare <code>ref(value)</code> and the template updates automatically. It's a fundamentally different mental model.\n\n<strong>The Composition API advantage:</strong> Coming from OOP PHP, the Composition API clicked immediately. Logic is organized by feature (not by option type), making it easy to extract composables like <code>useKonami()</code> or <code>useThemeStore()</code>.\n\n<strong>Performance for free:</strong> Vue 3's compiler does static hoisting, patch flags, and tree-shaking out of the box. The VraithUI portfolio scores 95+ on Lighthouse without manual optimization.",
+    "tags": ["vue", "migration", "javascript"]
+  },
+  {
+    "hash": "3daf702",
+    "date": "2025-10-20",
+    "title": "PokeBattleTower: consuming APIs with React",
+    "content": "PokeBattleTower is a React application built around the PokéAPI. It features advanced search with dynamic filters, responsive design with Tailwind CSS, and a battle tower mechanic.\n\n<strong>API design patterns:</strong> The app consumes a REST API with paginated endpoints. I implemented debounced search, request caching, and loading states to handle the API's rate limits gracefully.\n\n<strong>React vs Vue:</strong> Having built projects in both, I can say they solve the same problems differently. React's explicit nature (hooks, manual memoization) gives you more control but more footguns. Vue's magic (auto-tracking, computed) is more productive for UI-heavy work.\n\n<strong>Tailwind for rapid prototyping:</strong> The entire UI was built without writing a single CSS file. Tailwind's utility classes + responsive prefixes made it possible to go from design to deployed in a weekend.",
+    "tags": ["react", "api", "tailwind", "pokemon"]
+  }
+]

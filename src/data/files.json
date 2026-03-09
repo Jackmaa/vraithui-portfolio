@@ -15,6 +15,21 @@
     "component": "projects"
   },
   {
+    "id": "skills",
+    "label": "skills.rs",
+    "component": "skills"
+  },
+  {
+    "id": "blog",
+    "label": "blog.sh",
+    "component": "blog"
+  },
+  {
+    "id": "resume",
+    "label": "resume.json",
+    "component": "resume"
+  },
+  {
     "id": "contact",
     "label": "contact.vue",
     "component": "contact"

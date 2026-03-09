@@ -165,6 +165,9 @@ import LanguageToggle from "../components/LanguageToggle.vue";
 import Home from "../sections/Home.vue";
 import AboutMe from "../sections/AboutMe.vue";
 import Projects from "../sections/Projects.vue";
+import Skills from "../sections/Skills.vue";
+import Blog from "../sections/Blog.vue";
+import Resume from "../sections/Resume.vue";
 import Github from "../sections/Github.vue";
 import Contact from "../sections/Contact.vue";
 
@@ -182,6 +185,9 @@ const componentMap = {
   home: markRaw(Home),
   about: markRaw(AboutMe),
   projects: markRaw(Projects),
+  skills: markRaw(Skills),
+  blog: markRaw(Blog),
+  resume: markRaw(Resume),
   github: markRaw(Github),
   contact: markRaw(Contact),
 };

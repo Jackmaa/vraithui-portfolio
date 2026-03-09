@@ -42,6 +42,31 @@
       </CustomScrollbar>
     </div>
 
+    <!-- Input bar + suggestion overlay wrapper -->
+    <div class="relative shrink-0">
+      <!-- Suggestion dropdown (absolutely positioned, grows upward from input) -->
+      <div
+        v-if="showSuggestions && suggestions.length > 0"
+        class="suggestion-dropdown absolute bottom-full left-0 right-0 max-h-52 overflow-auto scroll-theme font-mono text-sm bg-[rgb(var(--panel))] border border-[rgb(var(--border))] border-b-0 rounded-t shadow-lg z-10"
+      >
+        <button
+          v-for="(s, i) in suggestions"
+          :key="s.item.name"
+          @click="acceptSuggestion(i)"
+          @mouseenter="suggestionIndex = i"
+          class="w-full text-left px-3 py-1.5 flex items-center gap-3 transition-colors"
+          :class="i === suggestionIndex ? 'bg-[rgb(var(--panel-2))]' : ''"
+        >
+          <span>
+            <template v-for="(seg, si) in getSuggestionSegments(s)" :key="si">
+              <span v-if="seg.highlight" class="text-[rgb(var(--accent))]">{{ seg.text }}</span>
+              <template v-else>{{ seg.text }}</template>
+            </template>
+          </span>
+          <span class="ml-auto text-xs opacity-40 truncate max-w-48">{{ s.item.description }}</span>
+        </button>
+      </div>
+
     <div
       class="px-3 py-2 border-t border-[rgb(var(--border))] flex items-center gap-2 bg-[rgb(var(--panel-2))]"
     >
@@ -49,13 +74,12 @@
       <input
         ref="inputRef"
         v-model="line"
-        @keydown.enter="run"
-        @keydown.up.prevent="historyUp"
-        @keydown.down.prevent="historyDown"
+        @keydown="handleKeydown"
         class="bg-transparent outline-none w-full font-mono text-sm"
         placeholder="Type a command..."
         aria-label="console input"
       />
+    </div>
     </div>
   </div>
 </template>
@@ -64,6 +88,7 @@
 import { ref, computed, nextTick, onMounted, onBeforeUnmount, watch } from "vue";
 import CustomScrollbar from "./CustomScrollbar.vue";
 import { useCommandStore } from "@/stores/commandStore";
+import { highlightMatches } from "@/vraithui/utils/fuzzyMatch";
 
 const props = defineProps({
   commands: { type: Array, default: () => [] },
@@ -77,6 +102,11 @@ const scrollY = ref(0);
 const scrollbarRef = ref(null);
 const inputRef = ref(null);
 const contentRef = ref(null);
+
+// Autocomplete state
+const suggestions = ref([]);
+const suggestionIndex = ref(-1);
+const showSuggestions = ref(false);
 
 // Use logs from command store
 const logs = computed(() => commandStore.consoleOutput);
@@ -97,6 +127,121 @@ const scrollAreaHeight = computed(() => {
   // Header ~40px + input ~45px = ~85px overhead
   return Math.max(100, consoleHeight.value - 85);
 });
+
+// Get highlight segments for a suggestion
+function getSuggestionSegments(s) {
+  return highlightMatches(s.item.name, s.matches);
+}
+
+// Watch line for suggestion computation
+watch(line, (val) => {
+  const trimmed = val.trim();
+  if (!trimmed) {
+    suggestions.value = [];
+    showSuggestions.value = false;
+    return;
+  }
+  const results = commandStore.getSuggestions(trimmed);
+  suggestions.value = results.slice(0, 8);
+  suggestionIndex.value = -1;
+  showSuggestions.value = suggestions.value.length > 0;
+});
+
+// Accept a suggestion
+function acceptSuggestion(idx) {
+  const target = idx >= 0 && idx < suggestions.value.length ? idx : suggestionIndex.value;
+  if (target >= 0 && target < suggestions.value.length) {
+    line.value = suggestions.value[target].item.name;
+    showSuggestions.value = false;
+    suggestionIndex.value = -1;
+    nextTick(() => inputRef.value?.focus());
+  }
+}
+
+// Unified keydown handler
+function handleKeydown(e) {
+  if (e.key === 'Tab') {
+    e.preventDefault();
+    handleTab();
+    return;
+  }
+
+  if (e.key === 'Escape') {
+    if (showSuggestions.value) {
+      showSuggestions.value = false;
+      suggestionIndex.value = -1;
+    } else {
+      emit("close");
+    }
+    return;
+  }
+
+  if (showSuggestions.value && suggestions.value.length > 0) {
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (suggestionIndex.value <= 0) {
+        suggestionIndex.value = suggestions.value.length - 1;
+      } else {
+        suggestionIndex.value--;
+      }
+      return;
+    }
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (suggestionIndex.value >= suggestions.value.length - 1) {
+        suggestionIndex.value = 0;
+      } else {
+        suggestionIndex.value++;
+      }
+      return;
+    }
+    if (e.key === 'Enter') {
+      if (suggestionIndex.value >= 0) {
+        e.preventDefault();
+        acceptSuggestion(suggestionIndex.value);
+        return;
+      }
+      // No highlight → execute as normal
+      run();
+      return;
+    }
+  } else {
+    // No suggestions visible — use original keybindings
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      historyUp();
+      return;
+    }
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      historyDown();
+      return;
+    }
+    if (e.key === 'Enter') {
+      run();
+      return;
+    }
+  }
+}
+
+// Tab completion
+function handleTab() {
+  if (suggestions.value.length === 0) return;
+
+  if (suggestions.value.length === 1) {
+    line.value = suggestions.value[0].item.name;
+    showSuggestions.value = false;
+    suggestionIndex.value = -1;
+  } else {
+    // Cycle through suggestions
+    if (suggestionIndex.value >= suggestions.value.length - 1) {
+      suggestionIndex.value = 0;
+    } else {
+      suggestionIndex.value++;
+    }
+    line.value = suggestions.value[suggestionIndex.value].item.name;
+  }
+}
 
 // Load saved height from localStorage
 function loadHeight() {
@@ -218,6 +363,10 @@ function run() {
     line.value = "";
     return;
   }
+
+  // Hide suggestions before clearing line to prevent flash
+  showSuggestions.value = false;
+  suggestionIndex.value = -1;
 
   // Execute through command store
   const result = commandStore.execute(cmd);

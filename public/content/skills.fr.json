@@ -1,0 +1,45 @@
+[
+  {
+    "category": "Frontend",
+    "icon": "🖥️",
+    "skills": [
+      { "name": "HTML5 / CSS3 / SCSS", "level": 92, "detail": "HTML sémantique, CSS Grid, Flexbox, animations, accessibilité" },
+      { "name": "JavaScript (POO)", "level": 85, "detail": "ES6+, manipulation DOM, async/await, closures, prototypes" },
+      { "name": "Vue.js / Nuxt", "level": 88, "detail": "Composition API, Pinia, Vue Router, SSR avec Nuxt 3" },
+      { "name": "React.js", "level": 72, "detail": "Hooks, Context API, patterns de composants, projet PokeBattleTower" },
+      { "name": "Tailwind CSS", "level": 90, "detail": "Design systems personnalisés, JIT, approche responsive-first" }
+    ]
+  },
+  {
+    "category": "Backend",
+    "icon": "⚙️",
+    "skills": [
+      { "name": "PHP (POO)", "level": 82, "detail": "PHP orienté objet, patterns MVC, développement d'API REST" },
+      { "name": "Symfony", "level": 78, "detail": "Doctrine ORM, Twig, sécurité, formulaires — projet CRM-FORMA" },
+      { "name": "Node.js", "level": 70, "detail": "Express, APIs REST, middleware, authentification JWT" },
+      { "name": "API REST", "level": 80, "detail": "Conception RESTful, authentification, pagination, gestion d'erreurs" },
+      { "name": "MySQL / PostgreSQL", "level": 78, "detail": "Optimisation de requêtes, migrations, modélisation relationnelle" }
+    ]
+  },
+  {
+    "category": "DevOps & Outils",
+    "icon": "🔧",
+    "skills": [
+      { "name": "Git / GitHub", "level": 88, "detail": "Stratégies de branches, pull requests, revue de code, collaboration" },
+      { "name": "Figma", "level": 72, "detail": "Prototypage UI/UX, design systems, bibliothèques de composants" },
+      { "name": "SCRUM / Agile", "level": 75, "detail": "Planification de sprints, rétrospectives, Kanban, workflow d'équipe" },
+      { "name": "Linux / Bash", "level": 78, "detail": "Arch Linux, scripting shell, administration système" },
+      { "name": "Neovim", "level": 85, "detail": "Config Lua personnalisée, LSP, Telescope, débogage DAP" }
+    ]
+  },
+  {
+    "category": "Soft Skills",
+    "icon": "🧠",
+    "skills": [
+      { "name": "Esprit d'équipe", "level": 90, "detail": "Développement collaboratif, revues de code, pair programming" },
+      { "name": "Autonomie", "level": 88, "detail": "Apprentissage autodidacte, résolution de problèmes indépendante" },
+      { "name": "Créativité UI/UX", "level": 82, "detail": "Conception d'interfaces intuitives, attention aux détails visuels" },
+      { "name": "Gestion du temps", "level": 85, "detail": "Gestion des priorités, respect des délais, organisation des tâches" }
+    ]
+  }
+]

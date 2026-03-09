@@ -13,6 +13,9 @@
     "home": "home.lua",
     "about": "about.md",
     "projects": "projects.ts",
+    "skills": "skills.rs",
+    "blog": "blog.sh",
+    "resume": "resume.json",
     "contact": "contact.vue",
     "github": "github.md"
   },
@@ -51,6 +54,31 @@
       "mostUsedLanguages": "Langages les plus utilisés",
       "learningJourney": "Parcours d'apprentissage",
       "timelineLoading": "Chargement timeline.json..."
+    },
+    "skills": {
+      "title": "Compétences",
+      "subtitle": "Aperçu des compétences techniques",
+      "loading": "Compilation de skills.rs...",
+      "compiling": "cargo build --release",
+      "compiled": "Compilation réussie",
+      "hover": "Survoler pour les détails"
+    },
+    "blog": {
+      "title": "Blog",
+      "subtitle": "Réflexions sur le code, la tech et tout le reste",
+      "loading": "Chargement de blog.sh...",
+      "empty": "Aucun article trouvé.",
+      "readMore": "Lire la suite",
+      "collapse": "Réduire",
+      "tags": "Tags"
+    },
+    "resume": {
+      "title": "CV",
+      "subtitle": "Expérience professionnelle et qualifications",
+      "loading": "Chargement de resume.json...",
+      "download": "Télécharger le PDF",
+      "collapse": "Cliquer pour réduire",
+      "expand": "Cliquer pour développer"
     },
     "contact": {
       "title": "Contact",

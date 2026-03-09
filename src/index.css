@@ -719,3 +719,133 @@ body {
   @apply bg-[rgb(var(--bg))] text-[rgb(var(--fg))];
   font-family: "JetBrains Mono", monospace;
 }
+
+/* ===== PRINT STYLES — Resume PDF export ===== */
+@media print {
+  /* Kill ALL overflow clipping in the entire tree */
+  *, *::before, *::after {
+    overflow: visible !important;
+    overflow-y: visible !important;
+    overflow-x: visible !important;
+  }
+
+  /* Everything auto height */
+  html, body, #app, #app > * {
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+  }
+
+  /* Hide all shell chrome */
+  .header-area,
+  .explorer-area,
+  .footer-area,
+  .resize-handle,
+  canvas {
+    display: none !important;
+  }
+
+  /* Reset grid to block flow */
+  .responsive-grid {
+    display: block !important;
+    height: auto !important;
+  }
+
+  /* Main area — remove positioning and fixed sizing */
+  .main-area {
+    position: static !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  /* Hide tabline */
+  .main-area > [class*="Tabline"],
+  .main-area > div:first-child:not(.resume-container) {
+    display: none !important;
+  }
+
+  /* CustomScrollbar — bust it open completely */
+  .csb.host,
+  [class*="csb"] {
+    height: auto !important;
+    max-height: none !important;
+    display: block !important;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+
+  /* Hide scrollbar track & thumb */
+  .csb.track,
+  .csb.thumb {
+    display: none !important;
+  }
+
+  /* Viewport — unclip */
+  .csb.viewport {
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  /* Content wrapper inside scrollbar */
+  .csb.viewport > * {
+    height: auto !important;
+  }
+
+  /* White background, black text for print */
+  body,
+  .main-area,
+  .resume-container,
+  .json-view {
+    background: white !important;
+    color: black !important;
+  }
+
+  /* Resume-specific print styles */
+  .resume-container .glow-text {
+    text-shadow: none !important;
+    color: black !important;
+  }
+
+  .resume-container .json-view {
+    border: 1px solid #ccc !important;
+    background: white !important;
+  }
+
+  .resume-container .json-key {
+    color: #0066cc !important;
+  }
+
+  .resume-container .json-string {
+    color: #008800 !important;
+  }
+
+  .resume-container .brace,
+  .resume-container .colon,
+  .resume-container .comma {
+    color: #333 !important;
+    opacity: 1 !important;
+  }
+
+  .resume-container .line-numbers {
+    color: #999 !important;
+    opacity: 1 !important;
+  }
+
+  /* Hide download button in print */
+  .resume-container button:not(.json-key) {
+    display: none !important;
+  }
+
+  /* Make JSON key buttons visible (they're the collapsible headers) */
+  .resume-container .json-key {
+    display: inline !important;
+  }
+
+  /* Hide particles, console, mobile controls, effects */
+  [class*="particles"],
+  [class*="Particles"],
+  [class*="Console"],
+  [class*="MobileControls"] {
+    display: none !important;
+  }
+}

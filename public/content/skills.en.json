@@ -1,0 +1,45 @@
+[
+  {
+    "category": "Frontend",
+    "icon": "🖥️",
+    "skills": [
+      { "name": "HTML5 / CSS3 / SCSS", "level": 92, "detail": "Semantic HTML, CSS Grid, Flexbox, animations, accessibility" },
+      { "name": "JavaScript (OOP)", "level": 85, "detail": "ES6+, DOM manipulation, async/await, closures, prototypes" },
+      { "name": "Vue.js / Nuxt", "level": 88, "detail": "Composition API, Pinia, Vue Router, SSR with Nuxt 3" },
+      { "name": "React.js", "level": 72, "detail": "Hooks, Context API, component patterns, PokeBattleTower project" },
+      { "name": "Tailwind CSS", "level": 90, "detail": "Custom design systems, JIT, responsive-first approach" }
+    ]
+  },
+  {
+    "category": "Backend",
+    "icon": "⚙️",
+    "skills": [
+      { "name": "PHP (OOP)", "level": 82, "detail": "Object-oriented PHP, MVC patterns, REST API development" },
+      { "name": "Symfony", "level": 78, "detail": "Doctrine ORM, Twig, security, form handling — CRM-FORMA project" },
+      { "name": "Node.js", "level": 70, "detail": "Express, REST APIs, middleware, JWT authentication" },
+      { "name": "API REST", "level": 80, "detail": "RESTful design, authentication, pagination, error handling" },
+      { "name": "MySQL / PostgreSQL", "level": 78, "detail": "Query optimization, migrations, relational modeling" }
+    ]
+  },
+  {
+    "category": "DevOps & Tools",
+    "icon": "🔧",
+    "skills": [
+      { "name": "Git / GitHub", "level": 88, "detail": "Branching strategies, pull requests, code review, collaboration" },
+      { "name": "Figma", "level": 72, "detail": "UI/UX prototyping, design systems, component libraries" },
+      { "name": "SCRUM / Agile", "level": 75, "detail": "Sprint planning, retrospectives, Kanban, team workflow" },
+      { "name": "Linux / Bash", "level": 78, "detail": "Arch Linux, shell scripting, system administration" },
+      { "name": "Neovim", "level": 85, "detail": "Custom Lua config, LSP, Telescope, DAP debugging" }
+    ]
+  },
+  {
+    "category": "Soft Skills",
+    "icon": "🧠",
+    "skills": [
+      { "name": "Teamwork", "level": 90, "detail": "Collaborative development, code reviews, pair programming" },
+      { "name": "Autonomy", "level": 88, "detail": "Self-directed learning, independent problem solving" },
+      { "name": "UI/UX Creativity", "level": 82, "detail": "Designing intuitive interfaces, attention to visual detail" },
+      { "name": "Time Management", "level": 85, "detail": "Priority management, deadline adherence, task organization" }
+    ]
+  }
+]

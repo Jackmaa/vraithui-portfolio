@@ -1,0 +1,91 @@
+{
+  "basics": {
+    "name": "Valentin Gillot",
+    "title": "Développeur Web Full-Stack",
+    "email": "valentingillot@gmail.com",
+    "website": "vraith.dev",
+    "location": "Bourg-en-Bresse, France",
+    "summary": "Développeur Web certifié (octobre 2025) passionné par le développement fullstack et le design UI/UX. Curieux et volontaire, j'aime apprendre en continu, collaborer en équipe et relever des défis techniques au sein d'environnements stimulants et humains."
+  },
+  "experience": [
+    {
+      "company": "CPAM de l'Ain",
+      "position": "Agent administratif",
+      "period": "08/2022 — 03/2023",
+      "description": "Traitement de dossiers et gestion administrative dans un environnement de service public structuré.",
+      "highlights": [
+        "Rigueur dans le traitement des dossiers",
+        "Organisation et gestion des priorités"
+      ]
+    },
+    {
+      "company": "La Poste",
+      "position": "Facteur Livreur",
+      "period": "11/2019 — 06/2022",
+      "description": "Opérations de livraison autonomes nécessitant initiative et gestion du temps.",
+      "highlights": [
+        "Autonomie et sens de l'initiative",
+        "Gestion du temps et respect des délais"
+      ]
+    },
+    {
+      "company": "Université d'Auvergne",
+      "position": "Agent de Scolarité",
+      "period": "08/2016 — 12/2018",
+      "description": "Accompagnement des étudiants et coordination administrative au sein d'un environnement universitaire.",
+      "highlights": [
+        "Relationnel et travail en équipe",
+        "Accompagnement et service client"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "CRM-FORMA",
+      "description": "CRM sur mesure pour centres de formation — centralisation des actions, gestion formations, apprenants et formateurs",
+      "stack": "Symfony, PostgreSQL, Vue.js"
+    },
+    {
+      "name": "NIHON",
+      "description": "Bibliothèque de mangas fullstack — système d'emprunt, panier, gestion utilisateurs, authentification JWT",
+      "stack": "JavaScript, PHP MVC, MySQL"
+    },
+    {
+      "name": "POKEBATTLETOWER",
+      "description": "Application Pokémon React — consommation API, recherche avancée, filtres dynamiques, interface responsive",
+      "stack": "React, Tailwind CSS"
+    },
+    {
+      "name": "VraithUI Portfolio",
+      "description": "Portfolio développeur thème terminal avec 15+ thèmes, système de commandes et recherche floue",
+      "stack": "Vue 3, Tailwind CSS, Vite"
+    }
+  ],
+  "education": [
+    {
+      "institution": "OnlineFormaPro",
+      "degree": "Certification Développeur Web & Mobile",
+      "period": "2024 — 2025",
+      "details": "Formation développement web full-stack couvrant les frameworks modernes, bases de données et workflows de déploiement."
+    },
+    {
+      "institution": "Université Clermont-Ferrand",
+      "degree": "Licence Mathématiques / Physique",
+      "period": "",
+      "details": "Fondations en pensée analytique et résolution de problèmes."
+    },
+    {
+      "institution": "IUT Brive-la-Gaillarde",
+      "degree": "DUT GEII (Génie Électrique et Informatique Industrielle)",
+      "period": "",
+      "details": "Diplôme technique couvrant l'électronique, les systèmes embarqués et l'informatique industrielle."
+    }
+  ],
+  "certifications": [
+    { "name": "Développeur Web & Mobile", "issuer": "OnlineFormaPro", "year": "2025" }
+  ],
+  "languages": [
+    { "name": "Français", "level": "Natif" },
+    { "name": "Anglais", "level": "Bilingue" }
+  ]
+}

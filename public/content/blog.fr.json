@@ -1,0 +1,37 @@
+[
+  {
+    "hash": "ecb7079",
+    "date": "2026-03-09",
+    "title": "Ajout de la recherche floue et nouvelles sections dans VraithUI",
+    "content": "Le portfolio dispose maintenant d'un moteur de recherche floue qui alimente à la fois la palette de commandes (Ctrl+K) et la complétion Tab de la console. Taper 'tls' trouve 'theme list', 'prj' match 'open projects'. Le système de scoring a six niveaux — exact, préfixe, début de mot, sous-chaîne, acronyme et sous-séquence floue.\n\n<strong>Trois nouvelles sections</strong> ont rejoint la famille : skills.rs (thème Rust avec animation cargo build et barres de progression animées), blog.sh (articles style git log), et resume.json (JSON coloré syntaxiquement avec sections repliables).\n\n<strong>Choix techniques clés :</strong> Le moteur de recherche est une fonction pure sans dépendances — partagée par les deux interfaces sans couplage. Le menu déroulant des suggestions utilise un positionnement absolu avec bottom:100% pour recouvrir la zone de scroll sans perturber le layout flex de la console.",
+    "tags": ["vue", "fuzzy-search", "portfolio"]
+  },
+  {
+    "hash": "f5aca7f",
+    "date": "2026-02-28",
+    "title": "Construire un portfolio thème terminal avec Vue 3",
+    "content": "VraithUI est un portfolio développeur inspiré de Neovim, construit entièrement avec Vue 3 et Tailwind CSS — aucune bibliothèque de composants. L'architecture imite un vrai éditeur de code :\n\n<strong>EditorShell.vue</strong> gère un layout CSS Grid avec des zones nommées : header, explorateur latéral, barre d'onglets, contenu principal, console et statusline. Chaque section est un composant Vue chargé via <code>&lt;component :is&gt;</code> dynamique.\n\n<strong>Le système de commandes :</strong> Un registre centralisé dans commands.js définit chaque commande comme un pattern regex + métadonnées. Le commandStore gère l'exécution, l'historique et maintenant les suggestions floues. Tout est accessible au clavier — Ctrl+K pour la palette, Ctrl+J pour la console.\n\n<strong>Thèmes :</strong> 15+ thèmes définis comme des ensembles de propriétés CSS personnalisées. Le store de thèmes persiste dans localStorage, supporte le basculement sombre/clair, et a même des thèmes cachés déverrouillables via le code Konami.",
+    "tags": ["vue", "architecture", "tailwind"]
+  },
+  {
+    "hash": "96b4ce7",
+    "date": "2026-01-15",
+    "title": "CRM-FORMA : construire un CRM sur mesure avec Symfony et Vue.js",
+    "content": "CRM-FORMA est un CRM sur mesure conçu pour les centres de formation. Il centralise toutes les actions administratives — gestion des formations, apprenants, formateurs et plannings en un seul endroit.\n\n<strong>Choix de stack :</strong> Symfony pour le backend fournit une structure MVC robuste avec Doctrine ORM pour PostgreSQL. Vue.js côté frontend gère les grilles de données réactives et le filtrage sans rechargement de page.\n\n<strong>Défis résolus :</strong>\n- Relations many-to-many complexes entre formateurs, formations et cohortes d'apprenants\n- Contrôle d'accès basé sur les rôles pour les vues admin, formateur et apprenant\n- Planification calendaire avec détection de conflits\n\n<strong>Leçon retenue :</strong> Construire un outil métier réel enseigne des choses que les projets perso n'apprennent pas — l'intégrité des données, les cas limites dans les workflows utilisateur, et l'importance de réfléchir aux transitions d'état avant d'écrire du code.",
+    "tags": ["symfony", "vue", "postgresql", "crm"]
+  },
+  {
+    "hash": "ce73dcd",
+    "date": "2025-12-01",
+    "title": "De jQuery à Vue 3 : leçons d'une migration",
+    "content": "L'une des expériences les plus précieuses de mon parcours d'apprentissage a été de comprendre pourquoi les frameworks modernes existent — en travaillant d'abord avec du JS vanilla et jQuery, puis en migrant vers Vue 3.\n\n<strong>Ce qui a changé :</strong> Le modèle de réactivité de Vue élimine entièrement la manipulation manuelle du DOM. Au lieu de <code>$('.element').text(value)</code>, on déclare <code>ref(value)</code> et le template se met à jour automatiquement. C'est un modèle mental fondamentalement différent.\n\n<strong>L'avantage de la Composition API :</strong> Venant du PHP orienté objet, la Composition API a tout de suite fait sens. La logique est organisée par fonctionnalité (pas par type d'option), facilitant l'extraction de composables comme <code>useKonami()</code> ou <code>useThemeStore()</code>.\n\n<strong>Performance gratuite :</strong> Le compilateur Vue 3 fait du hoisting statique, des patch flags et du tree-shaking par défaut. Le portfolio VraithUI obtient 95+ sur Lighthouse sans optimisation manuelle.",
+    "tags": ["vue", "migration", "javascript"]
+  },
+  {
+    "hash": "3daf702",
+    "date": "2025-10-20",
+    "title": "PokeBattleTower : consommer des APIs avec React",
+    "content": "PokeBattleTower est une application React construite autour de la PokéAPI. Elle propose une recherche avancée avec filtres dynamiques, un design responsive avec Tailwind CSS, et une mécanique de tour de combat.\n\n<strong>Patterns de consommation d'API :</strong> L'app consomme une API REST avec des endpoints paginés. J'ai implémenté une recherche debounced, du cache de requêtes et des états de chargement pour gérer les limites de taux de l'API élégamment.\n\n<strong>React vs Vue :</strong> Ayant construit des projets dans les deux, ils résolvent les mêmes problèmes différemment. La nature explicite de React (hooks, mémoïsation manuelle) donne plus de contrôle mais plus de pièges. La magie de Vue (auto-tracking, computed) est plus productive pour le travail centré UI.\n\n<strong>Tailwind pour le prototypage rapide :</strong> L'ensemble de l'UI a été construit sans écrire un seul fichier CSS. Les classes utilitaires de Tailwind + les préfixes responsive ont permis de passer du design au déploiement en un week-end.",
+    "tags": ["react", "api", "tailwind", "pokemon"]
+  }
+]

@@ -9,6 +9,7 @@ import {
 import { useThemeStore } from './themeStore';
 import { useLanguageStore } from './languageStore';
 import { THEMES } from '@/config/themes';
+import { fuzzyFilter } from '@/vraithui/utils/fuzzyMatch';
 
 const SESSION_START = Date.now();
 
@@ -141,7 +142,7 @@ export const useCommandStore = defineStore('command', () => {
       output.push('╚════════════════════════════════════════════════════════╝');
       output.push('');
       output.push('NAVIGATION:');
-      output.push('  open <section>   Open a section (home, about, projects, github, contact)');
+      output.push('  open <section>   Open a section (home, about, projects, skills, blog, resume, github, contact)');
       output.push('');
       output.push('THEMES:');
       output.push('  theme list       List all available themes');
@@ -177,7 +178,7 @@ export const useCommandStore = defineStore('command', () => {
       output.push('');
       output.push('Tips:');
       output.push('  • Use ↑/↓ arrows to navigate command history');
-      output.push('  • Press Tab for command completion (coming soon)');
+      output.push('  • Press Tab for command completion');
       output.push('  • Press Ctrl+J to toggle console');
       output.push('  • Some commands are hidden... try to find them all!');
 
@@ -493,6 +494,9 @@ export const useCommandStore = defineStore('command', () => {
           '  home      Landing / intro page',
           '  about     About me',
           '  projects  Project showcase',
+          '  skills    Technical skills',
+          '  blog      Blog posts',
+          '  resume    Resume / CV',
           '  github    GitHub activity',
           '  contact   Contact form',
         ],
@@ -593,6 +597,19 @@ export const useCommandStore = defineStore('command', () => {
   }
 
   /**
+   * Get fuzzy-matched command suggestions for autocomplete.
+   * Includes all commands (including easter eggs).
+   */
+  function getSuggestions(partialInput) {
+    if (!partialInput) return [];
+    const pool = COMMAND_DEFINITIONS.map((cmd) => ({
+      name: cmd.name,
+      description: cmd.description,
+    }));
+    return fuzzyFilter(partialInput, pool, (item) => item.name);
+  }
+
+  /**
    * Execute a command
    * Returns: { success, output?, action?, message?, section? }
    */
@@ -668,6 +685,7 @@ export const useCommandStore = defineStore('command', () => {
 
     // Actions
     execute,
+    getSuggestions,
     println,
     printLines,
     clearOutput,
