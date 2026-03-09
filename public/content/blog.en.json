@@ -21,13 +21,6 @@
     "tags": ["symfony", "vue", "postgresql", "crm"]
   },
   {
-    "hash": "ce73dcd",
-    "date": "2025-12-01",
-    "title": "From jQuery to Vue 3: lessons from a migration",
-    "content": "One of the most valuable experiences in my learning journey was understanding why modern frameworks exist — by first working with vanilla JS and jQuery, then migrating to Vue 3.\n\n<strong>What changed:</strong> Vue's reactivity model eliminates manual DOM manipulation entirely. Instead of <code>$('.element').text(value)</code>, you declare <code>ref(value)</code> and the template updates automatically. It's a fundamentally different mental model.\n\n<strong>The Composition API advantage:</strong> Coming from OOP PHP, the Composition API clicked immediately. Logic is organized by feature (not by option type), making it easy to extract composables like <code>useKonami()</code> or <code>useThemeStore()</code>.\n\n<strong>Performance for free:</strong> Vue 3's compiler does static hoisting, patch flags, and tree-shaking out of the box. The VraithUI portfolio scores 95+ on Lighthouse without manual optimization.",
-    "tags": ["vue", "migration", "javascript"]
-  },
-  {
     "hash": "3daf702",
     "date": "2025-10-20",
     "title": "PokeBattleTower: consuming APIs with React",

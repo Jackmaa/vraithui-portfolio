@@ -21,13 +21,6 @@
     "tags": ["symfony", "vue", "postgresql", "crm"]
   },
   {
-    "hash": "ce73dcd",
-    "date": "2025-12-01",
-    "title": "De jQuery à Vue 3 : leçons d'une migration",
-    "content": "L'une des expériences les plus précieuses de mon parcours d'apprentissage a été de comprendre pourquoi les frameworks modernes existent — en travaillant d'abord avec du JS vanilla et jQuery, puis en migrant vers Vue 3.\n\n<strong>Ce qui a changé :</strong> Le modèle de réactivité de Vue élimine entièrement la manipulation manuelle du DOM. Au lieu de <code>$('.element').text(value)</code>, on déclare <code>ref(value)</code> et le template se met à jour automatiquement. C'est un modèle mental fondamentalement différent.\n\n<strong>L'avantage de la Composition API :</strong> Venant du PHP orienté objet, la Composition API a tout de suite fait sens. La logique est organisée par fonctionnalité (pas par type d'option), facilitant l'extraction de composables comme <code>useKonami()</code> ou <code>useThemeStore()</code>.\n\n<strong>Performance gratuite :</strong> Le compilateur Vue 3 fait du hoisting statique, des patch flags et du tree-shaking par défaut. Le portfolio VraithUI obtient 95+ sur Lighthouse sans optimisation manuelle.",
-    "tags": ["vue", "migration", "javascript"]
-  },
-  {
     "hash": "3daf702",
     "date": "2025-10-20",
     "title": "PokeBattleTower : consommer des APIs avec React",
