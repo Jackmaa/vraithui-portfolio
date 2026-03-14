@@ -1,5 +1,46 @@
 [
   {
+    "hash": "redline-001",
+    "date": "2026-03-14",
+    "title": "Project Redline : expérimenter une architecture de projet modulaire",
+    "content": "Project Redline est un projet expérimental où j'explore différentes approches d'architecture logicielle. L'objectif n'est pas seulement de construire une application mais de tester des patterns d'organisation du code.\n\nDans ce projet, j'ai commencé par structurer le code autour de modules indépendants. Chaque module encapsule sa logique et peut être étendu sans casser le reste du système.\n\n<strong>Pourquoi une architecture modulaire ?</strong>\nLorsque les projets grandissent, la principale difficulté n'est plus d'écrire du code mais de le maintenir. Une architecture modulaire permet d'isoler les responsabilités et d'éviter les dépendances implicites.\n\nCe type de projet sert surtout de laboratoire pour tester des idées d'architecture qui pourront être réutilisées dans des projets plus grands."
+,
+    "tags": ["architecture","experiments","software-design"]
+  },
+  {
+    "hash": "authstarter-001",
+    "date": "2026-03-13",
+    "title": "Créer un starter d'authentification pour Symfony",
+    "content": "Lorsque l'on démarre un nouveau projet Symfony, la configuration de l'authentification est souvent la même : système d'inscription, login, gestion des utilisateurs et sécurité des sessions.\n\nLe projet symfony-auth-starter est né d'une idée simple : créer une base prête à l'emploi pour démarrer rapidement une application sécurisée.\n\n<strong>Fonctionnalités incluses :</strong>\n- système de login\n- gestion des utilisateurs\n- structure prête pour ajouter OAuth ou JWT\n\nSymfony fournit déjà un système de sécurité très robuste, mais il demande une certaine configuration initiale. Un starter permet de gagner du temps et d'éviter de répéter les mêmes étapes à chaque nouveau projet.\n\nCe type de repository est particulièrement utile pour les prototypes ou les projets personnels."
+,
+    "tags": ["symfony","authentication","starter-kit"]
+  },
+  {
+    "hash": "authstarter-002",
+    "date": "2026-03-13",
+    "title": "Comprendre le système de sécurité de Symfony",
+    "content": "Le système de sécurité de Symfony repose sur plusieurs concepts clés : firewalls, providers et authentificateurs.\n\nUn firewall définit les parties de l'application qui nécessitent une authentification. Les providers permettent de charger les utilisateurs depuis une base de données ou une autre source.\n\nLes authentificateurs, eux, déterminent comment l'utilisateur s'authentifie : formulaire de login, token API ou OAuth.\n\nComprendre cette architecture permet de créer des systèmes d'authentification très flexibles.\n\nDans symfony-auth-starter, l'objectif est de simplifier cette configuration pour fournir un point de départ clair et facilement extensible."
+,
+    "tags": ["symfony","security","backend"]
+  },
+  {
+    "hash": "securescan-001",
+    "date": "2026-03-12",
+    "title": "Construire un outil simple de sécurité pour analyser une application",
+    "content": "SecureScan est un projet expérimental autour de la sécurité applicative. L'idée est de créer un outil capable d'identifier certaines faiblesses potentielles dans une application web.\n\nLes premières versions se concentrent sur des vérifications simples :\n- configuration sensible\n- dépendances vulnérables\n- erreurs de sécurité communes\n\nCe type d'outil ne remplace pas un audit de sécurité complet, mais il peut servir de première ligne de défense pour détecter des problèmes évidents.\n\nL'objectif du projet est aussi pédagogique : comprendre comment fonctionnent les outils d'analyse de sécurité et comment ils détectent les vulnérabilités."
+,
+    "tags": ["security","devtools","analysis"]
+  },
+  {
+    "hash": "securescan-002",
+    "date": "2026-03-11",
+    "title": "Pourquoi construire ses propres outils développeur",
+    "content": "Les développeurs utilisent de nombreux outils : linters, analyseurs statiques, scanners de sécurité. Mais construire ses propres outils est souvent une excellente manière d'apprendre.\n\nAvec SecureScan, l'objectif est d'explorer comment analyser automatiquement un projet et identifier des patterns problématiques.\n\nMême un outil simple peut apporter une grande valeur : automatiser des vérifications répétitives et aider à maintenir un niveau de qualité constant dans un projet.\n\nConstruire ses propres outils développeur permet aussi de mieux comprendre comment fonctionnent les outils professionnels utilisés dans l'industrie."
+,
+    "tags": ["devtools","engineering","security"]
+  }
+]
+  {
     "hash": "ecb7079",
     "date": "2026-03-09",
     "title": "Ajout de la recherche floue et nouvelles sections dans VraithUI",
