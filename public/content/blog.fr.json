@@ -38,7 +38,7 @@
     "content": "Les développeurs utilisent de nombreux outils : linters, analyseurs statiques, scanners de sécurité. Mais construire ses propres outils est souvent une excellente manière d'apprendre.\n\nAvec SecureScan, l'objectif est d'explorer comment analyser automatiquement un projet et identifier des patterns problématiques.\n\nMême un outil simple peut apporter une grande valeur : automatiser des vérifications répétitives et aider à maintenir un niveau de qualité constant dans un projet.\n\nConstruire ses propres outils développeur permet aussi de mieux comprendre comment fonctionnent les outils professionnels utilisés dans l'industrie."
 ,
     "tags": ["devtools","engineering","security"]
-  }
+  },
   {
     "hash": "ecb7079",
     "date": "2026-03-09",
