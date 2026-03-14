@@ -38,7 +38,7 @@
     "content": "Developers rely on many tools every day: linters, static analyzers, security scanners, and build systems. But building your own developer tools is one of the best ways to understand how these systems actually work.\n\nSecureScan started as an experiment to explore how automated analysis can detect patterns and potential problems in a codebase.\n\nEven a small tool can provide real value by automating repetitive checks and helping maintain consistent code quality.\n\nMore importantly, building developer tools changes the way you think about software engineering. Instead of solving problems only inside an application, you start thinking about how to improve the development workflow itself."
 ,
     "tags": ["devtools", "engineering", "security"]
-  }
+  },
   {
     "hash": "ecb7079",
     "date": "2026-03-09",
