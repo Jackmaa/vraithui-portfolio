@@ -1,43 +1,24 @@
 [
   {
-    "hash": "redline-001",
-    "date": "2026-03-14",
-    "title": "Project Redline : expérimenter une architecture de projet modulaire",
-    "content": "Project Redline est un projet expérimental où j'explore différentes approches d'architecture logicielle. L'objectif n'est pas seulement de construire une application mais de tester des patterns d'organisation du code.\n\nDans ce projet, j'ai commencé par structurer le code autour de modules indépendants. Chaque module encapsule sa logique et peut être étendu sans casser le reste du système.\n\n<strong>Pourquoi une architecture modulaire ?</strong>\nLorsque les projets grandissent, la principale difficulté n'est plus d'écrire du code mais de le maintenir. Une architecture modulaire permet d'isoler les responsabilités et d'éviter les dépendances implicites.\n\nCe type de projet sert surtout de laboratoire pour tester des idées d'architecture qui pourront être réutilisées dans des projets plus grands."
-,
-    "tags": ["architecture","experiments","software-design"]
+    "hash": "0989d75",
+    "date": "2026-03-17",
+    "title": "Slay the Spire 2 m'a retourné le cerveau — maintenant je construis un deck-builder cyberpunk",
+    "content": "Slay the Spire 2 est sorti et j'y ai perdu un week-end. Puis j'en ai perdu un autre à me dire « je pourrais construire un truc comme ça. » Cette envie — la même qui m'avait poussé vers PokeBattleTower — est revenue en force. Sauf que cette fois, je voulais aller plus sombre. Cyberpunk. Netrunners. Un système de chaleur au lieu du mana.\n\n<strong>Jour un :</strong> J'ai scaffoldé avec Vite + React 19 + TypeScript + Zustand et j'ai immédiatement pris une décision dont je suis fier — pas de framework de jeu. Pas de Phaser, pas de PixiJS. Du React pur pour l'UI, du Canvas brut pour la carte, et une séparation nette : <code>game/</code> contient la logique pure sans aucun import React, <code>components/</code> c'est l'UI, <code>stores/</code> fait le pont. Chaque système de jeu est testable sans rien rendre à l'écran.\n\n<strong>Le système de chaleur</strong> est ce qui rend le jeu unique. Les cartes génèrent de la chaleur. Zone safe, overclocké, redline, crash — pousse trop fort et ton cyberdeck fond. Les ennemis tournent sur le même système. Cette symétrie, ça sonnait juste.\n\n<strong>Où ça en est :</strong> Écran titre avec une animation de séquence de boot, défilement de lore en machine à écrire, sélection de loadout avec 3 cyberdecks, carte en Canvas avec chemins ramifiés à la StS, et un écran de combat qui vient d'arriver. La couche logique du jeu est typée mais vide — moteur de combat, effets de cartes, IA ennemie, c'est la suite. J'ai vraiment hâte de continuer.",
+    "tags": ["react", "typescript", "gamedev", "zustand"]
   },
   {
-    "hash": "authstarter-001",
+    "hash": "6adcce5",
     "date": "2026-03-13",
-    "title": "Créer un starter d'authentification pour Symfony",
-    "content": "Lorsque l'on démarre un nouveau projet Symfony, la configuration de l'authentification est souvent la même : système d'inscription, login, gestion des utilisateurs et sécurité des sessions.\n\nLe projet symfony-auth-starter est né d'une idée simple : créer une base prête à l'emploi pour démarrer rapidement une application sécurisée.\n\n<strong>Fonctionnalités incluses :</strong>\n- système de login\n- gestion des utilisateurs\n- structure prête pour ajouter OAuth ou JWT\n\nSymfony fournit déjà un système de sécurité très robuste, mais il demande une certaine configuration initiale. Un starter permet de gagner du temps et d'éviter de répéter les mêmes étapes à chaque nouveau projet.\n\nCe type de repository est particulièrement utile pour les prototypes ou les projets personnels."
-,
-    "tags": ["symfony","authentication","starter-kit"]
+    "title": "Construire le Laravel Breeze de Symfony — parce que ça devrait exister",
+    "content": "À chaque nouveau projet Symfony, je refais le même scaffolding d'auth. Login, inscription, vérification d'email, reset de mot de passe, parfois OAuth. Laravel a Breeze — une commande et c'est réglé. Symfony n'a pas d'équivalent. Alors j'en construis un.\n\n<strong>La philosophie :</strong> <code>composer require</code>, lancer <code>php bin/console auth:install</code>, répondre à deux prompts (Google OAuth ? Email d'envoi ?), et t'as un système d'auth complet. Après l'install, tu possèdes tout le code — aucune dépendance runtime sur mon package. Ça scaffold l'entité User, les contrôleurs, les formulaires, les templates Twig, la config de sécurité, tout. Et ensuite ça te laisse tranquille.\n\n<strong>Le plus dur</strong> n'était pas le code d'auth en soi — c'était de rendre l'installeur intelligent. Il doit détecter ta config de base de données, enregistrer les bundles, scaffolder les fichiers sans écraser ceux qui existent, et donner un feedback clair. J'ai passé plus de temps sur l'InstallCommand que sur n'importe quel contrôleur.\n\n<strong>Pourquoi c'est important pour moi :</strong> Je veux contribuer à l'open source. Pas juste l'utiliser — mettre ma signature sur quelque chose. Construire des outils qui font gagner du temps aux autres développeurs, c'est le genre de travail qui te fait grandir. Ça te force à penser à la DX, aux cas limites que tu ne rencontrerais jamais dans tes propres projets, et à ce que « bons défauts » veut vraiment dire.",
+    "tags": ["symfony", "php", "open-source", "auth"]
   },
   {
-    "hash": "authstarter-002",
-    "date": "2026-03-13",
-    "title": "Comprendre le système de sécurité de Symfony",
-    "content": "Le système de sécurité de Symfony repose sur plusieurs concepts clés : firewalls, providers et authentificateurs.\n\nUn firewall définit les parties de l'application qui nécessitent une authentification. Les providers permettent de charger les utilisateurs depuis une base de données ou une autre source.\n\nLes authentificateurs, eux, déterminent comment l'utilisateur s'authentifie : formulaire de login, token API ou OAuth.\n\nComprendre cette architecture permet de créer des systèmes d'authentification très flexibles.\n\nDans symfony-auth-starter, l'objectif est de simplifier cette configuration pour fournir un point de départ clair et facilement extensible."
-,
-    "tags": ["symfony","security","backend"]
-  },
-  {
-    "hash": "securescan-001",
+    "hash": "591423b",
     "date": "2026-03-12",
-    "title": "Construire un outil simple de sécurité pour analyser une application",
-    "content": "SecureScan est un projet expérimental autour de la sécurité applicative. L'idée est de créer un outil capable d'identifier certaines faiblesses potentielles dans une application web.\n\nLes premières versions se concentrent sur des vérifications simples :\n- configuration sensible\n- dépendances vulnérables\n- erreurs de sécurité communes\n\nCe type d'outil ne remplace pas un audit de sécurité complet, mais il peut servir de première ligne de défense pour détecter des problèmes évidents.\n\nL'objectif du projet est aussi pédagogique : comprendre comment fonctionnent les outils d'analyse de sécurité et comment ils détectent les vulnérabilités."
-,
-    "tags": ["security","devtools","analysis"]
-  },
-  {
-    "hash": "securescan-002",
-    "date": "2026-03-11",
-    "title": "Pourquoi construire ses propres outils développeur",
-    "content": "Les développeurs utilisent de nombreux outils : linters, analyseurs statiques, scanners de sécurité. Mais construire ses propres outils est souvent une excellente manière d'apprendre.\n\nAvec SecureScan, l'objectif est d'explorer comment analyser automatiquement un projet et identifier des patterns problématiques.\n\nMême un outil simple peut apporter une grande valeur : automatiser des vérifications répétitives et aider à maintenir un niveau de qualité constant dans un projet.\n\nConstruire ses propres outils développeur permet aussi de mieux comprendre comment fonctionnent les outils professionnels utilisés dans l'industrie."
-,
-    "tags": ["devtools","engineering","security"]
+    "title": "J'ai construit un scanner de sécurité en deux jours — voici ce que j'ai appris sur les vulnérabilités",
+    "content": "La sécurité applicative, c'est un de ces sujets que tout le monde sait importants et que presque personne ne fait bien. Les vulnérabilités sont omniprésentes — même dans les packages populaires. Je voulais comprendre le sujet en profondeur, alors j'ai construit SecureScan : soumets un repo, lance plusieurs scanners en parallèle, mappe tout sur l'OWASP Top 10:2025, et génère des correctifs actionnables.\n\n<strong>La stack :</strong> Go + Fiber v3 pour l'API (la concurrence est native — parfait pour orchestrer Semgrep, TruffleHog, npm audit et ESLint en parallèle), SvelteKit pour le frontend avec SSE pour le suivi en temps réel, PostgreSQL pour la persistance. Deux jours, monorepo, zéro raccourci.\n\n<strong>Le moteur de correctifs</strong> est ce dont je suis le plus fier. Des générateurs par template pour les 5 patterns de vulnérabilités les plus courants (injection SQL, XSS, dépendances vulnérables, secrets exposés, mots de passe faibles), plus un correcteur IA optionnel propulsé par Claude pour le reste. Accepte un fix, et SecureScan crée une branche, applique les patches en ordre inversé de lignes (pour que les numéros de lignes ne bougent pas), commit, push, et ouvre une PR. Ce trick de l'ordre inversé m'a pris un temps embarrassant à trouver.\n\n<strong>Ce qui m'a surpris :</strong> Le mapping OWASP était plus dur que le scanning. Les outils reportent les findings différemment — certains te donnent des CWEs, d'autres non. J'ai fini par construire un fallback à trois niveaux : correspondance directe des métadonnées → lookup CWE → classification heuristique. La sécurité, ce n'est pas juste trouver les problèmes — c'est rendre les findings compréhensibles et corrigeables.",
+    "tags": ["go", "security", "sveltekit", "owasp"]
   },
   {
     "hash": "ecb7079",
@@ -45,26 +26,5 @@
     "title": "Ajout de la recherche floue et nouvelles sections dans VraithUI",
     "content": "Le portfolio dispose maintenant d'un moteur de recherche floue qui alimente à la fois la palette de commandes (Ctrl+K) et la complétion Tab de la console. Taper 'tls' trouve 'theme list', 'prj' match 'open projects'. Le système de scoring a six niveaux — exact, préfixe, début de mot, sous-chaîne, acronyme et sous-séquence floue.\n\n<strong>Trois nouvelles sections</strong> ont rejoint la famille : skills.rs (thème Rust avec animation cargo build et barres de progression animées), blog.sh (articles style git log), et resume.json (JSON coloré syntaxiquement avec sections repliables).\n\n<strong>Choix techniques clés :</strong> Le moteur de recherche est une fonction pure sans dépendances — partagée par les deux interfaces sans couplage. Le menu déroulant des suggestions utilise un positionnement absolu avec bottom:100% pour recouvrir la zone de scroll sans perturber le layout flex de la console.",
     "tags": ["vue", "fuzzy-search", "portfolio"]
-  },
-  {
-    "hash": "f5aca7f",
-    "date": "2026-02-28",
-    "title": "Construire un portfolio thème terminal avec Vue 3",
-    "content": "VraithUI est un portfolio développeur inspiré de Neovim, construit entièrement avec Vue 3 et Tailwind CSS — aucune bibliothèque de composants. L'architecture imite un vrai éditeur de code :\n\n<strong>EditorShell.vue</strong> gère un layout CSS Grid avec des zones nommées : header, explorateur latéral, barre d'onglets, contenu principal, console et statusline. Chaque section est un composant Vue chargé via <code>&lt;component :is&gt;</code> dynamique.\n\n<strong>Le système de commandes :</strong> Un registre centralisé dans commands.js définit chaque commande comme un pattern regex + métadonnées. Le commandStore gère l'exécution, l'historique et maintenant les suggestions floues. Tout est accessible au clavier — Ctrl+K pour la palette, Ctrl+J pour la console.\n\n<strong>Thèmes :</strong> 15+ thèmes définis comme des ensembles de propriétés CSS personnalisées. Le store de thèmes persiste dans localStorage, supporte le basculement sombre/clair, et a même des thèmes cachés déverrouillables via le code Konami.",
-    "tags": ["vue", "architecture", "tailwind"]
-  },
-  {
-    "hash": "96b4ce7",
-    "date": "2026-01-15",
-    "title": "CRM-FORMA : construire un CRM sur mesure avec Symfony et Vue.js",
-    "content": "CRM-FORMA est un CRM sur mesure conçu pour les centres de formation. Il centralise toutes les actions administratives — gestion des formations, apprenants, formateurs et plannings en un seul endroit.\n\n<strong>Choix de stack :</strong> Symfony pour le backend fournit une structure MVC robuste avec Doctrine ORM pour PostgreSQL. Vue.js côté frontend gère les grilles de données réactives et le filtrage sans rechargement de page.\n\n<strong>Défis résolus :</strong>\n- Relations many-to-many complexes entre formateurs, formations et cohortes d'apprenants\n- Contrôle d'accès basé sur les rôles pour les vues admin, formateur et apprenant\n- Planification calendaire avec détection de conflits\n\n<strong>Leçon retenue :</strong> Construire un outil métier réel enseigne des choses que les projets perso n'apprennent pas — l'intégrité des données, les cas limites dans les workflows utilisateur, et l'importance de réfléchir aux transitions d'état avant d'écrire du code.",
-    "tags": ["symfony", "vue", "postgresql", "crm"]
-  },
-  {
-    "hash": "3daf702",
-    "date": "2025-10-20",
-    "title": "PokeBattleTower : consommer des APIs avec React",
-    "content": "PokeBattleTower est une application React construite autour de la PokéAPI. Elle propose une recherche avancée avec filtres dynamiques, un design responsive avec Tailwind CSS, et une mécanique de tour de combat.\n\n<strong>Patterns de consommation d'API :</strong> L'app consomme une API REST avec des endpoints paginés. J'ai implémenté une recherche debounced, du cache de requêtes et des états de chargement pour gérer les limites de taux de l'API élégamment.\n\n<strong>React vs Vue :</strong> Ayant construit des projets dans les deux, ils résolvent les mêmes problèmes différemment. La nature explicite de React (hooks, mémoïsation manuelle) donne plus de contrôle mais plus de pièges. La magie de Vue (auto-tracking, computed) est plus productive pour le travail centré UI.\n\n<strong>Tailwind pour le prototypage rapide :</strong> L'ensemble de l'UI a été construit sans écrire un seul fichier CSS. Les classes utilitaires de Tailwind + les préfixes responsive ont permis de passer du design au déploiement en un week-end.",
-    "tags": ["react", "api", "tailwind", "pokemon"]
   }
 ]
