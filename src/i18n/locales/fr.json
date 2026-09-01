@@ -38,6 +38,14 @@
       "empty": {
         "message": "Aucun projet ne correspond à ce filtre.",
         "reset": "Réinitialiser les filtres"
+      },
+      "more": {
+        "title": "Autres projets",
+        "hint": "Code et liens uniquement — pas encore de captures."
+      },
+      "actions": {
+        "code": "Code",
+        "demo": "Démo"
       }
     },
     "github": {
