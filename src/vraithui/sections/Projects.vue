@@ -35,13 +35,35 @@
 
     <div v-else-if="error" class="text-red-400 text-sm">{{ $t('common.error') }}: {{ error }}</div>
 
-    <div v-else class="projects-grid">
-      <ProjectCard
-        v-for="project in filteredProjects"
-        :key="project.id"
-        :project="project"
-      />
-    </div>
+    <template v-else>
+      <!-- Featured lane: projects that have an image or a video -->
+      <div v-if="lanes.featured.length" class="projects-grid">
+        <ProjectCard
+          v-for="project in lanes.featured"
+          :key="project.id"
+          :project="project"
+        />
+      </div>
+
+      <!-- Compact lane: projects with neither. No placeholder media is
+           fabricated for them; they are listed instead of shown. -->
+      <section v-if="lanes.compact.length" class="compact-lane">
+        <div class="compact-header">
+          <h3 class="compact-title">
+            {{ $t('sections.projects.more.title') }}
+          </h3>
+          <p class="compact-hint">{{ $t('sections.projects.more.hint') }}</p>
+        </div>
+
+        <div class="compact-list">
+          <ProjectListRow
+            v-for="project in lanes.compact"
+            :key="project.id"
+            :project="project"
+          />
+        </div>
+      </section>
+    </template>
 
     <!-- Empty state -->
     <div
@@ -62,6 +84,8 @@
 <script setup>
 import { ref, computed, onMounted, nextTick, watch } from "vue";
 import ProjectCard from "./ProjectCard.vue";
+import ProjectListRow from "./ProjectListRow.vue";
+import { partitionByMedia } from "./projectLanes";
 import GlitchText from "../effects/GlitchText.vue";
 import { useLanguageStore } from "@/stores/languageStore";
 import { useI18n } from "vue-i18n";
@@ -90,6 +114,11 @@ const filteredProjects = computed(() => {
   if (activeFilter.value === "all") return projects.value;
   return projects.value.filter((p) => p.status === activeFilter.value);
 });
+
+// Two render lanes, not placeholder media: a project with no image and no
+// video is listed rather than shown as a card with a fabricated placeholder.
+// It graduates to a card by acquiring media, with no data migration.
+const lanes = computed(() => partitionByMedia(filteredProjects.value));
 
 // Fetch projects
 async function fetchProjects() {
@@ -145,6 +174,39 @@ onMounted(async () => {
 
 .glow-text {
   text-shadow: 0 0 10px rgba(var(--accent), 0.5);
+}
+
+.compact-lane {
+  margin-top: 2.5rem;
+}
+
+.compact-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid rgb(var(--border));
+}
+
+.compact-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(var(--accent));
+}
+
+.compact-hint {
+  font-size: 0.75rem;
+  opacity: 0.6;
+}
+
+.compact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 @keyframes fadeIn {
