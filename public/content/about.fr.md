@@ -71,4 +71,4 @@ Envie de collaborer sur un projet ? Discutons-en !
 
 ---
 
-_Last updated: March 2026_
+_Dernière mise à jour : septembre 2026_
