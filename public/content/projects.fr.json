@@ -65,7 +65,13 @@
     "description": "Plugin Tailwind CSS minimaliste et thémable avec 51 composants, 16 thèmes et support TypeScript complet. Design system inspiré de daisyUI avec tokens sémantiques, helpers runtime et accessibilité intégrée.",
     "status": "active",
     "year": 2025,
-    "tags": ["TailwindCSS", "Plugin", "TypeScript", "Design System", "UI Components"],
+    "tags": [
+      "TailwindCSS",
+      "Plugin",
+      "TypeScript",
+      "Design System",
+      "UI Components"
+    ],
     "github": "https://github.com/Jackmaa/vraithui-plugin",
     "demo": null,
     "image": "projects/vraithui-plugin.webp",
@@ -85,7 +91,13 @@
     "description": "CRM complet conçu pour les formateurs indépendants et centres de formation. Gestion complète de l'activité de formation, de la prospection à la facturation, avec conformité Qualiopi intégrée.",
     "status": "active",
     "year": 2025,
-    "tags": ["Symfony", "Vue.js", "PostgreSQL", "TailwindCSS", "JWT"],
+    "tags": [
+      "Symfony",
+      "Vue.js",
+      "PostgreSQL",
+      "TailwindCSS",
+      "JWT"
+    ],
     "github": "https://github.com/Jackmaa/CRM-Forma",
     "demo": null,
     "image": "projects/CRM-Forma.webp",
@@ -105,7 +117,12 @@
     "description": "Portfolio interactif inspiré des éditeurs de code modernes (Neovim/Cursor). Interface immersive avec système de thèmes cyberpunk, console intégrée, command palette et markdown parser custom.",
     "status": "active",
     "year": 2025,
-    "tags": ["Vue 3", "Vite", "TailwindCSS", "Design System"],
+    "tags": [
+      "Vue 3",
+      "Vite",
+      "TailwindCSS",
+      "Design System"
+    ],
     "github": "https://github.com/Jackmaa/vraithui-portfolio",
     "demo": null,
     "image": null,
@@ -125,7 +142,13 @@
     "description": "Application e-commerce moderne pour boulangerie avec système de commandes en ligne, gestion de stock, QR codes pour validation des commandes, et dashboard administrateur complet.",
     "status": "completed",
     "year": 2024,
-    "tags": ["Next.js 16", "TypeScript", "Prisma", "NextAuth", "TailwindCSS"],
+    "tags": [
+      "Next.js 16",
+      "TypeScript",
+      "Prisma",
+      "NextAuth",
+      "TailwindCSS"
+    ],
     "github": "https://github.com/Jackmaa/bakery-app",
     "demo": null,
     "image": "projects/bakery-app.webp",
@@ -145,7 +168,13 @@
     "description": "Bibliothèque de manga en ligne avec système d'emprunt et de gestion. Plateforme permettant de parcourir, rechercher et emprunter des mangas avec une interface responsive et des animations GSAP.",
     "status": "completed",
     "year": 2024,
-    "tags": ["PHP", "MVC", "REST API", "GSAP", "AltoRouter"],
+    "tags": [
+      "PHP",
+      "MVC",
+      "REST API",
+      "GSAP",
+      "AltoRouter"
+    ],
     "github": "https://github.com/Jackmaa/nihon-ECF-3",
     "demo": null,
     "image": "projects/nihon.webp",
@@ -165,7 +194,13 @@
     "description": "Pokédex interactif complet avec mini-jeu Pokémon Battle Royale. Recherche avancée, filtres par type, système de favoris, et combat tour par tour avec calculs de dégâts basés sur les stats réelles.",
     "status": "active",
     "year": 2024,
-    "tags": ["React", "PokéAPI", "Axios", "CSS", "LocalStorage"],
+    "tags": [
+      "React",
+      "PokéAPI",
+      "Axios",
+      "CSS",
+      "LocalStorage"
+    ],
     "github": "https://github.com/Jackmaa/PokeAPIGame",
     "demo": null,
     "image": "projects/PokeBattle.webp",
@@ -178,5 +213,140 @@
       "Toggle shiny avec sprites animés",
       "Chaînes d'évolution interactives"
     ]
+  },
+  {
+    "id": "blog-t",
+    "name": "blog-T",
+    "description": "Blog-T est une plateforme de publication personnelle développée avec Nuxt 3 (TypeScript) et Bun. Elle utilise SQLite en développement et PostgreSQL en production, avec Drizzle ORM pour la gestion de la base de données.",
+    "status": "active",
+    "year": null,
+    "tags": [
+      "node"
+    ],
+    "github": null,
+    "demo": null,
+    "image": null,
+    "video": null,
+    "highlights": []
+  },
+  {
+    "id": "chess-master",
+    "name": "Chess Master",
+    "description": "L'application Chess Master est une plateforme de jeu d'échecs axée sur des parties réelles, des parties historiques, des connaissances d'ouverture et des parties contre l'ordinateur. Elle est construite avec Next.js et TypeScript.",
+    "status": "active",
+    "year": null,
+    "tags": [
+      "node"
+    ],
+    "github": null,
+    "demo": null,
+    "image": null,
+    "video": null,
+    "highlights": []
+  },
+  {
+    "id": "fitness-app",
+    "name": "Fitness App",
+    "description": "L'application de fitness Ascension est un RPG solo basé sur le programme ROOKIE PATH, qui propose six mois de fondations de bodyweight suivies et tracées comme un chasseur. Elle est construite avec React Native, TypeScript et FastAPI.",
+    "status": "active",
+    "year": 2026,
+    "tags": [
+      "node",
+      "python"
+    ],
+    "github": null,
+    "demo": null,
+    "image": null,
+    "video": null,
+    "highlights": []
+  },
+  {
+    "id": "png2webp-converter",
+    "name": "Png2webp Converter",
+    "description": "Le projet png2webp-converter est un outil de conversion automatique de fichiers PNG en WebP avec compression optimale. Il est compatible avec Linux et Windows et utilise ffmpeg comme codec.",
+    "status": "active",
+    "year": 2025,
+    "tags": [],
+    "github": "https://github.com/Jackmaa/png2webp-converter",
+    "demo": null,
+    "image": null,
+    "video": null,
+    "highlights": []
+  },
+  {
+    "id": "portfolio-react",
+    "name": "Portfolio React",
+    "description": "Portfolio Angéline Gillot - Édition React : un portfolio moderne développé avec Vite + React 19. Il utilise React 19.2.0, Vite 7.2.2, React Router DOM et Framer Motion.",
+    "status": "active",
+    "year": null,
+    "tags": [
+      "node"
+    ],
+    "github": null,
+    "demo": null,
+    "image": null,
+    "video": null,
+    "highlights": []
+  },
+  {
+    "id": "protocol-redline",
+    "name": "Protocol Redline",
+    "description": "Le projet protocol_redline est un jeu de cartes de type roguelike cyberpunk pour Android. Il est construit avec React 19 et TypeScript, ainsi que les bibliothèques Zustand et Canvas. Le jeu se déroule dans un réseau caché appelé The Black Grid.",
+    "status": "active",
+    "year": 2026,
+    "tags": [
+      "node"
+    ],
+    "github": "https://github.com/Jackmaa/project-redline",
+    "demo": null,
+    "image": null,
+    "video": null,
+    "highlights": []
+  },
+  {
+    "id": "second-brain",
+    "name": "Second Brain",
+    "description": "second-brain est un outil qui génère et audit une deuxième cerveau Obsidian. Il est construit avec Python et utilise uv pour exécuter des commandes. Il permet de synchroniser des projets, des sessions et des historiques avec la deuxième cerveau.",
+    "status": "active",
+    "year": 2026,
+    "tags": [
+      "python"
+    ],
+    "github": null,
+    "demo": null,
+    "image": null,
+    "video": null,
+    "highlights": []
+  },
+  {
+    "id": "securescan",
+    "name": "Securescan",
+    "description": "SecureScan est une plateforme web qui orchestre des outils de sécurité open-source contre des bases de code soumises, agrège les résultats et les mappe à OWASP Top 10:2025, et propose des corrections. Elle est construite avec Go, Fiber, SvelteKit et PostgreSQL.",
+    "status": "active",
+    "year": 2026,
+    "tags": [
+      "go",
+      "node"
+    ],
+    "github": "https://github.com/Jackmaa/securescan",
+    "demo": null,
+    "image": null,
+    "video": null,
+    "highlights": []
+  },
+  {
+    "id": "symfony-auth-starter",
+    "name": "Symfony Auth Starter",
+    "description": "Le projet Symfony Auth Starter est un outil de démarrage d'authentification pour Symfony. Il est construit avec PHP 8.1 et Symfony 6.4. Il génère un système d'authentification complet en une commande.",
+    "status": "active",
+    "year": 2026,
+    "tags": [
+      "php"
+    ],
+    "github": "https://github.com/Jackmaa/symfony-auth-starter",
+    "demo": null,
+    "image": null,
+    "video": null,
+    "highlights": []
   }
 ]
