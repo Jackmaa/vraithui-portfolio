@@ -401,5 +401,39 @@
     "image": null,
     "video": null,
     "highlights": []
+  },
+  {
+    "id": "mandat-numerique",
+    "name": "Mandat Numérique",
+    "description": "Plateforme Go qui automatise les demandes d'effacement RGPD (article 17). Le citoyen dépose un mandat numérique versionné aux instructions chiffrées, et le service envoie puis suit les demandes de suppression auprès des courtiers en données français et européens, avec journal d'audit et relances.",
+    "status": "in-progress",
+    "year": 2026,
+    "tags": [
+      "go",
+      "public-sector"
+    ],
+    "github": null,
+    "demo": null,
+    "image": null,
+    "video": null,
+    "highlights": []
+  },
+  {
+    "id": "lec-draft",
+    "name": "LEC Draft Simulator",
+    "description": "Simulateur full-stack de drafts compétitives League of Legends en Bo1, Bo3 et Bo5, avec les règles du Fearless Draft et du Right of First Selection. FastAPI et SQLAlchemy asynchrone derrière un frontend React, calendrier des matchs et thèmes par équipe.",
+    "status": "in-progress",
+    "year": null,
+    "tags": [
+      "FastAPI",
+      "League of Legends",
+      "React",
+      "SQLAlchemy"
+    ],
+    "github": null,
+    "demo": null,
+    "image": null,
+    "video": null,
+    "highlights": []
   }
 ]

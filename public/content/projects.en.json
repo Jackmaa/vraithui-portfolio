@@ -401,5 +401,39 @@
     "image": null,
     "video": null,
     "highlights": []
+  },
+  {
+    "id": "mandat-numerique",
+    "name": "Mandat Numérique",
+    "description": "A Go platform that automates GDPR Article 17 erasure requests. Citizens file a versioned digital mandate holding encrypted instructions, and the service dispatches and tracks suppression requests across seeded French and EU data brokers, with an audit trail and retries.",
+    "status": "in-progress",
+    "year": 2026,
+    "tags": [
+      "go",
+      "public-sector"
+    ],
+    "github": null,
+    "demo": null,
+    "image": null,
+    "video": null,
+    "highlights": []
+  },
+  {
+    "id": "lec-draft",
+    "name": "LEC Draft Simulator",
+    "description": "A full-stack simulator for League of Legends competitive drafts across Bo1, Bo3 and Bo5 series, implementing Fearless Draft and Right of First Selection rules. FastAPI and async SQLAlchemy behind a React frontend with a match calendar and team theming.",
+    "status": "in-progress",
+    "year": null,
+    "tags": [
+      "FastAPI",
+      "League of Legends",
+      "React",
+      "SQLAlchemy"
+    ],
+    "github": null,
+    "demo": null,
+    "image": null,
+    "video": null,
+    "highlights": []
   }
 ]
