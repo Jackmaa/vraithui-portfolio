@@ -348,5 +348,58 @@
     "image": null,
     "video": null,
     "highlights": []
+  },
+  {
+    "id": "codoc",
+    "name": "Codoc",
+    "description": "Le projet codoc est une monorepo qui contient deux applications : une API Symfony en PHP 8.4+ et un frontend Vue 3 + Vite. Les applications sont installées avec Composer et npm.",
+    "status": "paused",
+    "year": 2025,
+    "tags": [
+      "monorepo",
+      "symfony",
+      "vue"
+    ],
+    "github": "https://github.com/Jackmaa/codoc",
+    "demo": null,
+    "image": null,
+    "video": null,
+    "highlights": []
+  },
+  {
+    "id": "pokebattletower",
+    "name": "PokeBattleTower",
+    "description": "Le projet PokeBattleTower est un jeu de roguelike Pokémon en ligne de commande développé avec Node.js. Il utilise la PokéAPI pour récupérer les données des Pokémon et Recoil pour gérer l'état de l'application. Le jeu est stocké localement dans le navigateur.",
+    "status": "paused",
+    "year": 2025,
+    "tags": [
+      "React",
+      "Recoil",
+      "Tailwind",
+      "experiment"
+    ],
+    "github": "https://github.com/Jackmaa/PokeBattleTower",
+    "demo": null,
+    "image": null,
+    "video": null,
+    "highlights": []
+  },
+  {
+    "id": "protocol-redline",
+    "name": "Protocol Redline",
+    "description": "Le projet protocol_redline est un jeu de cartes de deck-builder cyberpunk pour Android. Il utilise React 19 avec TypeScript pour la interface utilisateur et Zustand pour la gestion d'état. Le jeu se déroule dans un réseau caché appelé The Black Grid.",
+    "status": "paused",
+    "year": 2026,
+    "tags": [
+      "Android",
+      "deck-builder",
+      "game",
+      "roguelike"
+    ],
+    "github": "https://github.com/Jackmaa/project-redline",
+    "demo": null,
+    "image": null,
+    "video": null,
+    "highlights": []
   }
 ]

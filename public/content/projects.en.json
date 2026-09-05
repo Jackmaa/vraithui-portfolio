@@ -348,5 +348,58 @@
     "image": null,
     "video": null,
     "highlights": []
+  },
+  {
+    "id": "codoc",
+    "name": "Codoc",
+    "description": "Codoc Monorepo is a stack of two applications built with PHP and Node.js. It consists of a Symfony API and a Vue 3 frontend with Vite.",
+    "status": "paused",
+    "year": 2025,
+    "tags": [
+      "monorepo",
+      "symfony",
+      "vue"
+    ],
+    "github": "https://github.com/Jackmaa/codoc",
+    "demo": null,
+    "image": null,
+    "video": null,
+    "highlights": []
+  },
+  {
+    "id": "pokebattletower",
+    "name": "PokeBattleTower",
+    "description": "Pokémon Battle Tower Roguelike is a client-side game where players climb a battle tower, build a team, and try to reach the highest floor. Built with React, Recoil, and Framer Motion, it uses local storage for game data.",
+    "status": "paused",
+    "year": 2025,
+    "tags": [
+      "React",
+      "Recoil",
+      "Tailwind",
+      "experiment"
+    ],
+    "github": "https://github.com/Jackmaa/PokeBattleTower",
+    "demo": null,
+    "image": null,
+    "video": null,
+    "highlights": []
+  },
+  {
+    "id": "protocol-redline",
+    "name": "Protocol Redline",
+    "description": "Protocol: Redline is a cyberpunk roguelike deck-builder for Android built with React 19 and TypeScript. It features a hidden network layer, deck-building, and thermal limits. The game is structured with a clear separation of game logic and UI.",
+    "status": "paused",
+    "year": 2026,
+    "tags": [
+      "Android",
+      "deck-builder",
+      "game",
+      "roguelike"
+    ],
+    "github": "https://github.com/Jackmaa/project-redline",
+    "demo": null,
+    "image": null,
+    "video": null,
+    "highlights": []
   }
 ]
