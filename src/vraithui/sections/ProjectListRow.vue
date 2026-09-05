@@ -1,7 +1,16 @@
 <template>
-  <article class="list-row group" :class="statusBorderClass">
+  <!--
+    `details` when there is prose to disclose, `article` when there is not.
+    A `details` with an empty body still toggles, which is a control that
+    promises something and delivers nothing; `:is` avoids that without
+    duplicating the whole row markup twice.
+  -->
+  <component :is="expandable ? 'details' : 'article'"
+             class="list-row group" :class="statusBorderClass">
+    <component :is="expandable ? 'summary' : 'div'" class="row-summary">
     <!-- Name + meta -->
     <div class="row-head">
+      <span v-if="expandable" class="row-marker" aria-hidden="true">▸</span>
       <h3 class="row-name">{{ project.name }}</h3>
       <span class="row-meta">
         <span class="status-dot" :class="statusDotClass" aria-hidden="true"></span>
@@ -23,6 +32,7 @@
         target="_blank"
         rel="noopener noreferrer"
         class="row-link"
+        @click.stop
       >
         {{ $t('sections.projects.actions.code') }}
       </a>
@@ -32,11 +42,25 @@
         target="_blank"
         rel="noopener noreferrer"
         class="row-link"
+        @click.stop
       >
         {{ $t('sections.projects.actions.demo') }}
       </a>
     </div>
-  </article>
+    </component>
+
+    <!-- Disclosed: the prose the card shows and this row previously dropped. -->
+    <div v-if="expandable" class="row-detail">
+      <p v-if="project.description" class="row-description">
+        {{ project.description }}
+      </p>
+      <ul v-if="project.highlights?.length" class="row-highlights">
+        <li v-for="(highlight, i) in project.highlights" :key="i">
+          {{ highlight }}
+        </li>
+      </ul>
+    </div>
+  </component>
 </template>
 
 <script setup>
@@ -51,6 +75,12 @@ const props = defineProps({
 });
 
 const { t } = useI18n();
+
+// Only offer a disclosure when there is something inside it. Most entries have
+// a description; one that has neither renders as a plain row.
+const expandable = computed(
+  () => Boolean(props.project.description) || Boolean(props.project.highlights?.length),
+);
 
 // A dot rather than the card's badge pill: the row is one line of information,
 // and a full badge would compete with the project name for it.
@@ -92,14 +122,64 @@ const statusLabel = computed(() => {
 
 <style scoped>
 .list-row {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 0.5rem 1rem;
   padding: 0.75rem 1rem;
   border-left: 2px solid rgb(var(--border));
   background: rgb(var(--panel) / 0.35);
   transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+/* The row itself. Was `.list-row` before the disclosure wrapped it. */
+.row-summary {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.row-summary::-webkit-details-marker {
+  display: none;
+}
+
+.row-marker {
+  display: inline-block;
+  margin-right: 0.4rem;
+  font-size: 0.7rem;
+  opacity: 0.5;
+  transition: transform 0.2s ease;
+}
+
+.list-row[open] .row-marker {
+  transform: rotate(90deg);
+}
+
+.row-detail {
+  padding: 0.75rem 0 0.25rem 1.15rem;
+  max-width: 62ch;
+}
+
+.row-description {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+.row-highlights {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  list-style: none;
+  padding: 0;
+  font-size: 0.75rem;
+  opacity: 0.75;
+}
+
+.row-highlights li::before {
+  content: "▹";
+  color: rgb(var(--accent));
+  margin-right: 0.5rem;
 }
 
 .list-row:hover {
@@ -208,7 +288,8 @@ const statusLabel = computed(() => {
 @media (prefers-reduced-motion: reduce) {
   .list-row,
   .row-name,
-  .row-link {
+  .row-link,
+  .row-marker {
     transition: none;
   }
 }
