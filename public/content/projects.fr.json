@@ -275,18 +275,27 @@
   },
   {
     "id": "portfolio-react",
-    "name": "Portfolio React",
-    "description": "Portfolio Angéline Gillot - Édition React : un portfolio moderne développé avec Vite + React 19. Il utilise React 19.2.0, Vite 7.2.2, React Router DOM et Framer Motion.",
-    "status": "active",
-    "year": null,
+    "name": "Portfolio Angéline Gillot",
+    "description": "Migration du portfolio de ma sœur, écrit en PHP pendant sa formation, vers React 19 et Vite, avec animations Framer Motion et défilement fluide Lenis sur une identité visuelle céleste, déployé sur Vercel pour qu'elle en garde la main.",
+    "status": "completed",
+    "year": 2026,
     "tags": [
-      "node"
+      "React 19",
+      "Vite",
+      "SASS",
+      "Framer Motion",
+      "Lenis",
+      "migration"
     ],
     "github": null,
-    "demo": null,
+    "demo": "https://angele-dev.vercel.app/",
     "image": null,
     "video": null,
-    "highlights": []
+    "highlights": [
+      "Rebuilt from a PHP training project into a React single-page app",
+      "Scroll-reveal animation with Framer Motion and Lenis",
+      "Deployed to Vercel and handed over"
+    ]
   },
   {
     "id": "protocol-redline",

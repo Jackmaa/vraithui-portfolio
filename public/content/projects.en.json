@@ -275,18 +275,27 @@
   },
   {
     "id": "portfolio-react",
-    "name": "Portfolio React",
-    "description": "Portfolio Angéline Gillot - React Edition is a modern portfolio built with Vite and React 19. It features a mystical and celestial visual identity inspired by a fantasy universe. The project uses React 19.2.0, Vite 7.2.2, and SASS/SCSS for styles.",
-    "status": "active",
-    "year": null,
+    "name": "Portfolio Angéline Gillot",
+    "description": "A migration of my sister's PHP training portfolio to React 19 and Vite, rebuilt with Framer Motion animation and Lenis smooth scrolling over a celestial visual identity, and deployed to Vercel for her to own.",
+    "status": "completed",
+    "year": 2026,
     "tags": [
-      "node"
+      "React 19",
+      "Vite",
+      "SASS",
+      "Framer Motion",
+      "Lenis",
+      "migration"
     ],
     "github": null,
-    "demo": null,
+    "demo": "https://angele-dev.vercel.app/",
     "image": null,
     "video": null,
-    "highlights": []
+    "highlights": [
+      "Rebuilt from a PHP training project into a React single-page app",
+      "Scroll-reveal animation with Framer Motion and Lenis",
+      "Deployed to Vercel and handed over"
+    ]
   },
   {
     "id": "protocol-redline",
